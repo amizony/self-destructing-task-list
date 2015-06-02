@@ -1,0 +1,40 @@
+body {
+  background-image: url("../images/rockywall.png"); }
+
+.header {
+  text-align: center; }
+  .header h1 {
+    font-size: 50px; }
+
+.container {
+  height: 600px;
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px; }
+  .container .title {
+    background-color: #E7CDB4;
+    height: 80px; }
+    .container .title h2 {
+      margin-left: 30px;
+      display: inline-block;
+      vertical-align: middle; }
+  .container .task {
+    background-color: #F9E4D7;
+    height: 70px;
+    border-bottom: 1px solid #E7CDB4; }
+    .container .task p {
+      margin-left: 30px;
+      display: inline-block;
+      vertical-align: middle; }
+
+.navbar {
+  text-align: right;
+  margin-bottom: -20px; }
+  .navbar li {
+    list-style: none;
+    display: inline;
+    margin-right: 10px;
+    font-size: 20px; }
+  .navbar li:hover {
+    cursor: pointer; }
