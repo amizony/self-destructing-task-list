@@ -1,7 +1,7 @@
 // Variables
 $color-1: #E7CDB4;
 $color-2: #F9E4D7;
-$color-3: #E1DCD8;
+$color-3: #E84A5F;
 $color-4: #403F47;
 
 
@@ -36,8 +36,32 @@ body {
     }
   }
 
-  .task {
+  .active {
     background-color: $color-2;
+    height: 70px;
+    border-bottom: 1px solid $color-1;
+
+    p {
+      margin-left: 30px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .completed {
+    background-color: $color-2;
+    height: 70px;
+    border-bottom: 1px solid $color-1;
+
+    p {
+      margin-left: 30px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .expired {
+    background-color: $color-3;
     height: 70px;
     border-bottom: 1px solid $color-1;
 

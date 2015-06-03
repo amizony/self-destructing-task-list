@@ -19,11 +19,27 @@ body {
       margin-left: 30px;
       display: inline-block;
       vertical-align: middle; }
-  .container .task {
+  .container .active {
     background-color: #F9E4D7;
     height: 70px;
     border-bottom: 1px solid #E7CDB4; }
-    .container .task p {
+    .container .active p {
+      margin-left: 30px;
+      display: inline-block;
+      vertical-align: middle; }
+  .container .completed {
+    background-color: #F9E4D7;
+    height: 70px;
+    border-bottom: 1px solid #E7CDB4; }
+    .container .completed p {
+      margin-left: 30px;
+      display: inline-block;
+      vertical-align: middle; }
+  .container .expired {
+    background-color: #E84A5F;
+    height: 70px;
+    border-bottom: 1px solid #E7CDB4; }
+    .container .expired p {
       margin-left: 30px;
       display: inline-block;
       vertical-align: middle; }
