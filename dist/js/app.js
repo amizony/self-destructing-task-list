@@ -40,7 +40,7 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     var time = new Date();
     for (var i = 0; i < $scope.tasks.length; i++) {
       var age = time.getTime() - $scope.tasks[i].date;
-      if (age > 15000) {
+      if ((age > 15000) && ($scope.tasks[i].status == "active")) {
         $scope.tasks[i].status = "expired";
       }
     }
