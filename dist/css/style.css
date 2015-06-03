@@ -28,7 +28,7 @@ body {
       display: inline-block;
       vertical-align: middle; }
   .container .completed {
-    background-color: #F9E4D7;
+    background-color: #65d7b3;
     height: 70px;
     border-bottom: 1px solid #E7CDB4; }
     .container .completed p {
