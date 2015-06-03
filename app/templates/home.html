@@ -19,7 +19,11 @@
 
     <div class="new-task">
       <form ng-submit="addTask()">
-        <input ng-model="newTaskDescription" />
+        <input class="name" ng-model="newTaskDescription" />
+        <div class="priority">
+          <p>Priority:</p>
+          <input placeholder="low, medium or high" ng-model="newTaskPriority" />
+        </div>
         <button type="submit">Add Task</button>
       </form>
     </div>
