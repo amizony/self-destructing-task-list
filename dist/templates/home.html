@@ -15,14 +15,17 @@
       <div ng-repeat="task in tasks" class="active" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
       </div>
-    </div>
 
-    <div class="new-task" ng-show="!showHistory">
+
+    <div class="new-task">
       <form ng-submit="addTask()">
         <input ng-model="newTaskDescription" />
         <button type="submit">Add Task</button>
       </form>
     </div>
+
+  </div>
+
 
     <div class="history" ng-show="showHistory">
       <div class="title">
