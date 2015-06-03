@@ -21,14 +21,18 @@ taskList.config(["$stateProvider", "$locationProvider", function($stateProvider,
 taskList.controller("MainController.controller", ["$scope", "$firebaseArray", function($scope, $firebaseArray) {
 
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
-  $scope.messages = $firebaseArray(ref);
+  $scope.tasks = $firebaseArray(ref);
 
 
-  $scope.addMessage = function() {
-    $scope.messages.$add({
-      text: $scope.newMessageText
+  $scope.addTask = function() {
+    var time = new Date();
+    $scope.tasks.$add({
+      desc: $scope.newTaskDescription,
+      date: time.getTime(),
+      status: "active",
+      priority: "medium"
     });
-    $scope.newMessageText = "";
+    $scope.newTaskDescription = "";
   };
 
 }]);

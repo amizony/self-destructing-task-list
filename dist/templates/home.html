@@ -7,19 +7,19 @@
   </div>
   <div class="tabs">
 
-    <div class="tasks">
+    <div class="tasks" ng-show="true">
       <div class="title">
         <h2> Current Tasks </h2>
       </div>
 
-      <div ng-repeat="message in messages" class="task" ng-show="true">
-        <p>{{message.text}}</p>
+      <div ng-repeat="task in tasks" class="task" ng-show="task.status == 'active'">
+        <p>{{task.desc}}</p>
       </div>
     </div>
 
     <div class="new-task">
-      <form ng-submit="addMessage()">
-        <input ng-model="newMessageText" />
+      <form ng-submit="addTask()">
+        <input ng-model="newTaskDescription" />
         <button type="submit">Add Task</button>
       </form>
     </div>
@@ -29,7 +29,7 @@
         <h2> Task History </h2>
       </div>
 
-      <div ng-repeat="message in messages" class="task">
+      <div ng-repeat="task in tasks" class="task" ng-show="task.status == 'completed'">
         <p></p>
       </div>
     </div>
