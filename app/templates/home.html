@@ -15,19 +15,19 @@
       <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
         <div align="right">
-          <button ng-click="">Accomplished</button>
+          <button ng-click="completeTask(task)">Accomplished</button>
         </div>
       </div>
       <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
         <div align="right">
-          <button ng-click="">Accomplished</button>
+          <button ng-click="completeTask(task)">Accomplished</button>
         </div>
       </div>
       <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
         <div align="right">
-          <button ng-click="">Accomplished</button>
+          <button ng-click="completeTask(task)">Accomplished</button>
         </div>
       </div>
 

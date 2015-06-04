@@ -59,6 +59,11 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     $scope.newTaskPriority = "";
   };
 
+  $scope.completeTask = function(task) {
+    console.log(task);
+    task.status = "completed";
+  };
+
   var clearOldTasks = function() {
     var time = new Date();
     for (var i = 0; i < $scope.tasks.length; i++) {
