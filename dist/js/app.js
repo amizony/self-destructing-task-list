@@ -61,7 +61,7 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
 
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
-    $scope.tasks.$save();
+    updatingTasks();
   };
 
   var clearOldTasks = function() {
@@ -109,6 +109,14 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     for (var i = newPlace; i < n-1; i++) {
       switchTasks(i,n-1);
     }
+  };
+
+  var updatingTasks = function() {
+    var n = $scope.tasks.length;
+    for (var i = 0; i < n - 1; i++) {
+      $scope.tasks.$save(i);
+    }
+    $scope.tasks.$add($scope.tasks.pop());
   };
 
 }]);
