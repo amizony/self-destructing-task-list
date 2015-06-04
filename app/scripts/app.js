@@ -72,4 +72,10 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     }
   };
 
+  var switchTasks = function(n,m) {
+    var temp = $scope.tasks[n];
+    $scope.tasks[n] = $scope.tasks[m];
+    $scope.tasks[m] = temp;
+  };
+
 }]);
