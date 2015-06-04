@@ -12,7 +12,13 @@
         <h2> Current Tasks </h2>
       </div>
 
-      <div ng-repeat="task in tasks" class="active" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
+      <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
+        <p>{{task.desc}}</p>
+      </div>
+      <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
+        <p>{{task.desc}}</p>
+      </div>
+      <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
       </div>
 

@@ -44,13 +44,16 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
         default:
           priority = 2;
       }
+    } else {
+      priority = 2;
     }
     $scope.tasks.$add({
       desc: $scope.newTaskDescription,
       date: time.getTime(),
       status: "active",
-      priority: priority || 2
+      priority: priority
     });
+
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
   };
@@ -71,5 +74,6 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
       intervalID = setInterval(clearOldTasks, 1000*60);
     }
   };
+
 
 }]);
