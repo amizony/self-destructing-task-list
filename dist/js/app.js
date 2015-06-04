@@ -32,7 +32,6 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     var priority;
     if ($scope.newTaskPriority) {
       priority = $scope.newTaskPriority.toLowerCase();
-      console.log(priority);
       switch (priority) {
         case "low":
           priority = 3;
@@ -49,7 +48,7 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     } else {
       priority = 2;
     }
-    $scope.tasks.$add({
+    $scope.tasks.push({
       desc: $scope.newTaskDescription,
       date: time.getTime(),
       status: "active",
@@ -62,6 +61,7 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
 
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
+    $scope.tasks.$save();
   };
 
   var clearOldTasks = function() {
@@ -92,21 +92,15 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     var n = $scope.tasks.length;
     var placeFound = false;
     var newPlace = 0;
-    console.log("looking for right place");
 
     // find the right place
     while (!placeFound) {
-      console.log("---");
-      console.log("place:" + newPlace);
-      console.log($scope.tasks[newPlace].priority + "&" + $scope.tasks[n-1].priority);
       if ($scope.tasks[newPlace].priority > $scope.tasks[n-1].priority) {
         placeFound = true;
-        console.log("found - " + newPlace);
       } else {
         newPlace += 1;
         if (newPlace == n-1) {
           placeFound = true;
-          console.log("found - last");
         }
       }
     }
@@ -114,10 +108,7 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     // reorder the array
     for (var i = newPlace; i < n-1; i++) {
       switchTasks(i,n-1);
-      $scope.tasks.$save(i);
     }
-    $scope.tasks.$save(n-1);
-
   };
 
 }]);
