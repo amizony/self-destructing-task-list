@@ -59,7 +59,6 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
   };
 
   $scope.completeTask = function(task) {
-    console.log(task);
     task.status = "completed";
 
     for (var i = 0; i < $scope.tasks.length; i++) {
