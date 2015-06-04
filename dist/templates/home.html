@@ -14,12 +14,21 @@
 
       <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
+        <div align="right">
+          <button ng-click="">Accomplished</button>
+        </div>
       </div>
       <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
+        <div align="right">
+          <button ng-click="">Accomplished</button>
+        </div>
       </div>
       <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
+        <div align="right">
+          <button ng-click="">Accomplished</button>
+        </div>
       </div>
 
 
@@ -30,7 +39,6 @@
           <p>Priority:</p>
           <input placeholder="low, med or high" ng-model="newTaskPriority" />
         </div>
-        <button type="submit">Add Task</button>
       </form>
     </div>
 
