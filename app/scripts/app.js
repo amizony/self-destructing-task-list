@@ -51,6 +51,13 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
       status: "active",
       priority: priority || 2
     });
+
+    if (((priority == 1) || (priority == 2)) && ($scope.tasks.length > 0)) {
+      insertTask();
+    }
+
+
+
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
   };
@@ -76,6 +83,30 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     var temp = $scope.tasks[n];
     $scope.tasks[n] = $scope.tasks[m];
     $scope.tasks[m] = temp;
+  };
+
+  var insertTask = function() {
+    // take the last task of array (the new added one) and place it at its right place
+    var n = $scope.tasks.length;
+    var placeFound = false;
+    var newPlace = 0;
+
+    // find the right place
+    while (!placeFound) {
+      if ($scope.tasks[newPlace] > $scope.tasks[n-1]) {
+        placeFound = true;
+      } else {
+        newPlace += 1;
+      }
+    }
+
+    // reorder the array
+    for (var i = newPlace; i < n-1; i++) {
+      switchTasks(i,n-1);
+      $scope.tasks.$save(i);
+    }
+    $scope.tasks.$save(n-1);
+
   };
 
 }]);
