@@ -48,20 +48,15 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     } else {
       priority = 2;
     }
-    $scope.tasks.push({
+    $scope.tasks.$add({
       desc: $scope.newTaskDescription,
       date: time.getTime(),
       status: "active",
       priority: priority
     });
 
-    if (((priority == 1) || (priority == 2)) && ($scope.tasks.length > 1)) {
-      insertTask();
-    }
-
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
-    updatingTasks();
   };
 
   var clearOldTasks = function() {
@@ -81,43 +76,6 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     }
   };
 
-  var switchTasks = function(n,m) {
-    var temp = $scope.tasks[n];
-    $scope.tasks[n] = $scope.tasks[m];
-    $scope.tasks[m] = temp;
-  };
-
-  var insertTask = function() {
-    // take the last task of array (the new added one) and place it at its right place
-    var n = $scope.tasks.length;
-    var placeFound = false;
-    var newPlace = 0;
-
-    // find the right place
-    while (!placeFound) {
-      if ($scope.tasks[newPlace].priority > $scope.tasks[n-1].priority) {
-        placeFound = true;
-      } else {
-        newPlace += 1;
-        if (newPlace == n-1) {
-          placeFound = true;
-        }
-      }
-    }
-
-    // reorder the array
-    for (var i = newPlace; i < n-1; i++) {
-      switchTasks(i,n-1);
-    }
-  };
-
-  var updatingTasks = function() {
-    var n = $scope.tasks.length;
-    for (var i = 0; i < n - 1; i++) {
-      $scope.tasks.$save(i);
-    }
-    $scope.tasks.$add($scope.tasks.pop());
-  };
 
 }]);
 
