@@ -31,12 +31,25 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     var priority;
     if ($scope.newTaskPriority) {
       priority = $scope.newTaskPriority.toLowerCase();
+      switch (priority) {
+        case "low":
+          priority = 3;
+          break;
+        case "med":
+          priority = 2;
+          break;
+        case "high":
+          priority = 1;
+          break;
+        default:
+          priority = 2;
+      }
     }
     $scope.tasks.$add({
       desc: $scope.newTaskDescription,
       date: time.getTime(),
       status: "active",
-      priority: priority || "medium"
+      priority: priority || 2
     });
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
