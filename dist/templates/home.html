@@ -12,17 +12,30 @@
         <h2> Current Tasks </h2>
       </div>
 
-      <div ng-repeat="task in tasks" class="active" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
+      <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
         <p>{{task.desc}}</p>
       </div>
-    </div>
+      <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
+        <p>{{task.desc}}</p>
+      </div>
+      <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
+        <p>{{task.desc}}</p>
+      </div>
 
-    <div class="new-task" ng-show="!showHistory">
+
+    <div class="new-task">
       <form ng-submit="addTask()">
-        <input ng-model="newTaskDescription" />
+        <input class="name" ng-model="newTaskDescription" />
+        <div class="priority">
+          <p>Priority:</p>
+          <input placeholder="low, med or high" ng-model="newTaskPriority" />
+        </div>
         <button type="submit">Add Task</button>
       </form>
     </div>
+
+  </div>
+
 
     <div class="history" ng-show="showHistory">
       <div class="title">

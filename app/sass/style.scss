@@ -62,6 +62,41 @@ body {
   .expired {
     @include task-style($color-expired, $color-menu);
   }
+
+  .new-task {
+    background-color: $color-active;
+    height: 70px;
+    border-bottom: 1px solid $color-menu;
+
+    .name {
+      background-color: inherit;
+      height: 30px;
+      width: 450px;
+      margin-left: 30px;
+      margin-top: -15px;
+    }
+
+    .priority {
+      font-size: 12px;
+      display: inline-block;
+      width: 150px;
+
+      p {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      input {
+        display: block;
+      }
+    }
+
+    button {
+      height: 35px;
+      width: 150px;
+      font-size: 20px;
+    }
+  }
 }
 
 

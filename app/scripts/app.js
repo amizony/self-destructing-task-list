@@ -22,33 +22,58 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
 
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
   $scope.tasks = $firebaseArray(ref);
+
   var intervalID;
+  var oneWeek = 1000*60*60*24*7;
 
   $scope.addTask = function() {
     var time = new Date();
+    var priority;
+    if ($scope.newTaskPriority) {
+      priority = $scope.newTaskPriority.toLowerCase();
+      switch (priority) {
+        case "low":
+          priority = 3;
+          break;
+        case "med":
+          priority = 2;
+          break;
+        case "high":
+          priority = 1;
+          break;
+        default:
+          priority = 2;
+      }
+    } else {
+      priority = 2;
+    }
     $scope.tasks.$add({
       desc: $scope.newTaskDescription,
       date: time.getTime(),
       status: "active",
-      priority: "medium"
+      priority: priority
     });
+
     $scope.newTaskDescription = "";
+    $scope.newTaskPriority = "";
   };
 
   var clearOldTasks = function() {
     var time = new Date();
     for (var i = 0; i < $scope.tasks.length; i++) {
       var age = time.getTime() - $scope.tasks[i].date;
-      if ((age > 15000) && ($scope.tasks[i].status == "active")) {
+      if ((age > oneWeek) && ($scope.tasks[i].status == "active")) {
         $scope.tasks[i].status = "expired";
+        $scope.tasks.$save(i);
       }
     }
   };
 
   $scope.watchForOldTasks = function() {
     if (!intervalID) {
-      intervalID = setInterval(clearOldTasks, 10000);
+      intervalID = setInterval(clearOldTasks, 1000*60);
     }
   };
+
 
 }]);

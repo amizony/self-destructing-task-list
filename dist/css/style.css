@@ -43,6 +43,29 @@ body {
       margin-left: 30px;
       display: inline-block;
       vertical-align: middle; }
+  .container .new-task {
+    background-color: #F9E4D7;
+    height: 70px;
+    border-bottom: 1px solid #E7CDB4; }
+    .container .new-task .name {
+      background-color: inherit;
+      height: 30px;
+      width: 450px;
+      margin-left: 30px;
+      margin-top: -15px; }
+    .container .new-task .priority {
+      font-size: 12px;
+      display: inline-block;
+      width: 150px; }
+      .container .new-task .priority p {
+        display: block;
+        margin-bottom: 6px; }
+      .container .new-task .priority input {
+        display: block; }
+    .container .new-task button {
+      height: 35px;
+      width: 150px;
+      font-size: 20px; }
 
 .navbar {
   text-align: right;
