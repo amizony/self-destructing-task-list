@@ -42,6 +42,24 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
     buildList();
   }
 
+  $scope.addTask = function() {
+    var priority = 2;
+    if ($scope.newTaskPriority) {
+      switch ($scope.newTaskPriority.toLowerCase()) {
+        case "low":
+          priority = 3;
+          break;
+        case "high":
+          priority = 1;
+          break;
+      }
+    }
+    $scope.taskManagement.createTask($scope.newTaskDescription,priority);
+
+    $scope.newTaskDescription = "";
+    $scope.newTaskPriority = "";
+  };
+
 }]);
 
 
@@ -121,8 +139,14 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
   return {
     taskList: fireBaseTasks,
 
-    addTask: function() {
-
+    createTask: function(description,priority) {
+      var time = new Date();
+      fireBaseTasks.$add({
+        desc: description,
+        date: time.getTime(),
+        status: "active",
+        priority: priority
+      });
     },
 
     completeTask: function() {
@@ -133,37 +157,6 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
   };
 
   /*
-  $scope.addTask = function() {
-    var time = new Date();
-    var priority;
-    if ($scope.newTaskPriority) {
-      priority = $scope.newTaskPriority.toLowerCase();
-      switch (priority) {
-        case "low":
-          priority = 3;
-          break;
-        case "med":
-          priority = 2;
-          break;
-        case "high":
-          priority = 1;
-          break;
-        default:
-          priority = 2;
-      }
-    } else {
-      priority = 2;
-    }
-    $scope.tasks.$add({
-      desc: $scope.newTaskDescription,
-      date: time.getTime(),
-      status: "active",
-      priority: priority
-    });
-
-    $scope.newTaskDescription = "";
-    $scope.newTaskPriority = "";
-  }
 
   $scope.completeTask = function(task) {
     var time = new Date();
