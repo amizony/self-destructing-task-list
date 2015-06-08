@@ -30,13 +30,17 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 
   $scope.taskManagement = TaskManagement;
 
-  var buildList = function() {
-    $scope.tasks = $scope.taskManagement.taskList;
-  };
-
-  if (!$scope.tasks) {
+  $scope.$on("data-loaded", function() {
     buildList();
-  }
+  });
+
+  var buildList = function() {
+    setTimeout(function () {
+      $scope.$apply(function() {
+        $scope.tasks = $scope.taskManagement.getList();
+      });
+    }, 1);
+  };
 
   $scope.addTask = function() {
     var priority = 2;
@@ -69,13 +73,14 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
 
   var buildHistory = function() {
     $scope.history = [];
+    var list = $scope.taskManagement.getHistory();
     var ordered = false;
     var reset = false;
     var n = 0;
     // build array of completed and expired tasks
-    for (var i = 0; i < $scope.taskManagement.taskList.length; i++) {
-      if ($scope.taskManagement.taskList[i].status != "active") {
-        $scope.history.push($scope.taskManagement.taskList[i]);
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].status != "active") {
+        $scope.history.push(list[i]);
       }
     }
 
@@ -117,6 +122,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
   var intervalID;
   fireBaseTasks.$loaded(function() {
     intervalID = setInterval(clearOldTasks, 1000*60);
+    $rootScope.$broadcast("data-loaded");
   });
 
   var oneWeek = 1000*60*60*24*7;
@@ -137,7 +143,22 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
 
   return {
-    taskList: fireBaseTasks,
+    getList: function() {
+      var list = [];
+      var n = fireBaseTasks.length;
+      console.log(fireBaseTasks);
+      console.log(n);
+      for (var i = 0; i < n; i++) {
+        if (fireBaseTasks[i].status == "active") {
+          list.push(fireBaseTasks[i]);
+        }
+      }
+      return list;
+    },
+
+    getHistory: function() {
+      return fireBaseTasks;
+    },
 
     createTask: function(description,priority) {
       var time = new Date();
