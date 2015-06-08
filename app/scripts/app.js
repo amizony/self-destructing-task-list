@@ -29,7 +29,17 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 
   $scope.taskManagement = TaskManagement;
 
-  $scope.tasks = $scope.taskManagement.taskList;
+  if (!$scope.tasks) {
+    console.log("no local tasks");
+  }
+
+  var buildList = function() {
+    $scope.tasks = $scope.taskManagement.taskList;
+  };
+
+  if (!$scope.tasks) {
+    buildList();
+  }
 
 }]);
 
@@ -38,7 +48,41 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
 
   $scope.taskManagement = TaskManagement;
 
-  $scope.tasks = $scope.taskManagement.taskList;
+  var buildHistory = function() {
+    $scope.history = [];
+    var ordered = false;
+    var reset = false;
+    var n = 0;
+    // build array of completed and expired tasks
+    for (var i = 0; i < $scope.taskManagement.taskList.length; i++) {
+      if ($scope.taskManagement.taskList[i].status != "active") {
+        $scope.history.push($scope.taskManagement.taskList[i]);
+      }
+    }
+
+    // order the history
+    while (!ordered) {
+      if ($scope.history[n].date > $scope.history[n+1].date) {
+        var temp = $scope.history[n];
+        $scope.history[n] = $scope.history[n+1];
+        $scope.history[n+1] = temp;
+        reset = true;
+      }
+      n += 1;
+      if (n == $scope.history.length - 1) {
+        if (reset) {
+          n = 0;
+          reset = false;
+        } else {
+          ordered = true;
+        }
+      }
+    }
+  };
+
+  if (!$scope.history) {
+    buildHistory();
+  }
 
 }]);
 
@@ -136,38 +180,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
 
   $scope.buildHistory = function() {
-    $scope.history = [];
-    var ordered = false;
-    var reset = false;
-    var n = 0;
-    // build array of completed and expired tasks
-    for (var i = 0; i < $scope.tasks.length; i++) {
-      if ($scope.tasks[i].status != "active") {
-        $scope.history.push($scope.tasks[i]);
-      }
-    }
 
-    // order the history
-    while (!ordered) {
-      if ($scope.history[n].date > $scope.history[n+1].date) {
-        var temp = $scope.history[n];
-        $scope.history[n] = $scope.history[n+1];
-        $scope.history[n+1] = temp;
-        reset = true;
-      }
-      n += 1;
-      if (n == $scope.history.length - 1) {
-        if (reset) {
-          n = 0;
-          reset = false;
-        } else {
-          ordered = true;
-        }
-      }
-    }
-
-    // show the history
-    $scope.showHistory = true;
   };
 */
 }]);
