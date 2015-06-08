@@ -39,7 +39,7 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
   $scope.taskManagement = TaskManagement;
 
   $scope.tasks = $scope.taskManagement.taskList;
-  
+
 }]);
 
 
@@ -52,17 +52,40 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
   var fireBaseTasks = $firebaseArray(ref);
 
   var intervalID;
+  fireBaseTasks.$loaded(function() {
+    intervalID = setInterval(clearOldTasks, 1000*60);
+  });
+
   var oneWeek = 1000*60*60*24*7;
 
 
-  return {
-    taskList: fireBaseTasks
-
+  var clearOldTasks = function() {
+    var time = new Date();
+    console.log("-- Looking for old tasks --");
+    for (var i = 0; i < fireBaseTasks.length; i++) {
+      var age = time.getTime() - fireBaseTasks[i].date;
+      if ((age > oneWeek) && (fireBaseTasks[i].status == "active")) {
+        fireBaseTasks[i].status = "expired";
+        fireBaseTasks[i].date += oneWeek;
+        fireBaseTasks.$save(i);
+      }
+    }
   };
 
 
+  return {
+    taskList: fireBaseTasks,
+
+    addTask: function() {
+
+    },
+
+    completeTask: function() {
+
+    },
 
 
+  };
 
   /*
   $scope.addTask = function() {
@@ -110,23 +133,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
     }
   };
 
-  var clearOldTasks = function() {
-    var time = new Date();
-    for (var i = 0; i < $scope.tasks.length; i++) {
-      var age = time.getTime() - $scope.tasks[i].date;
-      if ((age > oneWeek) && ($scope.tasks[i].status == "active")) {
-        $scope.tasks[i].status = "expired";
-        $scope.tasks[i].date += oneWeek;
-        $scope.tasks.$save(i);
-      }
-    }
-  };
 
-  $scope.watchForOldTasks = function() {
-    if (!intervalID) {
-      intervalID = setInterval(clearOldTasks, 1000*60);
-    }
-  };
 
   $scope.buildHistory = function() {
     $scope.history = [];
