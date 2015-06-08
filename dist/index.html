@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="TaskList">
+<html ng-app="TaskListApp">
 <head lang="en">
   <meta charset="UTF-8">
   <title>Self-destructive Task List</title>
@@ -18,9 +18,21 @@
     <h1>To-do List</h1>
   </div>
 
-  <div ui-view>
-    <!-- Render template here -->
+
+  <div class="container">
+    <div class="navbar">
+      <ul>
+        <li><a ui-sref="history">History</a></li>
+        <li><a ui-sref="home">Tasks</a></li>
+      </ul>
+    </div>
+
+
+    <div ui-view>
+      <!-- Render template here -->
+    </div>
   </div>
+
 
 </body>
 </html>

@@ -1,32 +1,71 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-taskList = angular.module("TaskList", ["ui.router","firebase"]);
+taskListApp = angular.module("TaskListApp", ["ui.router","firebase"]);
 
 
 // ---------------------------------
 // Navigation
 
-taskList.config(["$stateProvider", "$locationProvider", function($stateProvider, $locationProvider) {
+taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $stateProvider.state("home", {
     url: "/",
-    controller: "MainController.controller",
+    controller: "ActiveTask.controller",
     templateUrl: "/templates/home.html"
+  });
+
+  $stateProvider.state("history", {
+    url: "/history",
+    controller: "PastTask.controller",
+    templateUrl: "/templates/history.html"
   });
 
 }]);
 
 
 // ---------------------------------
-// Controller
-taskList.controller("MainController.controller", ["$scope", "$firebaseArray", function($scope, $firebaseArray) {
+// Controllers
+
+taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
+
+  $scope.taskManagement = TaskManagement;
+
+  $scope.tasks = $scope.taskManagement.taskList;
+
+}]);
+
+
+taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
+
+  $scope.taskManagement = TaskManagement;
+
+  $scope.tasks = $scope.taskManagement.taskList;
+  
+}]);
+
+
+// ---------------------------------
+// Service
+
+taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
 
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
-  $scope.tasks = $firebaseArray(ref);
+  var fireBaseTasks = $firebaseArray(ref);
 
   var intervalID;
   var oneWeek = 1000*60*60*24*7;
 
+
+  return {
+    taskList: fireBaseTasks
+
+  };
+
+
+
+
+
+  /*
   $scope.addTask = function() {
     var time = new Date();
     var priority;
@@ -57,7 +96,7 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
 
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
-  };
+  }
 
   $scope.completeTask = function(task) {
     var time = new Date();
@@ -124,7 +163,7 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     // show the history
     $scope.showHistory = true;
   };
-
+*/
 }]);
 
 },{}]},{},[1]);
