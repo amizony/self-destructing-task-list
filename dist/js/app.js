@@ -30,10 +30,6 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 
   $scope.taskManagement = TaskManagement;
 
-  if (!$scope.tasks) {
-    console.log("no local tasks");
-  }
-
   var buildList = function() {
     $scope.tasks = $scope.taskManagement.taskList;
   };
@@ -58,6 +54,10 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
+  };
+
+  $scope.completeTask = function(task) {
+    $scope.taskManagement.validateTask(task.$id);
   };
 
 }]);
@@ -149,34 +149,19 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
       });
     },
 
-    completeTask: function() {
-
-    },
-
-
-  };
-
-  /*
-
-  $scope.completeTask = function(task) {
-    var time = new Date();
-
-    task.status = "completed";
-    task.date = time.getTime();
-
-    for (var i = 0; i < $scope.tasks.length; i++) {
-      if ($scope.tasks[i].date == task.date) {
-        $scope.tasks.$save(i);
+    validateTask: function(id) {
+      var time = new Date();
+      for (var i = 0; i < fireBaseTasks.length; i++) {
+        if (fireBaseTasks[i].$id == id) {
+          fireBaseTasks[i].status = "completed";
+          fireBaseTasks[i].date = time.getTime();
+          fireBaseTasks.$save(i);
+        }
       }
     }
-  };
-
-
-
-  $scope.buildHistory = function() {
 
   };
-*/
+
 }]);
 
 },{}]},{},[1]);
