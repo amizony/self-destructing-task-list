@@ -58,12 +58,26 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     $scope.newTaskPriority = "";
   };
 
+  $scope.completeTask = function(task) {
+    var time = new Date();
+
+    task.status = "completed";
+    task.date = time.getTime();
+
+    for (var i = 0; i < $scope.tasks.length; i++) {
+      if ($scope.tasks[i].date == task.date) {
+        $scope.tasks.$save(i);
+      }
+    }
+  };
+
   var clearOldTasks = function() {
     var time = new Date();
     for (var i = 0; i < $scope.tasks.length; i++) {
       var age = time.getTime() - $scope.tasks[i].date;
       if ((age > oneWeek) && ($scope.tasks[i].status == "active")) {
         $scope.tasks[i].status = "expired";
+        $scope.tasks[i].date += oneWeek;
         $scope.tasks.$save(i);
       }
     }
@@ -75,5 +89,39 @@ taskList.controller("MainController.controller", ["$scope", "$firebaseArray", fu
     }
   };
 
+  $scope.buildHistory = function() {
+    $scope.history = [];
+    var ordered = false;
+    var reset = false;
+    var n = 0;
+    // build array of completed and expired tasks
+    for (var i = 0; i < $scope.tasks.length; i++) {
+      if ($scope.tasks[i].status != "active") {
+        $scope.history.push($scope.tasks[i]);
+      }
+    }
+
+    // order the history
+    while (!ordered) {
+      if ($scope.history[n].date > $scope.history[n+1].date) {
+        var temp = $scope.history[n];
+        $scope.history[n] = $scope.history[n+1];
+        $scope.history[n+1] = temp;
+        reset = true;
+      }
+      n += 1;
+      if (n == $scope.history.length - 1) {
+        if (reset) {
+          n = 0;
+          reset = false;
+        } else {
+          ordered = true;
+        }
+      }
+    }
+
+    // show the history
+    $scope.showHistory = true;
+  };
 
 }]);

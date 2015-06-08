@@ -27,6 +27,13 @@ body {
       margin-left: 30px;
       display: inline-block;
       vertical-align: middle; }
+    .container .active div {
+      margin-right: 30px;
+      margin-top: -47px; }
+      .container .active div button {
+        height: 35px;
+        width: 150px;
+        font-size: 20px; }
   .container .completed {
     background-color: #65d7b3;
     height: 70px;

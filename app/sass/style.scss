@@ -53,6 +53,17 @@ body {
 
   .active {
     @include task-style($color-active, $color-menu);
+
+    div {
+      margin-right: 30px;
+      margin-top: -47px;
+
+      button {
+        height: 35px;
+        width: 150px;
+        font-size: 20px;
+      }
+    }
   }
 
   .completed {
