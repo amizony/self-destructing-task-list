@@ -56,21 +56,9 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
   }
 
   $scope.addTask = function() {
-    var priority = 2;
-    if ($scope.newTaskPriority) {
-      switch ($scope.newTaskPriority.toLowerCase()) {
-        case "low":
-          priority = 3;
-          break;
-        case "high":
-          priority = 1;
-          break;
-      }
-    }
-    TaskManagement.createTask($scope.newTaskDescription,priority);
-
+    TaskManagement.createTask($scope.newTaskDescription,$scope.newTaskPriority);
     $scope.newTaskDescription = "";
-    $scope.newTaskPriority = "";
+    $scope.newTaskPriority = 2;
   };
 
   $scope.completeTask = function(task) {

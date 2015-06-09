@@ -27,10 +27,12 @@
 
     <div class="new-task">
       <form ng-submit="addTask()">
-        <input class="name" ng-model="newTaskDescription" />
+        <input class="name" ng-model="newTaskDescription" placeholder="Enter a description" />
         <div class="priority">
           <p>Priority:</p>
-          <input placeholder="low, med or high" ng-model="newTaskPriority" />
+          <input type="radio" ng-model="newTaskPriority" value="1" /> High </br>
+          <input type="radio" ng-model="newTaskPriority" value="2" /> Medium </br>
+          <input type="radio" ng-model="newTaskPriority" value="3" /> Low </br>
         </div>
         <button type="submit">Add Task</button>
       </form>
