@@ -1,16 +1,19 @@
 @media all {
+  html {
+    font-size: 100%; }
   body {
-    background-image: url("../images/rockywall.png"); }
+    background-image: url("../images/rockywall.png");
+    font-size: 1em; }
   .header {
     text-align: center; }
     .header h1 {
-      font-size: 50px; }
+      font-size: 3em; }
   .container {
     min-height: 600px;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 20px; }
+    font-size: 1.2em; }
     .container .title {
       background-color: #E7CDB4;
       min-height: 80px; }
@@ -32,7 +35,7 @@
         .container .active div button {
           min-height: 35px;
           max-width: 150px;
-          font-size: 20px; }
+          font-size: 1.1em; }
     .container .completed {
       background-color: #65d7b3;
       min-height: 70px;
@@ -60,7 +63,7 @@
         margin-left: 30px;
         margin-top: -15px; }
       .container .new-task .priority {
-        font-size: 12px;
+        font-size: 0.7em;
         display: inline-block;
         max-width: 150px; }
         .container .new-task .priority p {
@@ -71,15 +74,14 @@
       .container .new-task button {
         min-height: 35px;
         max-width: 150px;
-        font-size: 20px; }
+        font-size: 1.1em; }
   .navbar {
     text-align: right;
     margin-bottom: -20px; }
     .navbar li {
       list-style: none;
       display: inline;
-      margin-right: 10px;
-      font-size: 20px; }
+      margin-right: 10px; }
     .navbar li:hover {
       cursor: pointer; } }
 
