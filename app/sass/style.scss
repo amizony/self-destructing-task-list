@@ -20,43 +20,88 @@ $color-completed: #65d7b3;
 
 
 // Syle
-body {
-  background-image: url("../images/rockywall.png");
-}
-
-.header {
-  text-align: center;
-
-  h1 {
-    font-size: 50px;
+@media all {
+  body {
+    background-image: url("../images/rockywall.png");
   }
-}
 
+  .header {
+    text-align: center;
 
-.container {
-  min-height: 600px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 20px;
-
-  .title {
-    background-color: $color-menu;
-    min-height: 80px;
-
-    h2 {
-      margin-left: 30px;
-      display: inline-block;
-      vertical-align: middle;
+    h1 {
+      font-size: 50px;
     }
   }
 
-  .active {
-    @include task-style($color-active, $color-menu);
 
-    div {
-      margin-right: 30px;
-      margin-top: -47px;
+  .container {
+    min-height: 600px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+
+    .title {
+      background-color: $color-menu;
+      min-height: 80px;
+
+      h2 {
+        margin-left: 30px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    .active {
+      @include task-style($color-active, $color-menu);
+
+      div {
+        margin-right: 30px;
+        margin-top: -47px;
+
+        button {
+          min-height: 35px;
+          max-width: 150px;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .completed {
+      @include task-style($color-completed, $color-menu);
+    }
+
+    .expired {
+      @include task-style($color-expired, $color-menu);
+    }
+
+    .new-task {
+      background-color: $color-active;
+      min-height: 70px;
+      border-bottom: 1px solid $color-menu;
+
+      .name {
+        background-color: inherit;
+        min-height: 30px;
+        max-width: 450px;
+        margin-left: 30px;
+        margin-top: -15px;
+      }
+
+      .priority {
+        font-size: 12px;
+        display: inline-block;
+        max-width: 150px;
+
+        p {
+          display: block;
+          margin-bottom: 6px;
+        }
+
+        input {
+          display: block;
+        }
+      }
 
       button {
         min-height: 35px;
@@ -66,63 +111,24 @@ body {
     }
   }
 
-  .completed {
-    @include task-style($color-completed, $color-menu);
-  }
 
-  .expired {
-    @include task-style($color-expired, $color-menu);
-  }
+  .navbar {
+    text-align: right;
+    margin-bottom: -20px;
 
-  .new-task {
-    background-color: $color-active;
-    min-height: 70px;
-    border-bottom: 1px solid $color-menu;
-
-    .name {
-      background-color: inherit;
-      min-height: 30px;
-      max-width: 450px;
-      margin-left: 30px;
-      margin-top: -15px;
-    }
-
-    .priority {
-      font-size: 12px;
-      display: inline-block;
-      max-width: 150px;
-
-      p {
-        display: block;
-        margin-bottom: 6px;
-      }
-
-      input {
-        display: block;
-      }
-    }
-
-    button {
-      min-height: 35px;
-      max-width: 150px;
+    li {
+      list-style: none;
+      display: inline;
+      margin-right: 10px;
       font-size: 20px;
+    }
+
+    li:hover {
+      cursor: pointer;
     }
   }
 }
 
+@media all and (max-device-width: 640){
 
-.navbar {
-  text-align: right;
-  margin-bottom: -20px;
-
-  li {
-    list-style: none;
-    display: inline;
-    margin-right: 10px;
-    font-size: 20px;
-  }
-
-  li:hover {
-    cursor: pointer;
-  }
 }
