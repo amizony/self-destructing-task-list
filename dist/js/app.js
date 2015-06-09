@@ -36,6 +36,8 @@ taskListApp.run(["TaskManagement", function(TaskManagement) {
 
 taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
 
+  $scope.background = {"background-color" : "#E7CDB4"};
+
   $scope.$on("data-loaded", function() {
     buildList();
   });
@@ -70,6 +72,8 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 
 
 taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
+
+  $scope.background = {"background-color" : "#E7CDB4"};
 
   $scope.$on("data-loaded", function() {
     buildHistory();

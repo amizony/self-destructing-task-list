@@ -1,18 +1,27 @@
-<div class="tabs">
-
-  <div class="history">
-    <div class="title">
-      <h2> Task History </h2>
-    </div>
-
-    <div ng-repeat="task in history">
-      <div ng-if="task.status == 'expired'" class="expired">
-        <p>{{task.desc}}</p>
-      </div>
-      <div ng-if="task.status == 'completed'" class="completed">
-        <p>{{task.desc}}</p>
-      </div>
-    </div>
+<div class="container">
+  <div class="navbar">
+    <ul>
+      <li><a ui-sref="home">Acrive Tasks</a></li>
+      <li><a ui-sref="history" ng-style="background">Task History</a></li>
+    </ul>
   </div>
+  
+  <div class="tabs">
 
+    <div class="history">
+      <div class="title">
+        <h2> Task History </h2>
+      </div>
+
+      <div ng-repeat="task in history">
+        <div ng-if="task.status == 'expired'" class="expired">
+          <p>{{task.desc}}</p>
+        </div>
+        <div ng-if="task.status == 'completed'" class="completed">
+          <p>{{task.desc}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

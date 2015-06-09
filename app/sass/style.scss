@@ -12,7 +12,8 @@ $font-big: 1.2em;
 @mixin task-style($background-color, $border-color) {
   background-color: $background-color;
   min-height: 70px;
-  border-bottom: 1px solid $border-color;
+  border: 1px solid $border-color;
+  border-top: none;
 
   p {
     margin-left: 30px;
@@ -41,6 +42,46 @@ $font-big: 1.2em;
     }
   }
 
+  .navbar {
+    text-align: left;
+    margin-bottom: 0px;
+
+    ul {
+      margin-bottom: 0px;
+    }
+
+    li {
+      list-style: none;
+      display: inline;
+      margin-left: 15px;
+      font-size: $font-big;
+
+      a {
+        line-height: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+        background-color: $color-active;
+        padding: 15px;
+        padding-top: 5px;
+        padding-bottom: 4px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+
+        a:visited {
+
+        }
+
+        a:hover {
+
+        }
+      }
+    }
+
+    li:hover {
+      cursor: pointer;
+    }
+  }
 
   .container {
     min-height: 600px;
@@ -84,9 +125,7 @@ $font-big: 1.2em;
     }
 
     .new-task {
-      background-color: $color-active;
-      min-height: 70px;
-      border-bottom: 1px solid $color-menu;
+      @include task-style($color-active, $color-menu);
 
       .name {
         background-color: inherit;
@@ -116,22 +155,6 @@ $font-big: 1.2em;
         max-width: 150px;
         font-size: $font-medium;
       }
-    }
-  }
-
-
-  .navbar {
-    text-align: right;
-    margin-bottom: -20px;
-
-    li {
-      list-style: none;
-      display: inline;
-      margin-right: 10px;
-    }
-
-    li:hover {
-      cursor: pointer;
     }
   }
 }
