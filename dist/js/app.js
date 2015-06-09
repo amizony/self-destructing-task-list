@@ -34,13 +34,21 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
     buildList();
   });
 
-  var buildList = function() {
+  $scope.$on("data-edited", function() {
+    buildList();
+  });
+
+  if (!$scope.tasks) {
+    buildList();
+  }
+
+  function buildList() {
     setTimeout(function () {
       $scope.$apply(function() {
         $scope.tasks = $scope.taskManagement.getList();
       });
-    }, 1);
-  };
+    }, 10);
+  }
 
   $scope.addTask = function() {
     var priority = 2;
@@ -71,41 +79,24 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
 
   $scope.taskManagement = TaskManagement;
 
-  var buildHistory = function() {
-    $scope.history = [];
-    var list = $scope.taskManagement.getHistory();
-    var ordered = false;
-    var reset = false;
-    var n = 0;
-    // build array of completed and expired tasks
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].status != "active") {
-        $scope.history.push(list[i]);
-      }
-    }
+  $scope.$on("data-loaded", function() {
+    buildHistory();
+  });
 
-    // order the history
-    while (!ordered) {
-      if ($scope.history[n].date > $scope.history[n+1].date) {
-        var temp = $scope.history[n];
-        $scope.history[n] = $scope.history[n+1];
-        $scope.history[n+1] = temp;
-        reset = true;
-      }
-      n += 1;
-      if (n == $scope.history.length - 1) {
-        if (reset) {
-          n = 0;
-          reset = false;
-        } else {
-          ordered = true;
-        }
-      }
-    }
-  };
+  $scope.$on("data-edited", function() {
+    buildHistory();
+  });
 
   if (!$scope.history) {
     buildHistory();
+  }
+
+  function buildHistory() {
+    setTimeout(function () {
+      $scope.$apply(function() {
+        $scope.history = $scope.taskManagement.getHistory();
+      });
+    }, 10);
   }
 
 }]);
@@ -119,10 +110,12 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
   var fireBaseTasks = $firebaseArray(ref);
 
+  var ready = false;
   var intervalID;
   fireBaseTasks.$loaded(function() {
     intervalID = setInterval(clearOldTasks, 1000*60);
     $rootScope.$broadcast("data-loaded");
+    ready = true;
   });
 
   var oneWeek = 1000*60*60*24*7;
@@ -137,6 +130,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         fireBaseTasks[i].status = "expired";
         fireBaseTasks[i].date += oneWeek;
         fireBaseTasks.$save(i);
+        $rootScope.$broadcast("data-edited");
       }
     }
   };
@@ -144,20 +138,55 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
   return {
     getList: function() {
-      var list = [];
-      var n = fireBaseTasks.length;
-      console.log(fireBaseTasks);
-      console.log(n);
-      for (var i = 0; i < n; i++) {
-        if (fireBaseTasks[i].status == "active") {
-          list.push(fireBaseTasks[i]);
+      if (!ready) {
+        return [];
+      } else {
+        var list = [];
+        var n = fireBaseTasks.length;
+        for (var i = 0; i < n; i++) {
+          if (fireBaseTasks[i].status == "active") {
+            list.push(fireBaseTasks[i]);
+          }
         }
+        return list;
       }
-      return list;
     },
 
     getHistory: function() {
-      return fireBaseTasks;
+      if (!ready) {
+        return [];
+      } else {
+        var history = [];
+        var ordered = false;
+        var reset = false;
+        var n = 0;
+        // build array of completed and expired tasks
+        for (var i = 0; i < fireBaseTasks.length; i++) {
+          if (fireBaseTasks[i].status != "active") {
+            history.push(fireBaseTasks[i]);
+          }
+        }
+
+        // order the history
+        while (!ordered) {
+          if (history[n].date > history[n+1].date) {
+            var temp = history[n];
+            history[n] = history[n+1];
+            history[n+1] = temp;
+            reset = true;
+          }
+          n += 1;
+          if (n == history.length - 1) {
+            if (reset) {
+              n = 0;
+              reset = false;
+            } else {
+              ordered = true;
+            }
+          }
+        }
+        return history;
+      }
     },
 
     createTask: function(description,priority) {
@@ -168,6 +197,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         status: "active",
         priority: priority
       });
+      $rootScope.$broadcast("data-edited");
     },
 
     validateTask: function(id) {
@@ -177,6 +207,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
           fireBaseTasks[i].status = "completed";
           fireBaseTasks[i].date = time.getTime();
           fireBaseTasks.$save(i);
+          $rootScope.$broadcast("data-edited");
         }
       }
     }
