@@ -7,21 +7,21 @@ body {
     font-size: 50px; }
 
 .container {
-  height: 600px;
-  width: 800px;
+  min-height: 600px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   font-size: 20px; }
   .container .title {
     background-color: #E7CDB4;
-    height: 80px; }
+    min-height: 80px; }
     .container .title h2 {
       margin-left: 30px;
       display: inline-block;
       vertical-align: middle; }
   .container .active {
     background-color: #F9E4D7;
-    height: 70px;
+    min-height: 70px;
     border-bottom: 1px solid #E7CDB4; }
     .container .active p {
       margin-left: 30px;
@@ -31,12 +31,12 @@ body {
       margin-right: 30px;
       margin-top: -47px; }
       .container .active div button {
-        height: 35px;
-        width: 150px;
+        min-height: 35px;
+        max-width: 150px;
         font-size: 20px; }
   .container .completed {
     background-color: #65d7b3;
-    height: 70px;
+    min-height: 70px;
     border-bottom: 1px solid #E7CDB4; }
     .container .completed p {
       margin-left: 30px;
@@ -44,7 +44,7 @@ body {
       vertical-align: middle; }
   .container .expired {
     background-color: #E84A5F;
-    height: 70px;
+    min-height: 70px;
     border-bottom: 1px solid #E7CDB4; }
     .container .expired p {
       margin-left: 30px;
@@ -52,26 +52,26 @@ body {
       vertical-align: middle; }
   .container .new-task {
     background-color: #F9E4D7;
-    height: 70px;
+    min-height: 70px;
     border-bottom: 1px solid #E7CDB4; }
     .container .new-task .name {
       background-color: inherit;
-      height: 30px;
-      width: 450px;
+      min-height: 30px;
+      max-width: 450px;
       margin-left: 30px;
       margin-top: -15px; }
     .container .new-task .priority {
       font-size: 12px;
       display: inline-block;
-      width: 150px; }
+      max-width: 150px; }
       .container .new-task .priority p {
         display: block;
         margin-bottom: 6px; }
       .container .new-task .priority input {
         display: block; }
     .container .new-task button {
-      height: 35px;
-      width: 150px;
+      min-height: 35px;
+      max-width: 150px;
       font-size: 20px; }
 
 .navbar {
