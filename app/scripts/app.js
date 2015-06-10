@@ -36,6 +36,7 @@ taskListApp.run(["TaskManagement", function(TaskManagement) {
 taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
 
   $scope.background = {"background-color" : "#E7CDB4"};
+  $scope.newTaskPriority = 2;
 
   $scope.$on("data-loaded", function() {
     buildList();

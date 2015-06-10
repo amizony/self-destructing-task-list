@@ -24,7 +24,7 @@ $font-big: 1.2em;
 
 
 // Syle
-@media all {
+@media screen {
   html {
     font-size: 100%;
   }
@@ -159,6 +159,8 @@ $font-big: 1.2em;
   }
 }
 
-@media all and (max-device-width: 640){
-
+@media screen and (max-width: 640px){
+  h1 {
+    color: red;
+  }
 }
