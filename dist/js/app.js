@@ -24,11 +24,22 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 
 
 // ---------------------------------
+// Sync with firebase
+
+taskListApp.run(["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
+  $rootScope.ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
+  $rootScope.fireBaseTasks = $firebaseArray($rootScope.ref);
+
+  $rootScope.fireBaseTasks.$loaded(function() {
+    $rootScope.$broadcast("data-loaded");
+  });
+}]);
+
+
+// ---------------------------------
 // Controllers
 
 taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
-
-  $scope.taskManagement = TaskManagement;
 
   $scope.$on("data-loaded", function() {
     buildList();
@@ -45,7 +56,7 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
   function buildList() {
     setTimeout(function () {
       $scope.$apply(function() {
-        $scope.tasks = $scope.taskManagement.getList();
+        $scope.tasks = TaskManagement.getList();
       });
     }, 10);
   }
@@ -62,22 +73,20 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
           break;
       }
     }
-    $scope.taskManagement.createTask($scope.newTaskDescription,priority);
+    TaskManagement.createTask($scope.newTaskDescription,priority);
 
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = "";
   };
 
   $scope.completeTask = function(task) {
-    $scope.taskManagement.validateTask(task.$id);
+    TaskManagement.validateTask(task.$id);
   };
 
 }]);
 
 
 taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
-
-  $scope.taskManagement = TaskManagement;
 
   $scope.$on("data-loaded", function() {
     buildHistory();
@@ -94,7 +103,7 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
   function buildHistory() {
     setTimeout(function () {
       $scope.$apply(function() {
-        $scope.history = $scope.taskManagement.getHistory();
+        $scope.history = TaskManagement.getHistory();
       });
     }, 10);
   }
@@ -105,31 +114,26 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
 // ---------------------------------
 // Service
 
-taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
-
-  var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
-  var fireBaseTasks = $firebaseArray(ref);
+taskListApp.service("TaskManagement", ["$rootScope", function($rootScope) {
 
   var ready = false;
   var intervalID;
-  fireBaseTasks.$loaded(function() {
-    intervalID = setInterval(clearOldTasks, 1000*60);
-    $rootScope.$broadcast("data-loaded");
+  $rootScope.$on("data-loaded", function() {
+    intervalID = setInterval(clearOldTasks, 1000*6);
     ready = true;
   });
 
   var oneWeek = 1000*60*60*24*7;
 
-
   var clearOldTasks = function() {
     var time = new Date();
     console.log("-- Looking for old tasks --");
-    for (var i = 0; i < fireBaseTasks.length; i++) {
-      var age = time.getTime() - fireBaseTasks[i].date;
-      if ((age > oneWeek) && (fireBaseTasks[i].status == "active")) {
-        fireBaseTasks[i].status = "expired";
-        fireBaseTasks[i].date += oneWeek;
-        fireBaseTasks.$save(i);
+    for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
+      var age = time.getTime() - $rootScope.fireBaseTasks[i].date;
+      if ((age > oneWeek) && ($rootScope.fireBaseTasks[i].status == "active")) {
+        $rootScope.fireBaseTasks[i].status = "expired";
+        $rootScope.fireBaseTasks[i].date += oneWeek;
+        $rootScope.fireBaseTasks.$save(i);
         $rootScope.$broadcast("data-edited");
       }
     }
@@ -142,10 +146,10 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         return [];
       } else {
         var list = [];
-        var n = fireBaseTasks.length;
+        var n = $rootScope.fireBaseTasks.length;
         for (var i = 0; i < n; i++) {
-          if (fireBaseTasks[i].status == "active") {
-            list.push(fireBaseTasks[i]);
+          if ($rootScope.fireBaseTasks[i].status == "active") {
+            list.push($rootScope.fireBaseTasks[i]);
           }
         }
         return list;
@@ -161,9 +165,9 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         var reset = false;
         var n = 0;
         // build array of completed and expired tasks
-        for (var i = 0; i < fireBaseTasks.length; i++) {
-          if (fireBaseTasks[i].status != "active") {
-            history.push(fireBaseTasks[i]);
+        for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
+          if ($rootScope.fireBaseTasks[i].status != "active") {
+            history.push($rootScope.fireBaseTasks[i]);
           }
         }
 
@@ -191,7 +195,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
     createTask: function(description,priority) {
       var time = new Date();
-      fireBaseTasks.$add({
+      $rootScope.fireBaseTasks.$add({
         desc: description,
         date: time.getTime(),
         status: "active",
@@ -202,11 +206,11 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
     validateTask: function(id) {
       var time = new Date();
-      for (var i = 0; i < fireBaseTasks.length; i++) {
-        if (fireBaseTasks[i].$id == id) {
-          fireBaseTasks[i].status = "completed";
-          fireBaseTasks[i].date = time.getTime();
-          fireBaseTasks.$save(i);
+      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
+        if ($rootScope.fireBaseTasks[i].$id == id) {
+          $rootScope.fireBaseTasks[i].status = "completed";
+          $rootScope.fireBaseTasks[i].date = time.getTime();
+          $rootScope.fireBaseTasks.$save(i);
           $rootScope.$broadcast("data-edited");
         }
       }
