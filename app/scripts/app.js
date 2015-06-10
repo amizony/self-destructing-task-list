@@ -25,13 +25,8 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 // ---------------------------------
 // Sync with firebase
 
-taskListApp.run(["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
-  $rootScope.ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
-  $rootScope.fireBaseTasks = $firebaseArray($rootScope.ref);
-
-  $rootScope.fireBaseTasks.$loaded(function() {
-    $rootScope.$broadcast("data-loaded");
-  });
+taskListApp.run(["TaskManagement", function(TaskManagement) {
+  TaskManagement.fetchData();
 }]);
 
 
@@ -113,7 +108,7 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
 // ---------------------------------
 // Service
 
-taskListApp.service("TaskManagement", ["$rootScope", function($rootScope) {
+taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
 
   var ready = false;
   var intervalID;
@@ -140,6 +135,14 @@ taskListApp.service("TaskManagement", ["$rootScope", function($rootScope) {
 
 
   return {
+    fetchData: function() {
+      var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
+      $rootScope.fireBaseTasks = $firebaseArray(ref);
+
+      $rootScope.fireBaseTasks.$loaded(function() {
+        $rootScope.$broadcast("data-loaded");
+      });
+    },
     getList: function() {
       if (!ready) {
         return [];
