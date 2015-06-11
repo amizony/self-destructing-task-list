@@ -70,11 +70,12 @@
         margin-left: 20px;
         font-size: 0.7em;
         display: inline-block;
-        width: 30%; }
+        width: 38%;
+        min-width: 180px; }
       .container .new-task .btn {
         margin-top: 0px;
-        width: auto;
-        margin-left: 70px; }
+        width: 15%;
+        min-width: 120px; }
         .container .new-task .btn button {
           min-height: 35px;
           max-width: 150px;

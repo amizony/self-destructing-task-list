@@ -143,14 +143,15 @@ $font-big: 1.2em;
         margin-left: 20px;
         font-size: $font-small;
         display: inline-block;
-        width: 30%;
+        width: 38%;
+        min-width: 180px;
 
       }
 
       .btn {
         margin-top: 0px;
-        width: auto;
-        margin-left: 70px;
+        width: 15%;
+        min-width: 120px;
 
         button {
           min-height: 35px;
