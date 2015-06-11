@@ -25,28 +25,26 @@
         </form>
       </div>
 
-      <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'">
-        <div><span>{{task.desc}}<span></div>
-        <div class="btn">
-          <button ng-click="completeTask(task)">Accomplished</button>
+      <div ng-repeat="task in tasks">
+        <div ng-if="task.priority == 1" class="high" ng-show="task.status == 'active'">
+          <div><span>{{task.desc}}<span></div>
+          <div class="btn">
+            <button ng-click="completeTask(task)">Complete</button>
+          </div>
+        </div>
+        <div ng-if="task.priority == 2" class="med" ng-show="task.status == 'active'">
+          <div><span>{{task.desc}}<span></div>
+          <div class="btn">
+            <button ng-click="completeTask(task)">Complete</button>
+          </div>
+        </div>
+        <div ng-if="task.priority == 3" class="low" ng-show="task.status == 'active'">
+          <div><span>{{task.desc}}<span></div>
+          <div class="btn">
+            <button ng-click="completeTask(task)">Complete</button>
+          </div>
         </div>
       </div>
-      <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'">
-        <div><span>{{task.desc}}<span></div>
-        <div class="btn">
-          <button ng-click="completeTask(task)">Accomplished</button>
-        </div>
-      </div>
-      <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'">
-        <div><span>{{task.desc}}<span></div>
-        <div class="btn">
-          <button ng-click="completeTask(task)">Accomplished</button>
-        </div>
-      </div>
-
-
-
 
     </div>
-
 </div>

@@ -11,21 +11,21 @@
   .navbar {
     text-align: left;
     margin-bottom: 0px;
-    border-bottom: 5px solid #E7CDB4; }
+    border-bottom: 5px solid #3299BB; }
     .navbar ul {
       margin: 0px;
       padding-left: 0px;
-      border-bottom: 1px solid #F9E4D7; }
+      border-bottom: 1px solid #BDD4FF; }
     .navbar li {
       list-style: none;
       display: inline;
       margin-left: 30px;
       font-size: 1.2em;
-      background-color: #F9E4D7;
+      background-color: #BDD4FF;
       height: 100%;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
-      border-bottom: 1px solid #F9E4D7; }
+      border-bottom: 1px solid #BDD4FF; }
       .navbar li a {
         text-decoration: none;
         font-weight: bold;
@@ -37,18 +37,18 @@
     margin: 0 auto;
     font-size: 1.2em; }
     .container .menu {
-      background-color: #F9E4D7;
-      border-left: 1px solid #E7CDB4;
-      border-right: 1px solid #E7CDB4; }
+      background-color: #FFC266;
+      border-left: 1px solid #3299BB;
+      border-right: 1px solid #3299BB; }
       .container .menu .menu-item {
         display: inline-block;
         margin-left: 70px; }
       .container .menu .n1 {
         width: 200px; }
     .container .new-task {
-      background-color: #F9E4D7;
+      background-color: #FFC266;
       min-height: 70px;
-      border: 1px solid #E7CDB4;
+      border: 1px solid #3299BB;
       border-top: none;
       max-width: 800px;
       vertical-align: middle;
@@ -79,29 +79,67 @@
           min-height: 35px;
           max-width: 150px;
           font-size: 1.1em; }
-    .container .active {
-      background-color: #F9E4D7;
+    .container .high {
+      background-color: #FFAD33;
       min-height: 70px;
-      border: 1px solid #E7CDB4;
+      border: 1px solid #3299BB;
       border-top: none;
       max-width: 800px; }
-      .container .active div {
+      .container .high div {
         margin-top: 15px;
         display: inline-block;
         width: 70%; }
-      .container .active span {
+      .container .high span {
         margin-left: 30px; }
-      .container .active .btn {
+      .container .high .btn {
         width: 25%; }
-        .container .active .btn button {
+        .container .high .btn button {
+          width: 100%;
+          margin-right: 20px;
+          min-height: 35px;
+          font-size: 1.1em; }
+    .container .med {
+      background-color: #FFC266;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px; }
+      .container .med div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .med span {
+        margin-left: 30px; }
+      .container .med .btn {
+        width: 25%; }
+        .container .med .btn button {
+          width: 100%;
+          margin-right: 20px;
+          min-height: 35px;
+          font-size: 1.1em; }
+    .container .low {
+      background-color: #FFE0B3;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px; }
+      .container .low div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .low span {
+        margin-left: 30px; }
+      .container .low .btn {
+        width: 25%; }
+        .container .low .btn button {
           width: 100%;
           margin-right: 20px;
           min-height: 35px;
           font-size: 1.1em; }
     .container .completed {
-      background-color: #65d7b3;
+      background-color: #66FF96;
       min-height: 70px;
-      border: 1px solid #E7CDB4;
+      border: 1px solid #3299BB;
       border-top: none;
       max-width: 800px; }
       .container .completed div {
@@ -111,9 +149,9 @@
       .container .completed span {
         margin-left: 30px; }
     .container .expired {
-      background-color: #E84A5F;
+      background-color: #FF8A7A;
       min-height: 70px;
-      border: 1px solid #E7CDB4;
+      border: 1px solid #3299BB;
       border-top: none;
       max-width: 800px; }
       .container .expired div {

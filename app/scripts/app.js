@@ -1,3 +1,5 @@
+var colorForCSS = "#3299BB";
+
 taskListApp = angular.module("TaskListApp", ["ui.router","firebase"]);
 
 
@@ -35,7 +37,7 @@ taskListApp.run(["TaskManagement", function(TaskManagement) {
 
 taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
 
-  $scope.background = {"background-color" : "#E7CDB4", "border-bottom" : "3px solid #E7CDB4"};
+  $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   $scope.newTaskPriority = 2;
 
   $scope.$on("data-loaded", function() {
@@ -73,7 +75,7 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 
 taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
 
-  $scope.background = {"background-color" : "#E7CDB4", "border-bottom" : "3px solid #E7CDB4"};
+  $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
 
   $scope.$on("data-loaded", function() {
     buildHistory();
