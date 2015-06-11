@@ -1,52 +1,52 @@
 <div class="container">
   <div class="navbar">
     <ul>
-      <li><a ui-sref="home" ng-style="background">Active Tasks</a></li>
+      <li ng-style="background"><a ui-sref="home">Active Tasks</a></li>
       <li><a ui-sref="history">Task History</a></li>
     </ul>
   </div>
 
-  <div class="tabs">
 
     <div class="tasks">
-      <div class="title">
-        <h2> Current Tasks </h2>
+      <div class="menu">
+        <div class="menu-item n1"> Task description </div>
+        <div class="menu-item n2"> Priority </div>
+      </div>
+
+      <div class="new-task">
+        <form ng-submit="addTask()">
+          <div class="name"><input ng-model="newTaskDescription" placeholder="Enter a new task" /></div>
+          <div class="priority">
+            <input type="radio" ng-model="newTaskPriority" value="1" /> High
+            <input type="radio" ng-model="newTaskPriority" value="2" /> Medium
+            <input type="radio" ng-model="newTaskPriority" value="3" /> Low
+          </div>
+          <div class="btn"><button type="submit">Add Task</button></div>
+        </form>
       </div>
 
       <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'">
-        <p>{{task.desc}}</p>
-        <div align="right">
+        <div><span>{{task.desc}}<span></div>
+        <div class="btn">
           <button ng-click="completeTask(task)">Accomplished</button>
         </div>
       </div>
       <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'">
-        <p>{{task.desc}}</p>
-        <div align="right">
+        <div><span>{{task.desc}}<span></div>
+        <div class="btn">
           <button ng-click="completeTask(task)">Accomplished</button>
         </div>
       </div>
       <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'">
-        <p>{{task.desc}}</p>
-        <div align="right">
+        <div><span>{{task.desc}}<span></div>
+        <div class="btn">
           <button ng-click="completeTask(task)">Accomplished</button>
         </div>
       </div>
 
 
-      <div class="new-task">
-        <form ng-submit="addTask()">
-          <input class="name" ng-model="newTaskDescription" placeholder="Enter a description" />
-          <div class="priority">
-            <p>Priority:</p>
-            <input type="radio" ng-model="newTaskPriority" value="1" /> High </br>
-            <input type="radio" ng-model="newTaskPriority" value="2" /> Medium </br>
-            <input type="radio" ng-model="newTaskPriority" value="3" /> Low </br>
-          </div>
-          <button type="submit">Add Task</button>
-        </form>
-      </div>
+
 
     </div>
 
-  </div>
 </div>

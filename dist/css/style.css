@@ -10,103 +10,119 @@
       font-size: 3em; }
   .navbar {
     text-align: left;
-    margin-bottom: 0px; }
+    margin-bottom: 0px;
+    border-bottom: 5px solid #E7CDB4; }
     .navbar ul {
-      margin-bottom: 0px; }
+      margin: 0px;
+      padding-left: 0px;
+      border-bottom: 1px solid #F9E4D7; }
     .navbar li {
       list-style: none;
       display: inline;
-      margin-left: 15px;
-      font-size: 1.2em; }
+      margin-left: 30px;
+      font-size: 1.2em;
+      background-color: #F9E4D7;
+      height: 100%;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom: 1px solid #F9E4D7; }
       .navbar li a {
-        line-height: 30px;
         text-decoration: none;
         font-weight: bold;
         color: black;
-        background-color: #F9E4D7;
-        padding: 15px;
-        padding-top: 5px;
-        padding-bottom: 4px;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px; }
-    .navbar li:hover {
-      cursor: pointer; }
+        padding-left: 15px;
+        padding-right: 15px; }
   .container {
-    min-height: 600px;
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     font-size: 1.2em; }
-    .container .title {
-      background-color: #E7CDB4;
-      min-height: 80px; }
-      .container .title h2 {
-        margin-left: 30px;
+    .container .menu {
+      background-color: #F9E4D7;
+      border-left: 1px solid #E7CDB4;
+      border-right: 1px solid #E7CDB4; }
+      .container .menu .menu-item {
         display: inline-block;
-        vertical-align: middle; }
+        margin-left: 70px; }
+      .container .menu .n1 {
+        width: 200px; }
+    .container .new-task {
+      background-color: #F9E4D7;
+      min-height: 70px;
+      border: 1px solid #E7CDB4;
+      border-top: none;
+      max-width: 800px;
+      vertical-align: middle;
+      min-height: 47px; }
+      .container .new-task div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .new-task span {
+        margin-left: 30px; }
+      .container .new-task .name {
+        margin-top: 0px;
+        margin-left: 30px;
+        width: 30%; }
+        .container .new-task .name input {
+          width: 100%; }
+      .container .new-task .priority {
+        margin-top: 0px;
+        margin-left: 20px;
+        font-size: 0.7em;
+        display: inline-block;
+        width: 30%; }
+      .container .new-task .btn {
+        margin-top: 0px;
+        width: auto;
+        margin-left: 70px; }
+        .container .new-task .btn button {
+          min-height: 35px;
+          max-width: 150px;
+          font-size: 1.1em; }
     .container .active {
       background-color: #F9E4D7;
       min-height: 70px;
       border: 1px solid #E7CDB4;
-      border-top: none; }
-      .container .active p {
-        margin-left: 30px;
-        display: inline-block;
-        vertical-align: middle; }
+      border-top: none;
+      max-width: 800px; }
       .container .active div {
-        margin-right: 30px;
-        margin-top: -47px; }
-        .container .active div button {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .active span {
+        margin-left: 30px; }
+      .container .active .btn {
+        width: 25%; }
+        .container .active .btn button {
+          width: 100%;
+          margin-right: 20px;
           min-height: 35px;
-          max-width: 150px;
           font-size: 1.1em; }
     .container .completed {
       background-color: #65d7b3;
       min-height: 70px;
       border: 1px solid #E7CDB4;
-      border-top: none; }
-      .container .completed p {
-        margin-left: 30px;
+      border-top: none;
+      max-width: 800px; }
+      .container .completed div {
+        margin-top: 15px;
         display: inline-block;
-        vertical-align: middle; }
+        width: 70%; }
+      .container .completed span {
+        margin-left: 30px; }
     .container .expired {
       background-color: #E84A5F;
       min-height: 70px;
       border: 1px solid #E7CDB4;
-      border-top: none; }
-      .container .expired p {
-        margin-left: 30px;
+      border-top: none;
+      max-width: 800px; }
+      .container .expired div {
+        margin-top: 15px;
         display: inline-block;
-        vertical-align: middle; }
-    .container .new-task {
-      background-color: #F9E4D7;
-      min-height: 70px;
-      border: 1px solid #E7CDB4;
-      border-top: none; }
-      .container .new-task p {
-        margin-left: 30px;
-        display: inline-block;
-        vertical-align: middle; }
-      .container .new-task .name {
-        background-color: inherit;
-        min-height: 30px;
-        max-width: 450px;
-        margin-left: 30px;
-        margin-top: -15px; }
-      .container .new-task .priority {
-        font-size: 0.7em;
-        display: inline-block;
-        max-width: 150px; }
-        .container .new-task .priority p {
-          display: block;
-          margin-bottom: 6px; }
-        .container .new-task .priority input {
-          display: inline-block; }
-      .container .new-task button {
-        min-height: 35px;
-        max-width: 150px;
-        font-size: 1.1em; } }
+        width: 70%; }
+      .container .expired span {
+        margin-left: 30px; } }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 639px) {
   h1 {
     color: red; } }

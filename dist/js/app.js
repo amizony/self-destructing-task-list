@@ -36,7 +36,7 @@ taskListApp.run(["TaskManagement", function(TaskManagement) {
 
 taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
 
-  $scope.background = {"background-color" : "#E7CDB4"};
+  $scope.background = {"background-color" : "#E7CDB4", "border-bottom" : "3px solid #E7CDB4"};
   $scope.newTaskPriority = 2;
 
   $scope.$on("data-loaded", function() {
@@ -74,7 +74,7 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 
 taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
 
-  $scope.background = {"background-color" : "#E7CDB4"};
+  $scope.background = {"background-color" : "#E7CDB4", "border-bottom" : "3px solid #E7CDB4"};
 
   $scope.$on("data-loaded", function() {
     buildHistory();
@@ -107,7 +107,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
   var ready = false;
   var intervalID;
   $rootScope.$on("data-loaded", function() {
-    intervalID = setInterval(clearOldTasks, 1000*6);
+    intervalID = setInterval(clearOldTasks, 1000*60);
     ready = true;
   });
 
