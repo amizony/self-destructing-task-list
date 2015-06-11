@@ -116,7 +116,7 @@ $font-big: 1.2em;
       }
 
       .n1 {
-        width: 200px;
+        width: 30%;
       }
 
       .n2 {
@@ -193,8 +193,25 @@ $font-big: 1.2em;
   }
 }
 
-@media screen and (max-width: 639px){
+@media screen and (max-width: 600px){
+  body {
+    font-size: .75em;
+  }
   h1 {
     color: red;
   }
+
+  .navbar li {
+    margin-left: 10px;
+  }
+
+  .tasks .menu .menu-item {
+    margin-left: 20px;
+    width: 40%;
+  }
+
+  .container .task div span {
+      margin-left: 10px;
+  }
+
 }
