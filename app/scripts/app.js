@@ -13,8 +13,14 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
     requireBase: false
   });
 
-  $stateProvider.state("home", {
+  $stateProvider.state("login", {
     url: "/",
+    controller: "Login.controller",
+    templateUrl: "/templates/login.html"
+  });
+
+  $stateProvider.state("home", {
+    url: "/home",
     controller: "ActiveTask.controller",
     templateUrl: "/templates/home.html"
   });
@@ -90,8 +96,15 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
 }]);
 
 
+taskListApp.controller("Login.controller", ["$scope", "TaskManagement", "AuthManagement", function($scope, TaskManagement, AuthManagement) {
+  $scope.nb = function() {
+    AuthManagement.login();
+  };
+}]);
+
+
 // ---------------------------------
-// Service
+// Services
 
 taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
 
@@ -174,7 +187,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
           list.push($rootScope.fireBaseTasks[i]);
         }
       }
-      
+
       // order the array and return it
       if (list.length < 1) {
         return list;
@@ -207,7 +220,28 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         }
       }
     }
-
   };
+}]);
 
+
+taskListApp.service("AuthManagement", ["$firebaseAuth", function($firebaseAuth) {
+
+  var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
+  var auth = $firebaseAuth(ref);
+
+  //auth.$login(firetoken).then(function(user) {
+  //  console.log('Logged in as: ', user);
+  //}, function(error) {
+  //  console.error('Login failed: ', error);
+  //});
+
+  return {
+    login: function () {
+      auth.$authAnonymously().then(function(authData) {
+        console.log(authData);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
+  };
 }]);
