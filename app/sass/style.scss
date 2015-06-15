@@ -1,128 +1,226 @@
 // Variables
-$color-menu: #E7CDB4;
-$color-active: #F9E4D7;
-$color-expired: #E84A5F;
-$color-completed: #65d7b3;
+$color-menu-activ: #3299BB;
+$color-menu-passiv: #BDD4FF;
+$color-task-high: #FFAD33;
+$color-task-med: #FFC266;
+$color-task-low: #FFE0B3;
+$color-expired: #FF8A7A;
+$color-completed: #66FF96;
+$color-button: #424242;
+
+$font-small: 0.7em;
+$font-medium: 1.1em;
+$font-big: 1.2em;
 
 
 // Mixins
-@mixin task-style($background-color, $border-color) {
+@mixin task-style($background-color) {
   background-color: $background-color;
-  height: 70px;
-  border-bottom: 1px solid $border-color;
+  min-height: 70px;
+  border: 1px solid $color-menu-activ;
+  border-top: none;
+  max-width: 800px;
 
-  p {
-    margin-left: 30px;
+  div {
+    margin-top: 15px;
     display: inline-block;
-    vertical-align: middle;
+    width: 70%;
+  }
+
+  span {
+    margin-left: 30px;
   }
 }
 
+
+@mixin btn-style() {
+  width: 25%;
+
+  button {
+    width: 100%;
+    margin-right: 20px;
+    min-height: 35px;
+    font-size: $font-medium;
+  }
+}
 
 // Syle
-body {
-  background-image: url("../images/rockywall.png");
-}
-
-.header {
-  text-align: center;
-
-  h1 {
-    font-size: 50px;
+@media screen {
+  html {
+    font-size: 100%;
   }
-}
 
+  body {
+    background-image: url("../images/rockywall.png");
+    font-size: 1em;
+  }
 
-.container {
-  height: 600px;
-  width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 20px;
+  .header {
+    text-align: center;
 
-  .title {
-    background-color: $color-menu;
-    height: 80px;
+    h1 {
+      font-size: 3em;
+    }
+  }
 
-    h2 {
+  .navbar {
+    text-align: left;
+    margin-bottom: 0px;
+    border-bottom: 5px solid $color-menu-activ;
+
+    ul {
+      margin: 0px;
+      padding-left: 0px;
+      border-bottom: 1px solid $color-menu-passiv;
+    }
+
+    li {
+      list-style: none;
+      display: inline;
       margin-left: 30px;
-      display: inline-block;
+      font-size: $font-big;
+      background-color: $color-menu-passiv;
+      height: 100%;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom: 1px solid $color-menu-passiv;
+
+      a {
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: $font-big;
+
+    .menu {
+      background-color: $color-task-med;
+      border-left: 1px solid $color-menu-activ;
+      border-right: 1px solid $color-menu-activ;
+
+      .menu-item {
+        display: inline-block;
+        margin-left: 70px;
+      }
+
+      .n1 {
+        width: 30%;
+      }
+    }
+
+    .new-task {
+      @include task-style($color-task-med);
       vertical-align: middle;
-    }
-  }
+      min-height: 47px;
 
-  .active {
-    @include task-style($color-active, $color-menu);
+      .name {
+        margin-top: 0px;
+        margin-left: 30px;
+        width: 30%;
 
-    div {
-      margin-right: 30px;
-      margin-top: -47px;
-
-      button {
-        height: 35px;
-        width: 150px;
-        font-size: 20px;
-      }
-    }
-  }
-
-  .completed {
-    @include task-style($color-completed, $color-menu);
-  }
-
-  .expired {
-    @include task-style($color-expired, $color-menu);
-  }
-
-  .new-task {
-    background-color: $color-active;
-    height: 70px;
-    border-bottom: 1px solid $color-menu;
-
-    .name {
-      background-color: inherit;
-      height: 30px;
-      width: 450px;
-      margin-left: 30px;
-      margin-top: -15px;
-    }
-
-    .priority {
-      font-size: 12px;
-      display: inline-block;
-      width: 150px;
-
-      p {
-        display: block;
-        margin-bottom: 6px;
+        input {
+          width: 100%;
+        }
       }
 
-      input {
-        display: block;
+      .priority {
+        margin-top: 0px;
+        margin-left: 20px;
+        font-size: $font-small;
+        display: inline-block;
+        width: 38%;
+        min-width: 170px;
+      }
+
+      .btn {
+        margin-top: 0px;
+        width: 15%;
+        min-width: 120px;
+
+        button {
+          min-height: 35px;
+          max-width: 150px;
+          font-size: $font-medium;
+        }
       }
     }
 
-    button {
-      height: 35px;
-      width: 150px;
-      font-size: 20px;
+    .high {
+      @include task-style($color-task-high);
+
+      .btn {
+        @include btn-style();
+      }
+    }
+    .med {
+      @include task-style($color-task-med);
+
+      .btn {
+        @include btn-style();
+      }
+    }
+    .low {
+      @include task-style($color-task-low);
+
+      .btn {
+        @include btn-style();
+      }
+    }
+
+    .completed {
+      @include task-style($color-completed);
+    }
+
+    .expired {
+      @include task-style($color-expired);
     }
   }
 }
 
-
-.navbar {
-  text-align: right;
-  margin-bottom: -20px;
-
-  li {
-    list-style: none;
-    display: inline;
-    margin-right: 10px;
-    font-size: 20px;
+@media screen and (max-width: 600px){
+  body {
+    font-size: .75em;
+  }
+  h1 {
+    color: red;
   }
 
-  li:hover {
-    cursor: pointer;
+  .navbar li {
+    margin-left: 10px;
+  }
+
+  .tasks .menu {
+    .menu-item {
+      margin-left: 20px;
+      width: 40%;
+    }
+
+    .n2 {
+      margin-left: 30px;
+    }
+  }
+
+  .container .task div span {
+      margin-left: 10px;
+  }
+
+  .container .new-task form .name {
+    margin-left: 10px;
+  }
+
+  .new-task .btn {
+    margin-left: 200px;
+  }
+
+  .container .tasks button {
+    padding-left: 3px;
+    padding-right: 3px;
   }
 }

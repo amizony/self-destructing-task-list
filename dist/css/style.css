@@ -1,86 +1,185 @@
-body {
-  background-image: url("../images/rockywall.png"); }
+@media screen {
+  html {
+    font-size: 100%; }
+  body {
+    background-image: url("../images/rockywall.png");
+    font-size: 1em; }
+  .header {
+    text-align: center; }
+    .header h1 {
+      font-size: 3em; }
+  .navbar {
+    text-align: left;
+    margin-bottom: 0px;
+    border-bottom: 5px solid #3299BB; }
+    .navbar ul {
+      margin: 0px;
+      padding-left: 0px;
+      border-bottom: 1px solid #BDD4FF; }
+    .navbar li {
+      list-style: none;
+      display: inline;
+      margin-left: 30px;
+      font-size: 1.2em;
+      background-color: #BDD4FF;
+      height: 100%;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom: 1px solid #BDD4FF; }
+      .navbar li a {
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+        padding-left: 15px;
+        padding-right: 15px; }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2em; }
+    .container .menu {
+      background-color: #FFC266;
+      border-left: 1px solid #3299BB;
+      border-right: 1px solid #3299BB; }
+      .container .menu .menu-item {
+        display: inline-block;
+        margin-left: 70px; }
+      .container .menu .n1 {
+        width: 30%; }
+    .container .new-task {
+      background-color: #FFC266;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px;
+      vertical-align: middle;
+      min-height: 47px; }
+      .container .new-task div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .new-task span {
+        margin-left: 30px; }
+      .container .new-task .name {
+        margin-top: 0px;
+        margin-left: 30px;
+        width: 30%; }
+        .container .new-task .name input {
+          width: 100%; }
+      .container .new-task .priority {
+        margin-top: 0px;
+        margin-left: 20px;
+        font-size: 0.7em;
+        display: inline-block;
+        width: 38%;
+        min-width: 170px; }
+      .container .new-task .btn {
+        margin-top: 0px;
+        width: 15%;
+        min-width: 120px; }
+        .container .new-task .btn button {
+          min-height: 35px;
+          max-width: 150px;
+          font-size: 1.1em; }
+    .container .high {
+      background-color: #FFAD33;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px; }
+      .container .high div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .high span {
+        margin-left: 30px; }
+      .container .high .btn {
+        width: 25%; }
+        .container .high .btn button {
+          width: 100%;
+          margin-right: 20px;
+          min-height: 35px;
+          font-size: 1.1em; }
+    .container .med {
+      background-color: #FFC266;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px; }
+      .container .med div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .med span {
+        margin-left: 30px; }
+      .container .med .btn {
+        width: 25%; }
+        .container .med .btn button {
+          width: 100%;
+          margin-right: 20px;
+          min-height: 35px;
+          font-size: 1.1em; }
+    .container .low {
+      background-color: #FFE0B3;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px; }
+      .container .low div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .low span {
+        margin-left: 30px; }
+      .container .low .btn {
+        width: 25%; }
+        .container .low .btn button {
+          width: 100%;
+          margin-right: 20px;
+          min-height: 35px;
+          font-size: 1.1em; }
+    .container .completed {
+      background-color: #66FF96;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px; }
+      .container .completed div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .completed span {
+        margin-left: 30px; }
+    .container .expired {
+      background-color: #FF8A7A;
+      min-height: 70px;
+      border: 1px solid #3299BB;
+      border-top: none;
+      max-width: 800px; }
+      .container .expired div {
+        margin-top: 15px;
+        display: inline-block;
+        width: 70%; }
+      .container .expired span {
+        margin-left: 30px; } }
 
-.header {
-  text-align: center; }
-  .header h1 {
-    font-size: 50px; }
-
-.container {
-  height: 600px;
-  width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 20px; }
-  .container .title {
-    background-color: #E7CDB4;
-    height: 80px; }
-    .container .title h2 {
-      margin-left: 30px;
-      display: inline-block;
-      vertical-align: middle; }
-  .container .active {
-    background-color: #F9E4D7;
-    height: 70px;
-    border-bottom: 1px solid #E7CDB4; }
-    .container .active p {
-      margin-left: 30px;
-      display: inline-block;
-      vertical-align: middle; }
-    .container .active div {
-      margin-right: 30px;
-      margin-top: -47px; }
-      .container .active div button {
-        height: 35px;
-        width: 150px;
-        font-size: 20px; }
-  .container .completed {
-    background-color: #65d7b3;
-    height: 70px;
-    border-bottom: 1px solid #E7CDB4; }
-    .container .completed p {
-      margin-left: 30px;
-      display: inline-block;
-      vertical-align: middle; }
-  .container .expired {
-    background-color: #E84A5F;
-    height: 70px;
-    border-bottom: 1px solid #E7CDB4; }
-    .container .expired p {
-      margin-left: 30px;
-      display: inline-block;
-      vertical-align: middle; }
-  .container .new-task {
-    background-color: #F9E4D7;
-    height: 70px;
-    border-bottom: 1px solid #E7CDB4; }
-    .container .new-task .name {
-      background-color: inherit;
-      height: 30px;
-      width: 450px;
-      margin-left: 30px;
-      margin-top: -15px; }
-    .container .new-task .priority {
-      font-size: 12px;
-      display: inline-block;
-      width: 150px; }
-      .container .new-task .priority p {
-        display: block;
-        margin-bottom: 6px; }
-      .container .new-task .priority input {
-        display: block; }
-    .container .new-task button {
-      height: 35px;
-      width: 150px;
-      font-size: 20px; }
-
-.navbar {
-  text-align: right;
-  margin-bottom: -20px; }
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 0.75em; }
+  h1 {
+    color: red; }
   .navbar li {
-    list-style: none;
-    display: inline;
-    margin-right: 10px;
-    font-size: 20px; }
-  .navbar li:hover {
-    cursor: pointer; }
+    margin-left: 10px; }
+  .tasks .menu .menu-item {
+    margin-left: 20px;
+    width: 40%; }
+  .tasks .menu .n2 {
+    margin-left: 30px; }
+  .container .task div span {
+    margin-left: 10px; }
+  .container .new-task form .name {
+    margin-left: 10px; }
+  .new-task .btn {
+    margin-left: 200px; }
+  .container .tasks button {
+    padding-left: 3px;
+    padding-right: 3px; } }
