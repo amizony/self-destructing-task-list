@@ -1,35 +1,28 @@
-<div class="container">
-  <div class="navbar">
-    <ul>
-      <li ng-click="buildHistory()">History</li>
-      <li ng-click="showHistory = false">Tasks</li>
-    </ul>
-  </div>
-  <div class="tabs">
+<div class="tabs">
 
-    <div class="tasks" ng-show="!showHistory">
-      <div class="title">
-        <h2> Current Tasks </h2>
-      </div>
+  <div class="tasks">
+    <div class="title">
+      <h2> Current Tasks </h2>
+    </div>
 
-      <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
-        <p>{{task.desc}}</p>
-        <div align="right">
-          <button ng-click="completeTask(task)">Accomplished</button>
-        </div>
+    <div ng-repeat="task in tasks" ng-if="task.priority == 1" class="active high" ng-show="task.status == 'active'">
+      <p>{{task.desc}}</p>
+      <div align="right">
+        <button ng-click="completeTask(task)">Accomplished</button>
       </div>
-      <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
-        <p>{{task.desc}}</p>
-        <div align="right">
-          <button ng-click="completeTask(task)">Accomplished</button>
-        </div>
+    </div>
+    <div ng-repeat="task in tasks" ng-if="task.priority == 2" class="active med" ng-show="task.status == 'active'">
+      <p>{{task.desc}}</p>
+      <div align="right">
+        <button ng-click="completeTask(task)">Accomplished</button>
       </div>
-      <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'" ng-mouseenter="watchForOldTasks()">
-        <p>{{task.desc}}</p>
-        <div align="right">
-          <button ng-click="completeTask(task)">Accomplished</button>
-        </div>
+    </div>
+    <div ng-repeat="task in tasks" ng-if="task.priority == 3" class="active low" ng-show="task.status == 'active'">
+      <p>{{task.desc}}</p>
+      <div align="right">
+        <button ng-click="completeTask(task)">Accomplished</button>
       </div>
+    </div>
 
 
     <div class="new-task">
@@ -45,21 +38,4 @@
 
   </div>
 
-
-    <div class="history" ng-show="showHistory">
-      <div class="title">
-        <h2> Task History </h2>
-      </div>
-
-      <div ng-repeat="task in history">
-        <div ng-if="task.status == 'expired'" class="expired">
-          <p>{{task.desc}}</p>
-        </div>
-        <div ng-if="task.status == 'completed'" class="completed">
-          <p>{{task.desc}}</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
 </div>
