@@ -189,7 +189,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
       }
 
       // order the array and return it
-      if (list.length < 1) {
+      if (list.length < 2) {
         return list;
       } else {
         return orderHistory(list);
