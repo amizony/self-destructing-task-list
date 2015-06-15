@@ -74,6 +74,7 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
 
   $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
+  buildHistory();
 
   $scope.$on("data-loaded", function() {
     buildHistory();
@@ -82,10 +83,6 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
   $scope.$on("data-edited", function() {
     buildHistory();
   });
-
-  if (!$scope.history) {
-    buildHistory();
-  }
 
   function buildHistory() {
     $scope.history = TaskManagement.getHistory();
@@ -121,6 +118,31 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
     }
   };
 
+  var orderHistory = function(history) {
+    var ordered = false;
+    var reset = false;
+    var n = 0;
+
+    // order the history
+    while (!ordered) {
+      if (history[n].date > history[n+1].date) {
+        var temp = history[n];
+        history[n] = history[n+1];
+        history[n+1] = temp;
+        reset = true;
+      }
+      n += 1;
+      if (n == history.length - 1) {
+        if (reset) {
+          n = 0;
+          reset = false;
+        } else {
+          ordered = true;
+        }
+      }
+    }
+    return history;
+  };
 
   return {
     fetchData: function() {
@@ -133,46 +155,33 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
     },
     getList: function() {
       var list = [];
-      var n = $rootScope.fireBaseTasks.length;
-      for (var i = 0; i < n; i++) {
+
+      // build array of active tasks
+      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
         if ($rootScope.fireBaseTasks[i].status == "active") {
           list.push($rootScope.fireBaseTasks[i]);
         }
       }
+
       return list;
     },
 
     getHistory: function() {
-      var history = [];
-      var ordered = false;
-      var reset = false;
-      var n = 0;
+      var list = [];
+
       // build array of completed and expired tasks
       for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
         if ($rootScope.fireBaseTasks[i].status != "active") {
-          history.push($rootScope.fireBaseTasks[i]);
+          list.push($rootScope.fireBaseTasks[i]);
         }
       }
-
-      // order the history
-      while (!ordered) {
-        if (history[n].date > history[n+1].date) {
-          var temp = history[n];
-          history[n] = history[n+1];
-          history[n+1] = temp;
-          reset = true;
-        }
-        n += 1;
-        if (n == history.length - 1) {
-          if (reset) {
-            n = 0;
-            reset = false;
-          } else {
-            ordered = true;
-          }
-        }
+      
+      // order the array and return it
+      if (list.length < 1) {
+        return list;
+      } else {
+        return orderHistory(list);
       }
-      return history;
     },
 
     createTask: function(description, priority) {
