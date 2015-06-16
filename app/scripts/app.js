@@ -229,6 +229,9 @@ taskListApp.service("AuthManagement", ["$firebaseAuth", function($firebaseAuth) 
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
   var auth = $firebaseAuth(ref);
 
+  var FirebaseTokenGenerator = require("firebase-token-generator");
+  //var tokenGenerator = new FirebaseTokenGenerator("qB4QRZgjiuWH2Vv1Sg2KrQy9Yjp40E6pCFSez0Oe");
+  //var token = tokenGenerator.createToken({ uid: "custom:1", some: "arbitrary", data: "here" });
   //auth.$login(firetoken).then(function(user) {
   //  console.log('Logged in as: ', user);
   //}, function(error) {
