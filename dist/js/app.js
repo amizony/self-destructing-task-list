@@ -38,8 +38,9 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 // ---------------------------------
 // Sync with firebase
 
-taskListApp.run(["TaskManagement", function(TaskManagement) {
+taskListApp.run(["TaskManagement", "AuthManagement", function(TaskManagement, AuthManagement) {
   TaskManagement.fetchData();
+  AuthManagement.generateToken();
 }]);
 
 
@@ -225,27 +226,27 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 }]);
 
 
-taskListApp.service("AuthManagement", ["$firebaseAuth", function($firebaseAuth) {
+taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", function($rootScope, $firebaseAuth) {
 
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
   var auth = $firebaseAuth(ref);
 
-  var FirebaseTokenGenerator = require("firebase-token-generator");
-  //var tokenGenerator = new FirebaseTokenGenerator("qB4QRZgjiuWH2Vv1Sg2KrQy9Yjp40E6pCFSez0Oe");
-  //var token = tokenGenerator.createToken({ uid: "custom:1", some: "arbitrary", data: "here" });
-  //auth.$login(firetoken).then(function(user) {
-  //  console.log('Logged in as: ', user);
-  //}, function(error) {
-  //  console.error('Login failed: ', error);
-  //});
+
 
   return {
     login: function () {
-      auth.$authAnonymously().then(function(authData) {
-        console.log(authData);
-      }).catch(function(error) {
-        console.log(error);
-      });
+      ref.authWithCustomToken($rootScope.token, function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Login Succeeded!", authData);
+      }
+    });
+    },
+    generateToken: function() {
+      var FirebaseTokenGenerator = require("firebase-token-generator");
+      var tokenGenerator = new FirebaseTokenGenerator("qB4QRZgjiuWH2Vv1Sg2KrQy9Yjp40E6pCFSez0Oe");
+      $rootScope.token = tokenGenerator.createToken({ uid: "custom:1", some: "arbitrary", data: "here" });
     }
   };
 }]);
