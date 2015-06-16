@@ -53,7 +53,7 @@ taskListApp.run(["TaskManagement", "AuthManagement", function(TaskManagement, Au
 }]);
 
 
-taskListApp.factory("Auth", ["firebaseAuth" , function($firebaseAuth) {
+taskListApp.factory("Auth", ["$firebaseAuth" , function($firebaseAuth) {
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
   return $firebaseAuth(ref);
 }]);
@@ -61,7 +61,7 @@ taskListApp.factory("Auth", ["firebaseAuth" , function($firebaseAuth) {
 // ---------------------------------
 // Controllers
 
-taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
+taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "currentAuth", "AuthManagement", function($scope, TaskManagement, currentAuth, AuthManagement) {
 
   $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   $scope.newTaskPriority = 2;
@@ -89,10 +89,16 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "cu
     TaskManagement.validateTask(task.$id);
   };
 
+  $scope.login = function() {
+    AuthManagement.login();
+  };
+  $scope.logout = function() {
+    AuthManagement.logout();
+  };
 }]);
 
 
-taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
+taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "currentAuth", "AuthManagement", function($scope, TaskManagement, currentAuth, AuthManagement) {
 
   $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   buildHistory();
@@ -109,12 +115,21 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "curr
     $scope.history = TaskManagement.getHistory();
   }
 
+  $scope.login = function() {
+    AuthManagement.login();
+  };
+  $scope.logout = function() {
+    AuthManagement.logout();
+  };
 }]);
 
 
 taskListApp.controller("Login.controller", ["$scope", "TaskManagement", "AuthManagement", function($scope, TaskManagement, AuthManagement) {
-  $scope.nb = function() {
+  $scope.login = function() {
     AuthManagement.login();
+  };
+  $scope.logout = function() {
+    AuthManagement.logout();
   };
 }]);
 
@@ -139,14 +154,12 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
       if ((age > oneWeek) && ($rootScope.fireBaseTasks[i].status == "active")) {
         $rootScope.fireBaseTasks[i].status = "expired";
         $rootScope.fireBaseTasks[i].date += oneWeek;
-        $rootScope.fireBaseTasks.$save(i).then(broadCastEvent("data-edited"));
+        $rootScope.fireBaseTasks.$save(i).then(function() {
+          $rootScope.$broadcast("data-edited");
+        });
       }
     }
   };
-
-  function broadCastEvent (dataEvent) {
-    $rootScope.$broadcast(dataEvent);
-  }
 
   var orderHistory = function(history) {
     var ordered = false;
@@ -178,7 +191,9 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
     fetchData: function() {
       var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
       $rootScope.fireBaseTasks = $firebaseArray(ref);
-      $rootScope.fireBaseTasks.$loaded().then(broadCastEvent("data-loaded"));
+      $rootScope.fireBaseTasks.$loaded().then(function() {
+        $rootScope.$broadcast("data-loaded");
+      });
     },
     getList: function() {
       var list = [];
@@ -218,7 +233,9 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         date: time.getTime(),
         status: "active",
         priority: priority
-      }).then(broadCastEvent("data-edited"));
+      }).then(function() {
+        $rootScope.$broadcast("data-edited");
+      });
     },
 
     validateTask: function(id) {
@@ -227,7 +244,9 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         if ($rootScope.fireBaseTasks[i].$id == id) {
           $rootScope.fireBaseTasks[i].status = "completed";
           $rootScope.fireBaseTasks[i].date = time.getTime();
-          $rootScope.fireBaseTasks.$save(i).then(broadCastEvent("data-edited"));
+          $rootScope.fireBaseTasks.$save(i).then(function() {
+            $rootScope.$broadcast("data-edited");
+          });
         }
       }
     }
@@ -244,15 +263,20 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$state", 
 
 
   return {
-    login: function () {
+    login: function() {
       ref.authWithCustomToken($rootScope.token, function(error, authData) {
-      if (error) {
-        console.log("Login Failed!", error);
-      } else {
-        console.log("Login Succeeded!", authData);
-        $state.go("home");
-      }
-    });
+        if (error) {
+          console.log("Login Failed!", error);
+        } else {
+          console.log("Login Succeeded!", authData);
+          $state.go("home");
+        }
+      });
+    },
+    logout: function() {
+      ref.unauth();
+      $state.go("login");
+      console.log("Logout Succeeded!");
     },
     generateToken: function() {
       var FirebaseTokenGenerator = require("firebase-token-generator");
