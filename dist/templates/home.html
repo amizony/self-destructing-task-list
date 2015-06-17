@@ -1,10 +1,12 @@
 <div class="container">
 
   <div class="login" align="right" ng-controller="Login.controller">
-    <button type="button" ng-click="login()">Login</button>
-    <button type="button" ng-click="logout()">Logout</button>
+    <form ng-submit="login()">
+      <input ng-model="name" placeholder="Enter your name" />
+      <button type="submit" ng-disabled="!usersReady">Login</button>
+    </form>
   </div>
-  
+
   <div class="navbar">
     <ul>
       <li><a ui-sref="tasks">Active Tasks</a></li>

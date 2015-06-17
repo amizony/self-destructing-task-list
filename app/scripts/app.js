@@ -49,8 +49,8 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 
 taskListApp.run(["TaskManagement", "AuthManagement", function(TaskManagement, AuthManagement) {
   TaskManagement.fetchData();
-  AuthManagement.generateToken();
-  AuthManagement.redirectLogin();
+  AuthManagement.fetchUsers();
+  AuthManagement.unauthentifiedRedirect();
 }]);
 
 
@@ -114,8 +114,21 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "curr
 
 
 taskListApp.controller("Login.controller", ["$scope", "TaskManagement", "AuthManagement", function($scope, TaskManagement, AuthManagement) {
+
+  $scope.uName = AuthManagement.getUserName();
+  $scope.name = "";
+  $scope.usersReady = AuthManagement.getUserDataStatus();
+
+  $scope.$on("users-loaded", function() {
+    $scope.usersReady = true;
+    //$scope.$apply(function() {
+      //$scope.uName = AuthManagement.getUserName();
+    //});
+  });
+
+
   $scope.login = function() {
-    AuthManagement.login();
+    AuthManagement.login($scope.name);
   };
   $scope.logout = function() {
     AuthManagement.logout();
@@ -178,8 +191,8 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
   return {
     fetchData: function() {
-      var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
-      $rootScope.fireBaseTasks = $firebaseArray(ref);
+      var tasksRef = new Firebase("https://luminous-fire-9311.firebaseio.com/tasks");
+      $rootScope.fireBaseTasks = $firebaseArray(tasksRef);
       $rootScope.fireBaseTasks.$loaded().then(function() {
         $rootScope.$broadcast("data-loaded");
       });
@@ -244,20 +257,82 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
 
 
-taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$state", function($rootScope, $firebaseAuth, $state) {
+taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebaseArray", "$state", function($rootScope, $firebaseAuth, $firebaseArray, $state) {
 
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
   var auth = $firebaseAuth(ref);
+
+  var users = null;
   var token;
+  var uid;
+  var currentUser = null;
+
+  function generateNewId(uName) {
+    var id = uName.toLocaleLowerCase().slice(0,4);
+    id += ":";
+    id += Math.floor((Math.random() * 1000000000));
+    return id;
+  }
+
+  function createUser(uName) {
+    var id = generateNewId(uName);
+    users.$add({
+      name: uName,
+      uid: id
+    }).then(function() {
+      $rootScope.$broadcast("users-edited");
+    });
+    return id;
+  }
+
+  function attributeId(uName) {
+    var user = lookForUser(uName);
+    if (user) {
+      return user.uid;
+    } else{
+      return createUser(uName);
+    }
+  }
+
+  function lookForUser(uName) {
+    for (var i = 0; i < users.length; i++) {;
+      if (users[i].name == uName) {
+        return users[i];
+      }
+    }
+    return false;
+  }
+
+  function generateToken(id) {
+    var FirebaseTokenGenerator = require("firebase-token-generator");
+    var tokenGenerator = new FirebaseTokenGenerator("qB4QRZgjiuWH2Vv1Sg2KrQy9Yjp40E6pCFSez0Oe");
+    token = tokenGenerator.createToken({ uid: id });
+  }
 
   return {
-    login: function() {
+    fetchUsers: function() {
+      var usersRef = new Firebase("https://luminous-fire-9311.firebaseio.com/users");
+      users = $firebaseArray(usersRef);
+      users.$loaded().then(function() {
+        $rootScope.$broadcast("users-loaded");
+      });
+    },
+    getUserName: function() {
+      return currentUser;
+    },
+    getUserDataStatus: function() {
+      return (users !== null);
+    },
+    login: function(name) {
+      uid = attributeId(name);
+      generateToken(uid);
       ref.authWithCustomToken(token, function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
         } else {
           console.log("Login Succeeded!", authData);
           $state.go("tasks");
+          currentUser = name;
         }
       });
     },
@@ -265,12 +340,7 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$state", 
       ref.unauth();
       $state.go("home");
     },
-    generateToken: function() {
-      var FirebaseTokenGenerator = require("firebase-token-generator");
-      var tokenGenerator = new FirebaseTokenGenerator("qB4QRZgjiuWH2Vv1Sg2KrQy9Yjp40E6pCFSez0Oe");
-      token = tokenGenerator.createToken({ uid: "custom:1", some: "arbitrary", data: "here" });
-    },
-    redirectLogin: function() {
+    unauthentifiedRedirect: function() {
       $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
         if (error === "AUTH_REQUIRED") {
           $state.go("home");
