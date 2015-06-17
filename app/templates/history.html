@@ -1,5 +1,7 @@
 <div class="container">
+
   <ng-include src='"/templates/login_bar.html"'></ng-include>
+
   <div class="navbar">
     <ul>
       <li><a ui-sref="tasks">Active Tasks</a></li>
@@ -8,15 +10,16 @@
   </div>
 
 
-    <div class="history">
+  <div class="history">
+    <div ng-repeat="task in history">
 
-      <div ng-repeat="task in history">
-        <div ng-if="task.status == 'expired'" class="task expired">
-          <div><span>{{task.desc}}</span></div>
-        </div>
-        <div ng-if="task.status == 'completed'" class="task completed">
-          <div><span>{{task.desc}}</span></div>
-        </div>
+      <div ng-if="task.status == 'expired'" class="task expired">
+        <div><span>{{task.desc}}</span></div>
+      </div>
+      
+      <div ng-if="task.status == 'completed'" class="task completed">
+        <div><span>{{task.desc}}</span></div>
       </div>
     </div>
+  </div>
 </div>
