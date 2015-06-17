@@ -51,6 +51,7 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 taskListApp.run(["TaskManagement", "AuthManagement", function(TaskManagement, AuthManagement) {
   TaskManagement.fetchData();
   AuthManagement.generateToken();
+  AuthManagement.redirectLogin();
 }]);
 
 
@@ -288,7 +289,6 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$state", 
       $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
         console.log(error);
         if (error === "AUTH_REQUIRED") {
-          console.log("go login");
           $state.go("login");
         }
       });
