@@ -14,16 +14,16 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
     requireBase: false
   });
 
-  $stateProvider.state("login", {
+  $stateProvider.state("home", {
     url: "/",
     controller: "Login.controller",
-    templateUrl: "/templates/login.html"
+    templateUrl: "/templates/home.html"
   });
 
-  $stateProvider.state("home", {
-    url: "/home",
+  $stateProvider.state("tasks", {
+    url: "/tasks",
     controller: "ActiveTask.controller",
-    templateUrl: "/templates/home.html",
+    templateUrl: "/templates/tasks.html",
     resolve: {
       "currentAuth": ["Auth", function(Auth) {
         return Auth.$requireAuth();
@@ -63,7 +63,7 @@ taskListApp.factory("Auth", ["$firebaseAuth" , function($firebaseAuth) {
 // ---------------------------------
 // Controllers
 
-taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "currentAuth", "AuthManagement", function($scope, TaskManagement, currentAuth, AuthManagement) {
+taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
 
   $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   $scope.newTaskPriority = 2;
@@ -91,16 +91,10 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "cu
     TaskManagement.validateTask(task.$id);
   };
 
-  $scope.login = function() {
-    AuthManagement.login();
-  };
-  $scope.logout = function() {
-    AuthManagement.logout();
-  };
 }]);
 
 
-taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "currentAuth", "AuthManagement", function($scope, TaskManagement, currentAuth, AuthManagement) {
+taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
 
   $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   buildHistory();
@@ -117,12 +111,6 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "curr
     $scope.history = TaskManagement.getHistory();
   }
 
-  $scope.login = function() {
-    AuthManagement.login();
-  };
-  $scope.logout = function() {
-    AuthManagement.logout();
-  };
 }]);
 
 
@@ -261,35 +249,32 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$state", 
 
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
   var auth = $firebaseAuth(ref);
-
-
+  var token;
 
   return {
     login: function() {
-      ref.authWithCustomToken($rootScope.token, function(error, authData) {
+      ref.authWithCustomToken(token, function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
         } else {
           console.log("Login Succeeded!", authData);
-          $state.go("home");
+          $state.go("tasks");
         }
       });
     },
     logout: function() {
       ref.unauth();
-      $state.go("login");
-      console.log("Logout Succeeded!");
+      $state.go("home");
     },
     generateToken: function() {
       var FirebaseTokenGenerator = require("firebase-token-generator");
       var tokenGenerator = new FirebaseTokenGenerator("qB4QRZgjiuWH2Vv1Sg2KrQy9Yjp40E6pCFSez0Oe");
-      $rootScope.token = tokenGenerator.createToken({ uid: "custom:1", some: "arbitrary", data: "here" });
+      token = tokenGenerator.createToken({ uid: "custom:1", some: "arbitrary", data: "here" });
     },
     redirectLogin: function() {
       $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
-        console.log(error);
         if (error === "AUTH_REQUIRED") {
-          $state.go("login");
+          $state.go("home");
         }
       });
     }
