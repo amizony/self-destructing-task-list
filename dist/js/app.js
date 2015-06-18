@@ -45,12 +45,13 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 
 
 // ---------------------------------
-// Sync with firebase & Authentication watchout
+// Sync with firebase & Authentication redirect
 
 taskListApp.run(["TaskManagement", "AuthManagement", "TaskManagement", function(TaskManagement, AuthManagement, TaskManagement) {
   AuthManagement.fetchUsers();
   TaskManagement.fetchData();
   AuthManagement.unauthentifiedRedirect();
+  AuthManagement.authentifiedRedirect();
 }]);
 
 
@@ -264,9 +265,6 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
   var token;
   var uid;
   var currentUser = null;
-  if (auth.$getAuth()) {
-    currentUser = auth.$getAuth().uid.slice(0,auth.$getAuth().uid.lastIndexOf(":"));
-  }
 
 
   function attributeUid(uName) {
@@ -327,6 +325,15 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
           $state.go("home");
         }
       });
+    },
+
+    authentifiedRedirect: function() {
+      if (auth.$getAuth()) {
+        currentUser = auth.$getAuth().uid.slice(0,auth.$getAuth().uid.lastIndexOf(":"));
+        users.$loaded().then(function() {
+          $state.go("tasks");
+        });
+      }
     },
 
     getUsersDataStatus: function() {
