@@ -15,7 +15,7 @@
       <div class="menu-item n1"> Task description </div>
       <div class="menu-item n2"> Priority </div>
     </div>
-    
+
     <div class="new-task">
       <form ng-submit="addTask()">
         <div class="name"><input ng-model="newTaskDescription" placeholder="Enter a new task" /></div>
@@ -31,21 +31,21 @@
 
     <div ng-repeat="task in tasks">
 
-      <div ng-if="task.priority == 1" class="task high" ng-show="task.status == 'active'">
+      <div ng-if="task.priority == 1" class="task high">
         <div><span>{{task.desc}}</span></div>
         <div class="btn">
           <button ng-click="completeTask(task)">Complete</button>
         </div>
       </div>
 
-      <div ng-if="task.priority == 2" class="task med" ng-show="task.status == 'active'">
+      <div ng-if="task.priority == 2" class="task med">
         <div><span>{{task.desc}}</span></div>
         <div class="btn">
           <button ng-click="completeTask(task)">Complete</button>
         </div>
       </div>
 
-      <div ng-if="task.priority == 3" class="task low" ng-show="task.status == 'active'">
+      <div ng-if="task.priority == 3" class="task low">
         <div><span>{{task.desc}}</span></div>
         <div class="btn">
           <button ng-click="completeTask(task)">Complete</button>

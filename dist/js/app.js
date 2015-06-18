@@ -48,9 +48,9 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 // ---------------------------------
 // Sync with firebase
 
-taskListApp.run(["TaskManagement", "AuthManagement", function(TaskManagement, AuthManagement) {
-  TaskManagement.fetchData();
+taskListApp.run(["TaskManagement", "AuthManagement", "TaskManagement", function(TaskManagement, AuthManagement, TaskManagement) {
   AuthManagement.fetchUsers();
+  TaskManagement.fetchData();
   AuthManagement.unauthentifiedRedirect();
 }]);
 
@@ -78,11 +78,11 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "cu
   });
 
   function buildList() {
-    $scope.tasks = TaskManagement.getList();
+    $scope.tasks = TaskManagement.getList(currentAuth.uid);
   }
 
   $scope.addTask = function() {
-    TaskManagement.createTask($scope.newTaskDescription,$scope.newTaskPriority);
+    TaskManagement.createTask($scope.newTaskDescription, $scope.newTaskPriority, currentAuth.uid);
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = 2;
   };
@@ -108,7 +108,7 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "curr
   });
 
   function buildHistory() {
-    $scope.history = TaskManagement.getHistory();
+    $scope.history = TaskManagement.getHistory(currentAuth.uid);
   }
 
 }]);
@@ -198,12 +198,12 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
         $rootScope.$broadcast("data-loaded");
       });
     },
-    getList: function() {
+    getList: function(uid) {
       var list = [];
 
       // build array of active tasks
       for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if ($rootScope.fireBaseTasks[i].status == "active") {
+        if (($rootScope.fireBaseTasks[i].owner == uid) && ($rootScope.fireBaseTasks[i].status == "active")) {
           list.push($rootScope.fireBaseTasks[i]);
         }
       }
@@ -211,12 +211,12 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
       return list;
     },
 
-    getHistory: function() {
+    getHistory: function(uid) {
       var list = [];
 
       // build array of completed and expired tasks
       for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if ($rootScope.fireBaseTasks[i].status != "active") {
+        if (($rootScope.fireBaseTasks[i].owner == uid) && ($rootScope.fireBaseTasks[i].status != "active")) {
           list.push($rootScope.fireBaseTasks[i]);
         }
       }
@@ -229,13 +229,14 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
       }
     },
 
-    createTask: function(description, priority) {
+    createTask: function(description, priority, uid) {
       var time = new Date();
       $rootScope.fireBaseTasks.$add({
         desc: description,
         date: time.getTime(),
         status: "active",
-        priority: priority
+        priority: priority,
+        owner: uid
       }).then(function() {
         $rootScope.$broadcast("data-edited");
       });
@@ -323,6 +324,9 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
     },
     getUserDataStatus: function() {
       return (users !== null);
+    },
+    getUserId: function () {
+      return uid;
     },
     login: function(name) {
       uid = attributeId(name);
