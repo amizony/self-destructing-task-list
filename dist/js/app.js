@@ -331,7 +331,11 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
       if (auth.$getAuth()) {
         currentUser = auth.$getAuth().uid.slice(0,auth.$getAuth().uid.lastIndexOf(":"));
         users.$loaded().then(function() {
-          $state.go("tasks");
+          if ($state.current.name == "history") {
+            $state.go("history");
+          } else {
+            $state.go("tasks");
+          }
         });
       }
     },
