@@ -10,7 +10,6 @@ taskListApp = angular.module("TaskListApp", ["ui.router","firebase"]);
 taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
-    // @see https://docs.angularjs.org/error/$location/nobase
     requireBase: false
   });
 
@@ -46,7 +45,7 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 
 
 // ---------------------------------
-// Sync with firebase
+// Sync with firebase & Authentication watchout
 
 taskListApp.run(["TaskManagement", "AuthManagement", "TaskManagement", function(TaskManagement, AuthManagement, TaskManagement) {
   AuthManagement.fetchUsers();
@@ -59,6 +58,7 @@ taskListApp.factory("Auth", ["$firebaseAuth" , function($firebaseAuth) {
   var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
   return $firebaseAuth(ref);
 }]);
+
 
 // ---------------------------------
 // Controllers
@@ -114,26 +114,24 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "curr
 }]);
 
 
-taskListApp.controller("Login.controller", ["$scope", "TaskManagement", "AuthManagement", function($scope, TaskManagement, AuthManagement) {
+taskListApp.controller("Login.controller", ["$scope", "AuthManagement", function($scope, AuthManagement) {
 
-  $scope.uName = AuthManagement.getUserName();
   $scope.name = "";
-  $scope.usersReady = AuthManagement.getUserDataStatus();
+  $scope.usersReady = AuthManagement.getUsersDataStatus();
+  $scope.currentUser = AuthManagement.getUserName();
 
   $scope.$on("users-loaded", function() {
     $scope.usersReady = true;
-    //$scope.$apply(function() {
-      //$scope.uName = AuthManagement.getUserName();
-    //});
   });
-
 
   $scope.login = function() {
     AuthManagement.login($scope.name);
   };
+
   $scope.logout = function() {
     AuthManagement.logout();
   };
+
 }]);
 
 
@@ -142,29 +140,30 @@ taskListApp.controller("Login.controller", ["$scope", "TaskManagement", "AuthMan
 
 taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
 
+  var oneWeek = 1000*60*60*24*7;
   var intervalID;
+  var firebaseTasks;
+
   $rootScope.$on("data-loaded", function() {
     intervalID = setInterval(clearOldTasks, 1000*60);
   });
 
-  var oneWeek = 1000*60*60*24*7;
-
-  var clearOldTasks = function() {
+  function clearOldTasks() {
     var time = new Date();
     console.log("-- Looking for old tasks --");
-    for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-      var age = time.getTime() - $rootScope.fireBaseTasks[i].date;
-      if ((age > oneWeek) && ($rootScope.fireBaseTasks[i].status == "active")) {
-        $rootScope.fireBaseTasks[i].status = "expired";
-        $rootScope.fireBaseTasks[i].date += oneWeek;
-        $rootScope.fireBaseTasks.$save(i).then(function() {
+    for (var i = 0; i < firebaseTasks.length; i++) {
+      var age = time.getTime() - firebaseTasks[i].date;
+      if ((age > oneWeek) && (firebaseTasks[i].status == "active")) {
+        firebaseTasks[i].status = "expired";
+        firebaseTasks[i].date += oneWeek;
+        firebaseTasks.$save(i).then(function() {
           $rootScope.$broadcast("data-edited");
         });
       }
     }
   };
 
-  var orderHistory = function(history) {
+  function orderHistory(history) {
     var ordered = false;
     var reset = false;
     var n = 0;
@@ -193,34 +192,31 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
   return {
     fetchData: function() {
       var tasksRef = new Firebase("https://luminous-fire-9311.firebaseio.com/tasks");
-      $rootScope.fireBaseTasks = $firebaseArray(tasksRef);
-      $rootScope.fireBaseTasks.$loaded().then(function() {
+      firebaseTasks = $firebaseArray(tasksRef);
+      firebaseTasks.$loaded().then(function() {
         $rootScope.$broadcast("data-loaded");
       });
     },
+
     getList: function(uid) {
       var list = [];
-
       // build array of active tasks
-      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if (($rootScope.fireBaseTasks[i].owner == uid) && ($rootScope.fireBaseTasks[i].status == "active")) {
-          list.push($rootScope.fireBaseTasks[i]);
+      for (var i = 0; i < firebaseTasks.length; i++) {
+        if ((firebaseTasks[i].owner == uid) && (firebaseTasks[i].status == "active")) {
+          list.push(firebaseTasks[i]);
         }
       }
-
       return list;
     },
 
     getHistory: function(uid) {
       var list = [];
-
       // build array of completed and expired tasks
-      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if (($rootScope.fireBaseTasks[i].owner == uid) && ($rootScope.fireBaseTasks[i].status != "active")) {
-          list.push($rootScope.fireBaseTasks[i]);
+      for (var i = 0; i < firebaseTasks.length; i++) {
+        if ((firebaseTasks[i].owner == uid) && (firebaseTasks[i].status != "active")) {
+          list.push(firebaseTasks[i]);
         }
       }
-
       // order the array and return it
       if (list.length < 2) {
         return list;
@@ -231,7 +227,7 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
     createTask: function(description, priority, uid) {
       var time = new Date();
-      $rootScope.fireBaseTasks.$add({
+      firebaseTasks.$add({
         desc: description,
         date: time.getTime(),
         status: "active",
@@ -244,11 +240,11 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
     validateTask: function(id) {
       var time = new Date();
-      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if ($rootScope.fireBaseTasks[i].$id == id) {
-          $rootScope.fireBaseTasks[i].status = "completed";
-          $rootScope.fireBaseTasks[i].date = time.getTime();
-          $rootScope.fireBaseTasks.$save(i).then(function() {
+      for (var i = 0; i < firebaseTasks.length; i++) {
+        if (firebaseTasks[i].$id == id) {
+          firebaseTasks[i].status = "completed";
+          firebaseTasks[i].date = time.getTime();
+          firebaseTasks.$save(i).then(function() {
             $rootScope.$broadcast("data-edited");
           });
         }
@@ -268,12 +264,30 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
   var token;
   var uid;
   var currentUser = null;
+  if (auth.$getAuth()) {
+    currentUser = auth.$getAuth().uid.slice(0,auth.$getAuth().uid.lastIndexOf(":"));
+  }
 
-  function generateNewId(uName) {
-    var id = uName.toLocaleLowerCase().slice(0,4);
-    id += ":";
-    id += Math.floor((Math.random() * 1000000000));
-    return id;
+
+  function attributeUid(uName) {
+    var user = lookForUser(uName);
+    if (user) {
+      // if user exist, then he already has an uid
+      return user.uid;
+    } else{
+      // else we create a new user
+      return createUser(uName);
+    }
+  }
+
+  function lookForUser(uName) {
+    // looks if user already exist in database
+    for (var i = 0; i < users.length; i++) {;
+      if (users[i].name == uName) {
+        return users[i];
+      }
+    }
+    return false;
   }
 
   function createUser(uName) {
@@ -281,28 +295,15 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
     users.$add({
       name: uName,
       uid: id
-    }).then(function() {
-      $rootScope.$broadcast("users-edited");
     });
     return id;
   }
 
-  function attributeId(uName) {
-    var user = lookForUser(uName);
-    if (user) {
-      return user.uid;
-    } else{
-      return createUser(uName);
-    }
-  }
-
-  function lookForUser(uName) {
-    for (var i = 0; i < users.length; i++) {;
-      if (users[i].name == uName) {
-        return users[i];
-      }
-    }
-    return false;
+  function generateNewId(uName) {
+    var uid = uName;
+    uid += ":";
+    uid += Math.floor((Math.random() * 1000000000));
+    return uid;
   }
 
   function generateToken(id) {
@@ -319,17 +320,21 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
         $rootScope.$broadcast("users-loaded");
       });
     },
-    getUserName: function() {
-      return currentUser;
+
+    unauthentifiedRedirect: function() {
+      $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+        if (error === "AUTH_REQUIRED") {
+          $state.go("home");
+        }
+      });
     },
-    getUserDataStatus: function() {
+
+    getUsersDataStatus: function() {
       return (users !== null);
     },
-    getUserId: function () {
-      return uid;
-    },
+
     login: function(name) {
-      uid = attributeId(name);
+      uid = attributeUid(name);
       generateToken(uid);
       ref.authWithCustomToken(token, function(error, authData) {
         if (error) {
@@ -341,17 +346,16 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
         }
       });
     },
+
     logout: function() {
       ref.unauth();
       $state.go("home");
     },
-    unauthentifiedRedirect: function() {
-      $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
-        if (error === "AUTH_REQUIRED") {
-          $state.go("home");
-        }
-      });
+
+    getUserName: function() {
+      return currentUser;
     }
+
   };
 }]);
 

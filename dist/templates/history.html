@@ -1,6 +1,6 @@
 <div class="container">
 
-  <ng-include src='"/templates/login_bar.html"'></ng-include>
+  <ng-include src="'/templates/login_bar.html'"></ng-include>
 
   <div class="navbar">
     <ul>
@@ -16,7 +16,7 @@
       <div ng-if="task.status == 'expired'" class="task expired">
         <div><span>{{task.desc}}</span></div>
       </div>
-      
+
       <div ng-if="task.status == 'completed'" class="task completed">
         <div><span>{{task.desc}}</span></div>
       </div>
