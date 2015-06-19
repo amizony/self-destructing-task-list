@@ -1,25 +1,12 @@
-<div class="container">
+<div class="history">
+  <div ng-repeat="task in history">
 
-  <ng-include src="'/templates/login_bar.html'"></ng-include>
+    <div ng-if="task.status == 'expired'" class="task expired">
+      <div><span>{{task.desc}}</span></div>
+    </div>
 
-  <div class="navbar">
-    <ul>
-      <li><a ui-sref="tasks">Active Tasks</a></li>
-      <li ng-style="background"><a ui-sref="history">Task History</a></li>
-    </ul>
-  </div>
-
-
-  <div class="history">
-    <div ng-repeat="task in history">
-
-      <div ng-if="task.status == 'expired'" class="task expired">
-        <div><span>{{task.desc}}</span></div>
-      </div>
-
-      <div ng-if="task.status == 'completed'" class="task completed">
-        <div><span>{{task.desc}}</span></div>
-      </div>
+    <div ng-if="task.status == 'completed'" class="task completed">
+      <div><span>{{task.desc}}</span></div>
     </div>
   </div>
 </div>

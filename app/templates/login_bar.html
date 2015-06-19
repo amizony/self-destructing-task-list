@@ -1,4 +1,15 @@
-<div class="login" align="right" ng-controller="Login.controller">
-  <span>logged as {{ currentUser }}</span>
-  <button type="button" ng-click="logout()">Logout</button>
+<div class="logbar" align="right" ng-controller="Login.controller">
+
+  <div class="login" ng-hide="currentUser">
+    <form ng-submit="login()">
+      <input ng-model="name" placeholder="Enter your name" />
+      <button type="submit" ng-disabled="!usersReady || name === ''">Login</button>
+    </form>
+  </div>
+
+  <div class="logout" ng-show="currentUser">
+    <span>logged as {{ currentUser }}</span>
+    <button type="button" ng-click="logout()">Logout</button>
+  </div>
+
 </div>

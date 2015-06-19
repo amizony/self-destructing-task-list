@@ -1,5 +1,3 @@
-var colorForCSS = "#3299BB";
-
 taskListApp = angular.module("TaskListApp", ["ui.router","firebase"]);
 
 
@@ -14,7 +12,6 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 
   $stateProvider.state("home", {
     url: "/",
-    controller: "Login.controller",
     templateUrl: "/templates/home.html"
   });
 
@@ -46,7 +43,7 @@ taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvid
 // ---------------------------------
 // Sync with firebase & Authentication redirect
 
-taskListApp.run(["TaskManagement", "AuthManagement", "TaskManagement", function(TaskManagement, AuthManagement, TaskManagement) {
+taskListApp.run(["TaskManagement", "AuthManagement", function(TaskManagement, AuthManagement) {
   AuthManagement.fetchUsers();
   TaskManagement.fetchData();
   AuthManagement.unauthentifiedRedirect();
@@ -63,9 +60,56 @@ taskListApp.factory("Auth", ["$firebaseAuth" , function($firebaseAuth) {
 // ---------------------------------
 // Controllers
 
+taskListApp.controller("NavBar.controller", ["$scope", "$rootScope", function($scope, $rootScope) {
+
+  var color = "#3299BB";
+  var activeStyle = {"background-color" : color, "border-bottom" : "3px solid" + color};
+
+
+  $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+    $scope.tasksStyle = {};
+    $scope.historyStyle = {};
+    if (toState.name == "tasks") {
+      $scope.tasksStyle = activeStyle;
+      $scope.historyStyle = {};
+    }
+    if (toState.name == "history") {
+      $scope.tasksStyle = {};
+      $scope.historyStyle = activeStyle;
+    }
+  });
+}]);
+
+
+taskListApp.controller("Login.controller", ["$scope", "$rootScope", "AuthManagement", function($scope, $rootScope, AuthManagement) {
+
+  $scope.name = "";
+  $scope.usersReady = AuthManagement.getUsersDataStatus();
+  $scope.currentUser = AuthManagement.getUserName();
+
+  $rootScope.$on("users-loaded", function() {
+    $scope.usersReady = true;
+  });
+
+  $rootScope.$on("$stateChangeSuccess", function() {
+    $scope.currentUser = AuthManagement.getUserName();
+  });
+
+  $scope.login = function() {
+    AuthManagement.login($scope.name);
+    $scope.name = "";
+  };
+
+  $scope.logout = function() {
+    AuthManagement.logout();
+    $scope.currentUser = null;
+  };
+
+}]);
+
+
 taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
 
-  $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   $scope.newTaskPriority = 2;
   buildList();
 
@@ -96,7 +140,6 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "cu
 
 taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
 
-  $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   buildHistory();
 
   $scope.$on("data-loaded", function() {
@@ -110,27 +153,6 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "curr
   function buildHistory() {
     $scope.history = TaskManagement.getHistory(currentAuth.uid);
   }
-
-}]);
-
-
-taskListApp.controller("Login.controller", ["$scope", "AuthManagement", function($scope, AuthManagement) {
-
-  $scope.name = "";
-  $scope.usersReady = AuthManagement.getUsersDataStatus();
-  $scope.currentUser = AuthManagement.getUserName();
-
-  $scope.$on("users-loaded", function() {
-    $scope.usersReady = true;
-  });
-
-  $scope.login = function() {
-    AuthManagement.login($scope.name);
-  };
-
-  $scope.logout = function() {
-    AuthManagement.logout();
-  };
 
 }]);
 
@@ -359,6 +381,7 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
 
     logout: function() {
       ref.unauth();
+      currentUser = null;
       $state.go("home");
     },
 
