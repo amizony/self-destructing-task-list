@@ -14,12 +14,21 @@
   <script src="/js/app.js"></script>
 </head>
 <body>
+
   <div class="header">
     <h1>To-do List</h1>
   </div>
 
-  <div ui-view>
-    <!-- Render template here -->
+  <div class="container">
+
+    <ng-include src="'/templates/login_bar.html'"></ng-include>
+
+    <ng-include src="'/templates/nav_bar.html'"></ng-include>
+
+    <div ui-view>
+      <!-- Render template here -->
+    </div>
+
   </div>
 
 </body>

@@ -1,5 +1,3 @@
-var colorForCSS = "#3299BB";
-
 taskListApp = angular.module("TaskListApp", ["ui.router","firebase"]);
 
 
@@ -9,39 +7,109 @@ taskListApp = angular.module("TaskListApp", ["ui.router","firebase"]);
 taskListApp.config(["$stateProvider", "$locationProvider", function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
-    // @see https://docs.angularjs.org/error/$location/nobase
     requireBase: false
   });
 
   $stateProvider.state("home", {
     url: "/",
-    controller: "ActiveTask.controller",
     templateUrl: "/templates/home.html"
+  });
+
+  $stateProvider.state("tasks", {
+    url: "/tasks",
+    controller: "ActiveTask.controller",
+    templateUrl: "/templates/tasks.html",
+    resolve: {
+      "currentAuth": ["Auth", function(Auth) {
+        return Auth.$requireAuth();
+      }]
+    }
   });
 
   $stateProvider.state("history", {
     url: "/history",
     controller: "PastTask.controller",
-    templateUrl: "/templates/history.html"
+    templateUrl: "/templates/history.html",
+    resolve: {
+      "currentAuth": ["Auth", function(Auth) {
+        return Auth.$requireAuth();
+      }]
+    }
   });
 
 }]);
 
 
 // ---------------------------------
-// Sync with firebase
+// Sync with firebase & Authentication redirect
 
-taskListApp.run(["TaskManagement", function(TaskManagement) {
+taskListApp.run(["TaskManagement", "AuthManagement", function(TaskManagement, AuthManagement) {
+  AuthManagement.fetchUsers();
   TaskManagement.fetchData();
+  AuthManagement.unauthentifiedRedirect();
+  AuthManagement.authentifiedRedirect();
+}]);
+
+
+taskListApp.factory("Auth", ["$firebaseAuth" , function($firebaseAuth) {
+  var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
+  return $firebaseAuth(ref);
 }]);
 
 
 // ---------------------------------
 // Controllers
 
-taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
+taskListApp.controller("NavBar.controller", ["$scope", "$rootScope", function($scope, $rootScope) {
 
-  $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
+  var color = "#3299BB";
+  var activeStyle = {"background-color" : color, "border-bottom" : "3px solid" + color};
+
+
+  $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+    $scope.tasksStyle = {};
+    $scope.historyStyle = {};
+    if (toState.name == "tasks") {
+      $scope.tasksStyle = activeStyle;
+      $scope.historyStyle = {};
+    }
+    if (toState.name == "history") {
+      $scope.tasksStyle = {};
+      $scope.historyStyle = activeStyle;
+    }
+  });
+}]);
+
+
+taskListApp.controller("Login.controller", ["$scope", "$rootScope", "AuthManagement", function($scope, $rootScope, AuthManagement) {
+
+  $scope.name = "";
+  $scope.usersReady = AuthManagement.getUsersDataStatus();
+  $scope.currentUser = AuthManagement.getUserName();
+
+  $rootScope.$on("users-loaded", function() {
+    $scope.usersReady = true;
+  });
+
+  $rootScope.$on("$stateChangeSuccess", function() {
+    $scope.currentUser = AuthManagement.getUserName();
+  });
+
+  $scope.login = function() {
+    AuthManagement.login($scope.name);
+    $scope.name = "";
+  };
+
+  $scope.logout = function() {
+    AuthManagement.logout();
+    $scope.currentUser = null;
+  };
+
+}]);
+
+
+taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
+
   $scope.newTaskPriority = 2;
   buildList();
 
@@ -54,11 +122,11 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
   });
 
   function buildList() {
-    $scope.tasks = TaskManagement.getList();
+    $scope.tasks = TaskManagement.getList(currentAuth.uid);
   }
 
   $scope.addTask = function() {
-    TaskManagement.createTask($scope.newTaskDescription,$scope.newTaskPriority);
+    TaskManagement.createTask($scope.newTaskDescription, $scope.newTaskPriority, currentAuth.uid);
     $scope.newTaskDescription = "";
     $scope.newTaskPriority = 2;
   };
@@ -70,9 +138,8 @@ taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", fun
 }]);
 
 
-taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", function($scope, TaskManagement) {
+taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
 
-  $scope.background = {"background-color" : colorForCSS, "border-bottom" : "3px solid" + colorForCSS};
   buildHistory();
 
   $scope.$on("data-loaded", function() {
@@ -84,40 +151,41 @@ taskListApp.controller("PastTask.controller", ["$scope", "TaskManagement", funct
   });
 
   function buildHistory() {
-    $scope.history = TaskManagement.getHistory();
+    $scope.history = TaskManagement.getHistory(currentAuth.uid);
   }
 
 }]);
 
 
 // ---------------------------------
-// Service
+// Services
 
 taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function($rootScope, $firebaseArray) {
 
+  var oneWeek = 1000*60*60*24*7;
   var intervalID;
+  var firebaseTasks;
+
   $rootScope.$on("data-loaded", function() {
     intervalID = setInterval(clearOldTasks, 1000*60);
   });
 
-  var oneWeek = 1000*60*60*24*7;
-
-  var clearOldTasks = function() {
+  function clearOldTasks() {
     var time = new Date();
     console.log("-- Looking for old tasks --");
-    for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-      var age = time.getTime() - $rootScope.fireBaseTasks[i].date;
-      if ((age > oneWeek) && ($rootScope.fireBaseTasks[i].status == "active")) {
-        $rootScope.fireBaseTasks[i].status = "expired";
-        $rootScope.fireBaseTasks[i].date += oneWeek;
-        $rootScope.fireBaseTasks.$save(i).then(function() {
+    for (var i = 0; i < firebaseTasks.length; i++) {
+      var age = time.getTime() - firebaseTasks[i].date;
+      if ((age > oneWeek) && (firebaseTasks[i].status == "active")) {
+        firebaseTasks[i].status = "expired";
+        firebaseTasks[i].date += oneWeek;
+        firebaseTasks.$save(i).then(function() {
           $rootScope.$broadcast("data-edited");
         });
       }
     }
   };
 
-  var orderHistory = function(history) {
+  function orderHistory(history) {
     var ordered = false;
     var reset = false;
     var n = 0;
@@ -145,51 +213,48 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
   return {
     fetchData: function() {
-      var ref = new Firebase("https://luminous-fire-9311.firebaseio.com/messages");
-      $rootScope.fireBaseTasks = $firebaseArray(ref);
-
-      $rootScope.fireBaseTasks.$loaded().then(function() {
+      var tasksRef = new Firebase("https://luminous-fire-9311.firebaseio.com/tasks");
+      firebaseTasks = $firebaseArray(tasksRef);
+      firebaseTasks.$loaded().then(function() {
         $rootScope.$broadcast("data-loaded");
       });
     },
-    getList: function() {
-      var list = [];
 
+    getList: function(uid) {
+      var list = [];
       // build array of active tasks
-      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if ($rootScope.fireBaseTasks[i].status == "active") {
-          list.push($rootScope.fireBaseTasks[i]);
+      for (var i = 0; i < firebaseTasks.length; i++) {
+        if ((firebaseTasks[i].owner == uid) && (firebaseTasks[i].status == "active")) {
+          list.push(firebaseTasks[i]);
         }
       }
-
       return list;
     },
 
-    getHistory: function() {
+    getHistory: function(uid) {
       var list = [];
-
       // build array of completed and expired tasks
-      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if ($rootScope.fireBaseTasks[i].status != "active") {
-          list.push($rootScope.fireBaseTasks[i]);
+      for (var i = 0; i < firebaseTasks.length; i++) {
+        if ((firebaseTasks[i].owner == uid) && (firebaseTasks[i].status != "active")) {
+          list.push(firebaseTasks[i]);
         }
       }
-      
       // order the array and return it
-      if (list.length < 1) {
+      if (list.length < 2) {
         return list;
       } else {
         return orderHistory(list);
       }
     },
 
-    createTask: function(description, priority) {
+    createTask: function(description, priority, uid) {
       var time = new Date();
-      $rootScope.fireBaseTasks.$add({
+      firebaseTasks.$add({
         desc: description,
         date: time.getTime(),
         status: "active",
-        priority: priority
+        priority: priority,
+        owner: uid
       }).then(function() {
         $rootScope.$broadcast("data-edited");
       });
@@ -197,17 +262,132 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
     validateTask: function(id) {
       var time = new Date();
-      for (var i = 0; i < $rootScope.fireBaseTasks.length; i++) {
-        if ($rootScope.fireBaseTasks[i].$id == id) {
-          $rootScope.fireBaseTasks[i].status = "completed";
-          $rootScope.fireBaseTasks[i].date = time.getTime();
-          $rootScope.fireBaseTasks.$save(i).then(function() {
+      for (var i = 0; i < firebaseTasks.length; i++) {
+        if (firebaseTasks[i].$id == id) {
+          firebaseTasks[i].status = "completed";
+          firebaseTasks[i].date = time.getTime();
+          firebaseTasks.$save(i).then(function() {
             $rootScope.$broadcast("data-edited");
           });
         }
       }
     }
+  };
+}]);
+
+
+
+taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebaseArray", "$state", function($rootScope, $firebaseAuth, $firebaseArray, $state) {
+
+  var ref = new Firebase("https://luminous-fire-9311.firebaseio.com");
+  var auth = $firebaseAuth(ref);
+
+  var users = null;
+  var token;
+  var uid;
+  var currentUser = null;
+
+
+  function attributeUid(uName) {
+    var user = lookForUser(uName);
+    if (user) {
+      // if user exist, then he already has an uid
+      return user.uid;
+    } else{
+      // else we create a new user
+      return createUser(uName);
+    }
+  }
+
+  function lookForUser(uName) {
+    // looks if user already exist in database
+    for (var i = 0; i < users.length; i++) {;
+      if (users[i].name == uName) {
+        return users[i];
+      }
+    }
+    return false;
+  }
+
+  function createUser(uName) {
+    var id = generateNewId(uName);
+    users.$add({
+      name: uName,
+      uid: id
+    });
+    return id;
+  }
+
+  function generateNewId(uName) {
+    var uid = uName;
+    uid += ":";
+    uid += Math.floor((Math.random() * 1000000000));
+    return uid;
+  }
+
+  function generateToken(id) {
+    var FirebaseTokenGenerator = require("firebase-token-generator");
+    var tokenGenerator = new FirebaseTokenGenerator("qB4QRZgjiuWH2Vv1Sg2KrQy9Yjp40E6pCFSez0Oe");
+    token = tokenGenerator.createToken({ uid: id });
+  }
+
+  return {
+    fetchUsers: function() {
+      var usersRef = new Firebase("https://luminous-fire-9311.firebaseio.com/users");
+      users = $firebaseArray(usersRef);
+      users.$loaded().then(function() {
+        $rootScope.$broadcast("users-loaded");
+      });
+    },
+
+    unauthentifiedRedirect: function() {
+      $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+        if (error === "AUTH_REQUIRED") {
+          $state.go("home");
+        }
+      });
+    },
+
+    authentifiedRedirect: function() {
+      if (auth.$getAuth()) {
+        currentUser = auth.$getAuth().uid.slice(0,auth.$getAuth().uid.lastIndexOf(":"));
+        users.$loaded().then(function() {
+          if ($state.current.name == "history") {
+            $state.go("history");
+          } else {
+            $state.go("tasks");
+          }
+        });
+      }
+    },
+
+    getUsersDataStatus: function() {
+      return (users !== null);
+    },
+
+    login: function(name) {
+      uid = attributeUid(name);
+      generateToken(uid);
+      ref.authWithCustomToken(token, function(error, authData) {
+        if (error) {
+          console.log("Login Failed!", error);
+        } else {
+          console.log("Login Succeeded!", authData);
+          $state.go("tasks");
+          currentUser = name;
+        }
+      });
+    },
+
+    logout: function() {
+      ref.unauth();
+      currentUser = null;
+      $state.go("home");
+    },
+
+    getUserName: function() {
+      return currentUser;
+    }
 
   };
-
 }]);

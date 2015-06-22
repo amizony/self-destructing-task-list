@@ -15,7 +15,8 @@ HTML5 application built with [Grunt](http://gruntjs.com/) and using:
 * Tasks expire if not completed within one week
 * Task can be created with a priority
 * History of completed and expired tasks
-* Display smartphones friendly
+* Display mobile-phones friendly
+* Authentication 
 
 
 ## Quick start
