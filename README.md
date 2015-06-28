@@ -2,6 +2,8 @@
 
 A Task list application built during my apprenticeship at [Bloc.io](https://www.bloc.io).
 
+Demo is available on heroku: [Task-list](http://my-little-task-list.herokuapp.com/).
+
 ## Technologies
 
 HTML5 application built with [Grunt](http://gruntjs.com/) and using:
@@ -16,7 +18,7 @@ HTML5 application built with [Grunt](http://gruntjs.com/) and using:
 * Task can be created with a priority
 * History of completed and expired tasks
 * Display mobile-phones friendly
-* Authentication 
+* Authentication
 
 
 ## Quick start
