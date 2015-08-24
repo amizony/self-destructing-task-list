@@ -155,6 +155,23 @@ $font-big: 1.2em;
     }
   }
 
+// Changing placeholder color in the form
+  *::-webkit-input-placeholder {
+      color: white;
+  }
+  *:-moz-placeholder {
+      /* FF 4-18 */
+      color: white;
+  }
+  *::-moz-placeholder {
+      /* FF 19+ */
+      color: white;
+  }
+  *:-ms-input-placeholder {
+      /* IE 10+ */
+      color: white;
+  }
+
   .container {
     max-width: 800px;
     margin: 0 auto;
@@ -173,7 +190,10 @@ $font-big: 1.2em;
           margin-top: 0px;
           width: 100%;
           font-size: $font-medium;
-          background-color: $color-task-low;
+          background-color: $color-task-med;
+          box-shadow: none;
+          outline: none;
+          border: none;
         }
       }
 

@@ -51,6 +51,17 @@
         color: white;
         padding-left: 15px;
         padding-right: 15px; }
+  *::-webkit-input-placeholder {
+    color: white; }
+  *:-moz-placeholder {
+    /* FF 4-18 */
+    color: white; }
+  *::-moz-placeholder {
+    /* FF 19+ */
+    color: white; }
+  *:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white; }
   .container {
     max-width: 800px;
     margin: 0 auto;
@@ -82,7 +93,10 @@
           margin-top: 0px;
           width: 100%;
           font-size: 1.1em;
-          background-color: #FFE0B3; }
+          background-color: #FFC266;
+          box-shadow: none;
+          outline: none;
+          border: none; }
       .container .new-task .priority {
         margin-top: 0px;
         padding-top: 0px;
