@@ -147,36 +147,39 @@ $font-big: 1.2em;
 
     .new-task {
       @include task-style($color-task-med);
-      vertical-align: middle;
-      min-height: 47px;
 
       .name {
         margin-top: 0px;
-        margin-left: 30px;
-        width: 30%;
+        padding-top: 0px;
+        margin-left: 5%;
+        width: 60%;
 
         input {
+          margin-top: 0px;
           width: 100%;
+          font-size: $font-medium;
+          background-color: $color-task-low;
         }
       }
 
       .priority {
         margin-top: 0px;
-        margin-left: 20px;
+        padding-top: 0px;
+        padding-left: 5%;
+        padding-bottom: 10px;
         font-size: $font-small;
-        display: inline-block;
-        width: 38%;
-        min-width: 170px;
+        width: 50%;
       }
 
       .btn {
-        margin-top: 0px;
-        width: 15%;
-        min-width: 120px;
+        width: 20%;
+        padding-top: 15px;
+        float: right;
 
         button {
-          min-height: 35px;
           width: 120px;
+          margin-right: 20px;
+          min-height: 35px;
           font-size: $font-medium;
           font-weight: bolder;
         }

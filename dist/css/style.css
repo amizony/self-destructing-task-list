@@ -55,9 +55,7 @@
       background-color: #FFC266;
       border-bottom: 1px solid black;
       max-width: 800px;
-      font-family: sans-serif;
-      vertical-align: middle;
-      min-height: 47px; }
+      font-family: sans-serif; }
       .container .new-task div {
         display: inline-block;
         padding-top: 15px;
@@ -73,24 +71,29 @@
         font-family: monospace; }
       .container .new-task .name {
         margin-top: 0px;
-        margin-left: 30px;
-        width: 30%; }
+        padding-top: 0px;
+        margin-left: 5%;
+        width: 60%; }
         .container .new-task .name input {
-          width: 100%; }
+          margin-top: 0px;
+          width: 100%;
+          font-size: 1.1em;
+          background-color: #FFE0B3; }
       .container .new-task .priority {
         margin-top: 0px;
-        margin-left: 20px;
+        padding-top: 0px;
+        padding-left: 5%;
+        padding-bottom: 10px;
         font-size: 0.7em;
-        display: inline-block;
-        width: 38%;
-        min-width: 170px; }
+        width: 50%; }
       .container .new-task .btn {
-        margin-top: 0px;
-        width: 15%;
-        min-width: 120px; }
+        width: 20%;
+        padding-top: 15px;
+        float: right; }
         .container .new-task .btn button {
-          min-height: 35px;
           width: 120px;
+          margin-right: 20px;
+          min-height: 35px;
           font-size: 1.1em;
           font-weight: bolder; }
     .container .high {
