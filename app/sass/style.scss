@@ -14,6 +14,8 @@ $color-red: #FF5960;
 $color-orange: #E8A046;
 $color-yellow: #FFF790;
 
+$color-transparent: rgba(255, 255, 255, 0);
+
 $font-small: 0.7em;
 $font-medium: 1.1em;
 $font-big: 1.2em;
@@ -58,7 +60,20 @@ $font-big: 1.2em;
     min-height: 35px;
     font-size: $font-medium;
     font-weight: bolder;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: $color-transparent;
+    border: 2px solid black;
+    text-align: center;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
   }
+
+  button:hover, button:active {
+    background-color: #fff;
+  }
+
 }
 
 // Syle
@@ -88,6 +103,22 @@ $font-big: 1.2em;
 
     span {
       font-style: italic;
+    }
+
+    button {
+      font-weight: bolder;
+      border-radius: 5px;
+      font-size: 0.9em;
+      background-color: $color-transparent;
+      border: 1px solid black;
+      text-align: center;
+      outline: none;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button:hover, button:active {
+      background-color: #fff;
     }
   }
 
@@ -129,22 +160,6 @@ $font-big: 1.2em;
     margin: 0 auto;
     font-size: $font-big;
 
-    .menu {
-      background-color: $color-task-med;
-      font-family: sans-serif;
-      //border-left: 1px solid $color-menu-activ;
-      //border-right: 1px solid $color-menu-activ;
-
-      .menu-item {
-        display: inline-block;
-        margin-left: 70px;
-      }
-
-      .n1 {
-        width: 30%;
-      }
-    }
-
     .new-task {
       @include task-style($color-task-med);
 
@@ -172,17 +187,7 @@ $font-big: 1.2em;
       }
 
       .btn {
-        width: 20%;
-        padding-top: 15px;
-        float: right;
-
-        button {
-          width: 120px;
-          margin-right: 20px;
-          min-height: 35px;
-          font-size: $font-medium;
-          font-weight: bolder;
-        }
+        @include btn-style();
       }
     }
 
