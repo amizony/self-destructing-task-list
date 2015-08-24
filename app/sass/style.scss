@@ -50,10 +50,11 @@ $font-big: 1.2em;
   width: 20%;
 
   button {
-    width: 100%;
+    width: 120px;
     margin-right: 20px;
     min-height: 35px;
     font-size: $font-medium;
+    font-weight: bolder;
   }
 }
 
@@ -83,7 +84,7 @@ $font-big: 1.2em;
     font-family: sans-serif;
 
     span {
-      font-style: italic;  
+      font-style: italic;
     }
   }
 
@@ -103,7 +104,7 @@ $font-big: 1.2em;
       display: inline;
       margin-left: 30px;
       font-size: $font-big;
-      font-family: cursive;
+      font-family: sans-serif;
       background-color: $color-blue;
       height: 100%;
       border-top-left-radius: 8px;
@@ -113,7 +114,7 @@ $font-big: 1.2em;
       a {
         text-decoration: none;
         font-weight: bold;
-        color: black;
+        color: white;
         padding-left: 15px;
         padding-right: 15px;
       }
@@ -127,7 +128,7 @@ $font-big: 1.2em;
 
     .menu {
       background-color: $color-task-med;
-      font-family: cursive;
+      font-family: sans-serif;
       //border-left: 1px solid $color-menu-activ;
       //border-right: 1px solid $color-menu-activ;
 
@@ -172,8 +173,9 @@ $font-big: 1.2em;
 
         button {
           min-height: 35px;
-          max-width: 150px;
+          width: 120px;
           font-size: $font-medium;
+          font-weight: bolder;
         }
       }
     }

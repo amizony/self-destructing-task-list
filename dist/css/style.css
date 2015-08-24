@@ -27,7 +27,7 @@
       display: inline;
       margin-left: 30px;
       font-size: 1.2em;
-      font-family: cursive;
+      font-family: sans-serif;
       background-color: #68C0FF;
       height: 100%;
       border-top-left-radius: 8px;
@@ -36,7 +36,7 @@
       .navbar li a {
         text-decoration: none;
         font-weight: bold;
-        color: black;
+        color: white;
         padding-left: 15px;
         padding-right: 15px; }
   .container {
@@ -45,7 +45,7 @@
     font-size: 1.2em; }
     .container .menu {
       background-color: #FFC266;
-      font-family: cursive; }
+      font-family: sans-serif; }
       .container .menu .menu-item {
         display: inline-block;
         margin-left: 70px; }
@@ -89,8 +89,9 @@
         min-width: 120px; }
         .container .new-task .btn button {
           min-height: 35px;
-          max-width: 150px;
-          font-size: 1.1em; }
+          width: 120px;
+          font-size: 1.1em;
+          font-weight: bolder; }
     .container .high {
       background-color: #FFAD33;
       min-height: 70px;
@@ -111,10 +112,11 @@
       .container .high .btn {
         width: 20%; }
         .container .high .btn button {
-          width: 100%;
+          width: 120px;
           margin-right: 20px;
           min-height: 35px;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          font-weight: bolder; }
     .container .med {
       background-color: #FFC266;
       min-height: 70px;
@@ -135,10 +137,11 @@
       .container .med .btn {
         width: 20%; }
         .container .med .btn button {
-          width: 100%;
+          width: 120px;
           margin-right: 20px;
           min-height: 35px;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          font-weight: bolder; }
     .container .low {
       background-color: #FFE0B3;
       min-height: 70px;
@@ -159,10 +162,11 @@
       .container .low .btn {
         width: 20%; }
         .container .low .btn button {
-          width: 100%;
+          width: 120px;
           margin-right: 20px;
           min-height: 35px;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          font-weight: bolder; }
     .container .completed {
       background-color: #FFF790;
       min-height: 70px;
