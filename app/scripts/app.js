@@ -211,6 +211,15 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
     return history;
   };
 
+  function secondsToString(miliSec) {
+    var days = Math.floor(miliSec / (1000*60*60*24));
+    miliSec = miliSec % (1000*60*60*24);
+    var hours = Math.floor(miliSec / (1000*60*60));
+    miliSec = miliSec % (1000*60*60);
+    var min = Math.floor(miliSec / (1000*60));
+    return days + " days, " + hours + " hours, " + min + " min."
+  }
+
   return {
     fetchData: function() {
       var tasksRef = new Firebase("https://luminous-fire-9311.firebaseio.com/tasks");
@@ -222,10 +231,12 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
     getList: function(uid) {
       var list = [];
+      var time = new Date();
       // build array of active tasks
       for (var i = 0; i < firebaseTasks.length; i++) {
         if ((firebaseTasks[i].owner == uid) && (firebaseTasks[i].status == "active")) {
           list.push(firebaseTasks[i]);
+          list[list.length - 1].timeLeft = secondsToString(oneWeek + firebaseTasks[i].date - time.getTime());
         }
       }
       return list;
@@ -236,7 +247,10 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
       // build array of completed and expired tasks
       for (var i = 0; i < firebaseTasks.length; i++) {
         if ((firebaseTasks[i].owner == uid) && (firebaseTasks[i].status != "active")) {
+          var time = new Date(null);
+          time.setTime(firebaseTasks[i].date);
           list.push(firebaseTasks[i]);
+          list[list.length - 1].end = time.toLocaleDateString();
         }
       }
       // order the array and return it

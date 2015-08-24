@@ -2,11 +2,17 @@
   <div ng-repeat="task in history">
 
     <div ng-if="task.status == 'expired'" class="task expired">
-      <div><span>{{task.desc}}</span></div>
+      <div><span>{{ task.desc }}</span></div>
+      <div class="time">
+        Expired on: {{ task.end }}
+      </div>
     </div>
 
     <div ng-if="task.status == 'completed'" class="task completed">
-      <div><span>{{task.desc}}</span></div>
+      <div><span>{{ task.desc }}</span></div>
+      <div class="time">
+        Completed on: {{ task.end }}
+      </div>
     </div>
   </div>
 </div>

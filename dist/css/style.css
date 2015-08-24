@@ -57,6 +57,10 @@
         margin-top: 15px;
         display: inline-block;
         width: 70%; }
+      .container .new-task .time {
+        margin-top: 0px;
+        margin-left: 30%;
+        font-size: 0.7em; }
       .container .new-task span {
         margin-left: 30px; }
       .container .new-task .name {
@@ -90,6 +94,10 @@
         margin-top: 15px;
         display: inline-block;
         width: 70%; }
+      .container .high .time {
+        margin-top: 0px;
+        margin-left: 30%;
+        font-size: 0.7em; }
       .container .high span {
         margin-left: 30px; }
       .container .high .btn {
@@ -109,6 +117,10 @@
         margin-top: 15px;
         display: inline-block;
         width: 70%; }
+      .container .med .time {
+        margin-top: 0px;
+        margin-left: 30%;
+        font-size: 0.7em; }
       .container .med span {
         margin-left: 30px; }
       .container .med .btn {
@@ -128,6 +140,10 @@
         margin-top: 15px;
         display: inline-block;
         width: 70%; }
+      .container .low .time {
+        margin-top: 0px;
+        margin-left: 30%;
+        font-size: 0.7em; }
       .container .low span {
         margin-left: 30px; }
       .container .low .btn {
@@ -147,6 +163,10 @@
         margin-top: 15px;
         display: inline-block;
         width: 70%; }
+      .container .completed .time {
+        margin-top: 0px;
+        margin-left: 30%;
+        font-size: 0.7em; }
       .container .completed span {
         margin-left: 30px; }
     .container .expired {
@@ -159,6 +179,10 @@
         margin-top: 15px;
         display: inline-block;
         width: 70%; }
+      .container .expired .time {
+        margin-top: 0px;
+        margin-left: 30%;
+        font-size: 0.7em; }
       .container .expired span {
         margin-left: 30px; } }
 
