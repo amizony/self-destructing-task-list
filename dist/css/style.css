@@ -74,9 +74,8 @@
       .container .new-task div {
         display: inline-block;
         padding-top: 15px;
-        width: 75%; }
-      .container .new-task span {
-        padding-left: 5%; }
+        padding-left: 5%;
+        width: 70%; }
       .container .new-task .time {
         width: 50%;
         padding-top: 0px;
@@ -86,8 +85,7 @@
         font-family: monospace; }
       .container .new-task .name {
         margin-top: 0px;
-        padding-top: 0px;
-        margin-left: 5%;
+        padding: 0px;
         width: 60%; }
         .container .new-task .name input {
           margin-top: 0px;
@@ -99,11 +97,10 @@
           border: none; }
       .container .new-task .priority {
         margin-top: 0px;
-        padding-top: 0px;
-        padding-left: 5%;
+        padding: 0px;
         padding-bottom: 10px;
         font-size: 0.7em;
-        width: 50%; }
+        width: 100%; }
       .container .new-task .btn {
         width: 20%;
         padding-top: 15px;
@@ -132,9 +129,8 @@
       .container .high div {
         display: inline-block;
         padding-top: 15px;
-        width: 75%; }
-      .container .high span {
-        padding-left: 5%; }
+        padding-left: 5%;
+        width: 70%; }
       .container .high .time {
         width: 50%;
         padding-top: 0px;
@@ -170,9 +166,8 @@
       .container .med div {
         display: inline-block;
         padding-top: 15px;
-        width: 75%; }
-      .container .med span {
-        padding-left: 5%; }
+        padding-left: 5%;
+        width: 70%; }
       .container .med .time {
         width: 50%;
         padding-top: 0px;
@@ -208,9 +203,8 @@
       .container .low div {
         display: inline-block;
         padding-top: 15px;
-        width: 75%; }
-      .container .low span {
-        padding-left: 5%; }
+        padding-left: 5%;
+        width: 70%; }
       .container .low .time {
         width: 50%;
         padding-top: 0px;
@@ -246,9 +240,8 @@
       .container .completed div {
         display: inline-block;
         padding-top: 15px;
-        width: 75%; }
-      .container .completed span {
-        padding-left: 5%; }
+        padding-left: 5%;
+        width: 70%; }
       .container .completed .time {
         width: 50%;
         padding-top: 0px;
@@ -264,9 +257,8 @@
       .container .expired div {
         display: inline-block;
         padding-top: 15px;
-        width: 75%; }
-      .container .expired span {
-        padding-left: 5%; }
+        padding-left: 5%;
+        width: 70%; }
       .container .expired .time {
         width: 50%;
         padding-top: 0px;

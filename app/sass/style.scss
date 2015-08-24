@@ -31,11 +31,8 @@ $font-big: 1.2em;
   div {
     display: inline-block;
     padding-top: 15px;
-    width: 75%;
-  }
-
-  span {
     padding-left: 5%;
+    width: 70%;
   }
 
   .time {
@@ -182,8 +179,7 @@ $font-big: 1.2em;
 
       .name {
         margin-top: 0px;
-        padding-top: 0px;
-        margin-left: 5%;
+        padding: 0px;
         width: 60%;
 
         input {
@@ -199,11 +195,10 @@ $font-big: 1.2em;
 
       .priority {
         margin-top: 0px;
-        padding-top: 0px;
-        padding-left: 5%;
+        padding: 0px;
         padding-bottom: 10px;
         font-size: $font-small;
-        width: 50%;
+        width: 100%;
       }
 
       .btn {
