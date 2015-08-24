@@ -25,6 +25,7 @@ $font-big: 1.2em;
   min-height: 70px;
   border-bottom: 1px solid black;
   max-width: 800px;
+  font-family: sans-serif;
 
   div {
     margin-top: 15px;
@@ -36,6 +37,7 @@ $font-big: 1.2em;
     margin-top: 0px;
     margin-left: 30%;
     font-size: $font-small;
+    font-family: monospace;
   }
 
   span {
@@ -72,6 +74,16 @@ $font-big: 1.2em;
 
     h1 {
       font-size: 3em;
+      font-family: monospace;
+    }
+  }
+
+  .logbar {
+    font-size: $font-medium;
+    font-family: sans-serif;
+
+    span {
+      font-style: italic;  
     }
   }
 
@@ -91,6 +103,7 @@ $font-big: 1.2em;
       display: inline;
       margin-left: 30px;
       font-size: $font-big;
+      font-family: cursive;
       background-color: $color-blue;
       height: 100%;
       border-top-left-radius: 8px;
@@ -114,6 +127,7 @@ $font-big: 1.2em;
 
     .menu {
       background-color: $color-task-med;
+      font-family: cursive;
       //border-left: 1px solid $color-menu-activ;
       //border-right: 1px solid $color-menu-activ;
 
@@ -199,9 +213,6 @@ $font-big: 1.2em;
 @media screen and (max-width: 600px){
   body {
     font-size: .75em;
-  }
-  h1 {
-    color: red;
   }
 
   .navbar li {

@@ -7,7 +7,13 @@
   .header {
     text-align: center; }
     .header h1 {
-      font-size: 3em; }
+      font-size: 3em;
+      font-family: monospace; }
+  .logbar {
+    font-size: 1.1em;
+    font-family: sans-serif; }
+    .logbar span {
+      font-style: italic; }
   .navbar {
     text-align: left;
     margin-bottom: 0px;
@@ -21,6 +27,7 @@
       display: inline;
       margin-left: 30px;
       font-size: 1.2em;
+      font-family: cursive;
       background-color: #68C0FF;
       height: 100%;
       border-top-left-radius: 8px;
@@ -37,7 +44,8 @@
     margin: 0 auto;
     font-size: 1.2em; }
     .container .menu {
-      background-color: #FFC266; }
+      background-color: #FFC266;
+      font-family: cursive; }
       .container .menu .menu-item {
         display: inline-block;
         margin-left: 70px; }
@@ -48,6 +56,7 @@
       min-height: 70px;
       border-bottom: 1px solid black;
       max-width: 800px;
+      font-family: sans-serif;
       vertical-align: middle;
       min-height: 47px; }
       .container .new-task div {
@@ -57,7 +66,8 @@
       .container .new-task .time {
         margin-top: 0px;
         margin-left: 30%;
-        font-size: 0.7em; }
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .new-task span {
         margin-left: 30px; }
       .container .new-task .name {
@@ -85,7 +95,8 @@
       background-color: #FFAD33;
       min-height: 70px;
       border-bottom: 1px solid black;
-      max-width: 800px; }
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .high div {
         margin-top: 15px;
         display: inline-block;
@@ -93,7 +104,8 @@
       .container .high .time {
         margin-top: 0px;
         margin-left: 30%;
-        font-size: 0.7em; }
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .high span {
         margin-left: 30px; }
       .container .high .btn {
@@ -107,7 +119,8 @@
       background-color: #FFC266;
       min-height: 70px;
       border-bottom: 1px solid black;
-      max-width: 800px; }
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .med div {
         margin-top: 15px;
         display: inline-block;
@@ -115,7 +128,8 @@
       .container .med .time {
         margin-top: 0px;
         margin-left: 30%;
-        font-size: 0.7em; }
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .med span {
         margin-left: 30px; }
       .container .med .btn {
@@ -129,7 +143,8 @@
       background-color: #FFE0B3;
       min-height: 70px;
       border-bottom: 1px solid black;
-      max-width: 800px; }
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .low div {
         margin-top: 15px;
         display: inline-block;
@@ -137,7 +152,8 @@
       .container .low .time {
         margin-top: 0px;
         margin-left: 30%;
-        font-size: 0.7em; }
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .low span {
         margin-left: 30px; }
       .container .low .btn {
@@ -151,7 +167,8 @@
       background-color: #FFF790;
       min-height: 70px;
       border-bottom: 1px solid black;
-      max-width: 800px; }
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .completed div {
         margin-top: 15px;
         display: inline-block;
@@ -159,14 +176,16 @@
       .container .completed .time {
         margin-top: 0px;
         margin-left: 30%;
-        font-size: 0.7em; }
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .completed span {
         margin-left: 30px; }
     .container .expired {
       background-color: #FF5960;
       min-height: 70px;
       border-bottom: 1px solid black;
-      max-width: 800px; }
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .expired div {
         margin-top: 15px;
         display: inline-block;
@@ -174,15 +193,14 @@
       .container .expired .time {
         margin-top: 0px;
         margin-left: 30%;
-        font-size: 0.7em; }
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .expired span {
         margin-left: 30px; } }
 
 @media screen and (max-width: 600px) {
   body {
     font-size: 0.75em; }
-  h1 {
-    color: red; }
   .navbar li {
     margin-left: 10px; }
   .tasks .menu .menu-item {
