@@ -8,10 +8,13 @@
     text-align: center; }
     .header h1 {
       font-size: 3em;
-      font-family: monospace; }
+      font-family: monospace;
+      padding-top: 10px;
+      padding-bottom: 60px; }
   .logbar {
     font-size: 1.1em;
-    font-family: sans-serif; }
+    font-family: sans-serif;
+    padding-bottom: 20px; }
     .logbar span {
       font-style: italic; }
     .logbar button {

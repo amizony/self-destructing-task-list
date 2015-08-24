@@ -91,12 +91,15 @@ $font-big: 1.2em;
     h1 {
       font-size: 3em;
       font-family: monospace;
+      padding-top: 10px;
+      padding-bottom: 60px;
     }
   }
 
   .logbar {
     font-size: $font-medium;
     font-family: sans-serif;
+    padding-bottom: 20px;
 
     span {
       font-style: italic;

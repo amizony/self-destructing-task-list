@@ -2,7 +2,7 @@
 
   <div class="login" ng-hide="currentUser">
     <form ng-submit="login()">
-      <input ng-model="name" placeholder="Enter your name" />
+      Username: <input ng-model="name" placeholder="Enter your name" />
       <button type="submit" ng-disabled="!usersReady || name === ''">Login</button>
     </form>
   </div>
