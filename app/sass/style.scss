@@ -8,6 +8,12 @@ $color-expired: #FF8A7A;
 $color-completed: #66FF96;
 $color-button: #424242;
 
+$color-blue: #68C0FF;
+$color-violet: #7C20E8;
+$color-red: #FF5960;
+$color-orange: #E8A046;
+$color-yellow: #FFF790;
+
 $font-small: 0.7em;
 $font-medium: 1.1em;
 $font-big: 1.2em;
@@ -17,14 +23,13 @@ $font-big: 1.2em;
 @mixin task-style($background-color) {
   background-color: $background-color;
   min-height: 70px;
-  border: 1px solid $color-menu-activ;
-  border-top: none;
+  border-bottom: 1px solid black;
   max-width: 800px;
 
   div {
     margin-top: 15px;
     display: inline-block;
-    width: 70%;
+    width: 75%;
   }
 
   .time {
@@ -40,7 +45,7 @@ $font-big: 1.2em;
 
 
 @mixin btn-style() {
-  width: 25%;
+  width: 20%;
 
   button {
     width: 100%;
@@ -57,7 +62,8 @@ $font-big: 1.2em;
   }
 
   body {
-    background-image: url("../images/rockywall.png");
+    //background-image: url("../images/rockywall.png");
+    background-color: $color-blue;
     font-size: 1em;
   }
 
@@ -72,12 +78,12 @@ $font-big: 1.2em;
   .navbar {
     text-align: left;
     margin-bottom: 0px;
-    border-bottom: 5px solid $color-menu-activ;
+    border-bottom: 5px solid $color-violet;
 
     ul {
       margin: 0px;
       padding-left: 0px;
-      border-bottom: 1px solid $color-menu-passiv;
+      border-bottom: 1px solid $color-blue;
     }
 
     li {
@@ -85,11 +91,11 @@ $font-big: 1.2em;
       display: inline;
       margin-left: 30px;
       font-size: $font-big;
-      background-color: $color-menu-passiv;
+      background-color: $color-blue;
       height: 100%;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
-      border-bottom: 1px solid $color-menu-passiv;
+      border-bottom: 1px solid $color-blue;
 
       a {
         text-decoration: none;
@@ -108,8 +114,8 @@ $font-big: 1.2em;
 
     .menu {
       background-color: $color-task-med;
-      border-left: 1px solid $color-menu-activ;
-      border-right: 1px solid $color-menu-activ;
+      //border-left: 1px solid $color-menu-activ;
+      //border-right: 1px solid $color-menu-activ;
 
       .menu-item {
         display: inline-block;
@@ -181,11 +187,11 @@ $font-big: 1.2em;
     }
 
     .completed {
-      @include task-style($color-completed);
+      @include task-style($color-yellow);
     }
 
     .expired {
-      @include task-style($color-expired);
+      @include task-style($color-red);
     }
   }
 }

@@ -2,7 +2,7 @@
   html {
     font-size: 100%; }
   body {
-    background-image: url("../images/rockywall.png");
+    background-color: #68C0FF;
     font-size: 1em; }
   .header {
     text-align: center; }
@@ -11,21 +11,21 @@
   .navbar {
     text-align: left;
     margin-bottom: 0px;
-    border-bottom: 5px solid #3299BB; }
+    border-bottom: 5px solid #7C20E8; }
     .navbar ul {
       margin: 0px;
       padding-left: 0px;
-      border-bottom: 1px solid #BDD4FF; }
+      border-bottom: 1px solid #68C0FF; }
     .navbar li {
       list-style: none;
       display: inline;
       margin-left: 30px;
       font-size: 1.2em;
-      background-color: #BDD4FF;
+      background-color: #68C0FF;
       height: 100%;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
-      border-bottom: 1px solid #BDD4FF; }
+      border-bottom: 1px solid #68C0FF; }
       .navbar li a {
         text-decoration: none;
         font-weight: bold;
@@ -37,9 +37,7 @@
     margin: 0 auto;
     font-size: 1.2em; }
     .container .menu {
-      background-color: #FFC266;
-      border-left: 1px solid #3299BB;
-      border-right: 1px solid #3299BB; }
+      background-color: #FFC266; }
       .container .menu .menu-item {
         display: inline-block;
         margin-left: 70px; }
@@ -48,15 +46,14 @@
     .container .new-task {
       background-color: #FFC266;
       min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
+      border-bottom: 1px solid black;
       max-width: 800px;
       vertical-align: middle;
       min-height: 47px; }
       .container .new-task div {
         margin-top: 15px;
         display: inline-block;
-        width: 70%; }
+        width: 75%; }
       .container .new-task .time {
         margin-top: 0px;
         margin-left: 30%;
@@ -87,13 +84,12 @@
     .container .high {
       background-color: #FFAD33;
       min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
+      border-bottom: 1px solid black;
       max-width: 800px; }
       .container .high div {
         margin-top: 15px;
         display: inline-block;
-        width: 70%; }
+        width: 75%; }
       .container .high .time {
         margin-top: 0px;
         margin-left: 30%;
@@ -101,7 +97,7 @@
       .container .high span {
         margin-left: 30px; }
       .container .high .btn {
-        width: 25%; }
+        width: 20%; }
         .container .high .btn button {
           width: 100%;
           margin-right: 20px;
@@ -110,13 +106,12 @@
     .container .med {
       background-color: #FFC266;
       min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
+      border-bottom: 1px solid black;
       max-width: 800px; }
       .container .med div {
         margin-top: 15px;
         display: inline-block;
-        width: 70%; }
+        width: 75%; }
       .container .med .time {
         margin-top: 0px;
         margin-left: 30%;
@@ -124,7 +119,7 @@
       .container .med span {
         margin-left: 30px; }
       .container .med .btn {
-        width: 25%; }
+        width: 20%; }
         .container .med .btn button {
           width: 100%;
           margin-right: 20px;
@@ -133,13 +128,12 @@
     .container .low {
       background-color: #FFE0B3;
       min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
+      border-bottom: 1px solid black;
       max-width: 800px; }
       .container .low div {
         margin-top: 15px;
         display: inline-block;
-        width: 70%; }
+        width: 75%; }
       .container .low .time {
         margin-top: 0px;
         margin-left: 30%;
@@ -147,22 +141,21 @@
       .container .low span {
         margin-left: 30px; }
       .container .low .btn {
-        width: 25%; }
+        width: 20%; }
         .container .low .btn button {
           width: 100%;
           margin-right: 20px;
           min-height: 35px;
           font-size: 1.1em; }
     .container .completed {
-      background-color: #66FF96;
+      background-color: #FFF790;
       min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
+      border-bottom: 1px solid black;
       max-width: 800px; }
       .container .completed div {
         margin-top: 15px;
         display: inline-block;
-        width: 70%; }
+        width: 75%; }
       .container .completed .time {
         margin-top: 0px;
         margin-left: 30%;
@@ -170,15 +163,14 @@
       .container .completed span {
         margin-left: 30px; }
     .container .expired {
-      background-color: #FF8A7A;
+      background-color: #FF5960;
       min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
+      border-bottom: 1px solid black;
       max-width: 800px; }
       .container .expired div {
         margin-top: 15px;
         display: inline-block;
-        width: 70%; }
+        width: 75%; }
       .container .expired .time {
         margin-top: 0px;
         margin-left: 30%;
