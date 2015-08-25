@@ -63,7 +63,7 @@ taskListApp.factory("Auth", ["$firebaseAuth" , function($firebaseAuth) {
 
 taskListApp.controller("NavBar.controller", ["$scope", "$rootScope", function($scope, $rootScope) {
 
-  var color = "#7C20E8";
+  var color = "#3A70E5";
   var activeStyle = {"background-color" : color, "border-bottom" : "3px solid" + color};
 
 
