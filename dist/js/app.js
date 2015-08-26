@@ -111,6 +111,7 @@ taskListApp.controller("Login.controller", ["$scope", "$rootScope", "AuthManagem
 
 taskListApp.controller("ActiveTask.controller", ["$scope", "TaskManagement", "currentAuth", function($scope, TaskManagement, currentAuth) {
 
+  $scope.newTaskDescription = ""
   $scope.newTaskPriority = 2;
   buildList();
 
