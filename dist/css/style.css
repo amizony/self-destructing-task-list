@@ -2,33 +2,41 @@
   html {
     font-size: 100%; }
   body {
-    background-image: url("../images/gplaypattern.png");
-    font-size: 1em; }
+    background-image: url("../images/gplaypatterninverse.png");
+    font-size: 1em;
+    color: white; }
   .header {
     text-align: center; }
     .header h1 {
       font-size: 5.5em;
       font-family: monospace;
       padding-top: 10px;
-      padding-bottom: 40px; }
+      padding-bottom: 40px;
+      color: white; }
   .logbar {
     font-size: 1.1em;
     font-family: sans-serif;
-    padding-bottom: 20px; }
+    padding-bottom: 20px;
+    color: white; }
+    .logbar input {
+      background-color: rgba(255, 255, 255, 0.3); }
+    .logbar input:hover, .logbar input:focus {
+      background-color: white; }
     .logbar span {
       font-style: italic; }
     .logbar button {
       font-weight: bolder;
       border-radius: 5px;
       font-size: 0.9em;
+      color: white;
       background-color: rgba(255, 255, 255, 0);
-      border: 1px solid black;
+      border: 1px solid #DDD;
       text-align: center;
       outline: none;
       text-decoration: none;
       cursor: pointer; }
     .logbar button:hover, .logbar button:active {
-      background-color: #ccc; }
+      background-color: #444; }
   .navbar {
     text-align: left;
     margin-bottom: 0px;
@@ -55,16 +63,28 @@
         color: black;
         padding-left: 15px;
         padding-right: 15px; }
+  *::-webkit-input-placeholder {
+    color: white; }
+  *:-moz-placeholder {
+    /* FF 4-18 */
+    color: white; }
+  *::-moz-placeholder {
+    /* FF 19+ */
+    color: white; }
+  *:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white; }
   .container {
     max-width: 800px;
     margin: 0 auto;
     font-size: 1.2em; }
     .container .new-task {
-      background-color: #F5F5F5;
-      border-left: 7px solid #FF9900;
-      border-bottom: 1px solid #bbb;
+      background-color: #222;
+      border-left: 7px solid #E90;
+      border-bottom: 1px solid #777;
       max-width: 800px;
       font-family: sans-serif;
+      color: #DDD;
       border-left: none; }
       .container .new-task div {
         display: inline-block;
@@ -93,7 +113,7 @@
           background-color: inherit;
           box-shadow: none;
           outline: none;
-          border: 1px solid #ddd;
+          border: 1px solid #DDD;
           border-radius: 3px; }
         .container .new-task .name input:hover {
           background-color: white; }
@@ -116,22 +136,24 @@
           min-height: 35px;
           font-size: 1.1em;
           font-weight: bolder;
+          color: white;
           border-radius: 5px;
           padding: 5px;
           background-color: rgba(255, 255, 255, 0);
-          border: 2px solid black;
+          border: 2px solid #DDD;
           text-align: center;
           outline: none;
           text-decoration: none;
           cursor: pointer; }
         .container .new-task .btn button:hover, .container .new-task .btn button:active {
-          background-color: #ccc; }
+          background-color: #0b0; }
     .container .high {
-      background-color: #F5F5F5;
-      border-left: 7px solid #FF0000;
-      border-bottom: 1px solid #bbb;
+      background-color: #222;
+      border-left: 7px solid #D00;
+      border-bottom: 1px solid #777;
       max-width: 800px;
-      font-family: sans-serif; }
+      font-family: sans-serif;
+      color: #DDD; }
       .container .high div {
         display: inline-block;
         margin-top: 15px;
@@ -155,22 +177,24 @@
           min-height: 35px;
           font-size: 1.1em;
           font-weight: bolder;
+          color: white;
           border-radius: 5px;
           padding: 5px;
           background-color: rgba(255, 255, 255, 0);
-          border: 2px solid black;
+          border: 2px solid #DDD;
           text-align: center;
           outline: none;
           text-decoration: none;
           cursor: pointer; }
         .container .high .btn button:hover, .container .high .btn button:active {
-          background-color: #ccc; }
+          background-color: #0b0; }
     .container .med {
-      background-color: #F5F5F5;
-      border-left: 7px solid #FF9900;
-      border-bottom: 1px solid #bbb;
+      background-color: #222;
+      border-left: 7px solid #E90;
+      border-bottom: 1px solid #777;
       max-width: 800px;
-      font-family: sans-serif; }
+      font-family: sans-serif;
+      color: #DDD; }
       .container .med div {
         display: inline-block;
         margin-top: 15px;
@@ -194,22 +218,24 @@
           min-height: 35px;
           font-size: 1.1em;
           font-weight: bolder;
+          color: white;
           border-radius: 5px;
           padding: 5px;
           background-color: rgba(255, 255, 255, 0);
-          border: 2px solid black;
+          border: 2px solid #DDD;
           text-align: center;
           outline: none;
           text-decoration: none;
           cursor: pointer; }
         .container .med .btn button:hover, .container .med .btn button:active {
-          background-color: #ccc; }
+          background-color: #0b0; }
     .container .low {
-      background-color: #F5F5F5;
-      border-left: 7px solid #FFFF00;
-      border-bottom: 1px solid #bbb;
+      background-color: #222;
+      border-left: 7px solid #DD0;
+      border-bottom: 1px solid #777;
       max-width: 800px;
-      font-family: sans-serif; }
+      font-family: sans-serif;
+      color: #DDD; }
       .container .low div {
         display: inline-block;
         margin-top: 15px;
@@ -233,22 +259,24 @@
           min-height: 35px;
           font-size: 1.1em;
           font-weight: bolder;
+          color: white;
           border-radius: 5px;
           padding: 5px;
           background-color: rgba(255, 255, 255, 0);
-          border: 2px solid black;
+          border: 2px solid #DDD;
           text-align: center;
           outline: none;
           text-decoration: none;
           cursor: pointer; }
         .container .low .btn button:hover, .container .low .btn button:active {
-          background-color: #ccc; }
+          background-color: #0b0; }
     .container .completed {
-      background-color: #F5F5F5;
-      border-left: 7px solid #FFFF00;
-      border-bottom: 1px solid #bbb;
+      background-color: #222;
+      border-left: 7px solid #0D0;
+      border-bottom: 1px solid #777;
       max-width: 800px;
-      font-family: sans-serif; }
+      font-family: sans-serif;
+      color: #DDD; }
       .container .completed div {
         display: inline-block;
         margin-top: 15px;
@@ -262,11 +290,12 @@
         font-size: 0.7em;
         font-family: monospace; }
     .container .expired {
-      background-color: #F5F5F5;
-      border-left: 7px solid #FF0000;
-      border-bottom: 1px solid #bbb;
+      background-color: #222;
+      border-left: 7px solid #D00;
+      border-bottom: 1px solid #777;
       max-width: 800px;
-      font-family: sans-serif; }
+      font-family: sans-serif;
+      color: #DDD; }
       .container .expired div {
         display: inline-block;
         margin-top: 15px;
