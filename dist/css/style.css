@@ -2,30 +2,53 @@
   html {
     font-size: 100%; }
   body {
-    background-image: url("../images/rockywall.png");
+    background-image: url("../images/gplaypattern.png");
     font-size: 1em; }
   .header {
     text-align: center; }
     .header h1 {
-      font-size: 3em; }
+      font-size: 5.5em;
+      font-family: monospace;
+      padding-top: 10px;
+      padding-bottom: 40px; }
+  .logbar {
+    font-size: 1.1em;
+    font-family: sans-serif;
+    padding-bottom: 20px; }
+    .logbar span {
+      font-style: italic; }
+    .logbar button {
+      font-weight: bolder;
+      border-radius: 5px;
+      font-size: 0.9em;
+      background-color: rgba(255, 255, 255, 0);
+      border: 1px solid black;
+      text-align: center;
+      outline: none;
+      text-decoration: none;
+      cursor: pointer; }
+    .logbar button:hover, .logbar button:active {
+      background-color: #ccc; }
   .navbar {
     text-align: left;
     margin-bottom: 0px;
-    border-bottom: 5px solid #3299BB; }
+    border-bottom: 5px solid #3A70E5; }
     .navbar ul {
       margin: 0px;
       padding-left: 0px;
-      border-bottom: 1px solid #BDD4FF; }
+      padding-bottom: 4px; }
     .navbar li {
       list-style: none;
       display: inline;
       margin-left: 30px;
+      padding: 4px;
       font-size: 1.2em;
-      background-color: #BDD4FF;
+      font-family: sans-serif;
+      background-color: #AEC9FF;
       height: 100%;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
-      border-bottom: 1px solid #BDD4FF; }
+      border-bottom: 1px solid #AEC9FF; }
       .navbar li a {
         text-decoration: none;
         font-weight: bold;
@@ -36,142 +59,235 @@
     max-width: 800px;
     margin: 0 auto;
     font-size: 1.2em; }
-    .container .menu {
-      background-color: #FFC266;
-      border-left: 1px solid #3299BB;
-      border-right: 1px solid #3299BB; }
-      .container .menu .menu-item {
-        display: inline-block;
-        margin-left: 70px; }
-      .container .menu .n1 {
-        width: 30%; }
     .container .new-task {
-      background-color: #FFC266;
-      min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
+      background-color: #F5F5F5;
+      border-left: 7px solid #FF9900;
+      border-bottom: 1px solid #bbb;
       max-width: 800px;
-      vertical-align: middle;
-      min-height: 47px; }
+      font-family: sans-serif;
+      border-left: none; }
       .container .new-task div {
-        margin-top: 15px;
         display: inline-block;
+        margin-top: 15px;
+        margin-left: 4%;
         width: 70%; }
-      .container .new-task span {
-        margin-left: 30px; }
-      .container .new-task .name {
+      .container .new-task .time {
+        width: 50%;
         margin-top: 0px;
-        margin-left: 30px;
-        width: 30%; }
+        margin-left: 4%;
+        margin-bottom: 10px;
+        font-size: 0.7em;
+        font-family: monospace; }
+      .container .new-task .name {
+        margin-left: 1%;
+        margin-top: 0px;
+        padding: 0px;
+        width: 90%; }
         .container .new-task .name input {
-          width: 100%; }
+          margin-top: 0px;
+          margin-bottom: 7px;
+          padding: 5px;
+          width: 100%;
+          font-size: 1.1em;
+          background-color: rgba(255, 255, 255, 0.3);
+          background-color: inherit;
+          box-shadow: none;
+          outline: none;
+          border: 1px solid #ddd;
+          border-radius: 3px; }
+        .container .new-task .name input:hover {
+          background-color: white; }
+        .container .new-task .name input:focus {
+          background-color: white; }
       .container .new-task .priority {
         margin-top: 0px;
-        margin-left: 20px;
+        padding: 0px;
+        padding-bottom: 10px;
         font-size: 0.7em;
-        display: inline-block;
-        width: 38%;
-        min-width: 170px; }
+        width: 100%; }
       .container .new-task .btn {
-        margin-top: 0px;
-        width: 15%;
-        min-width: 120px; }
+        width: 20%;
+        margin-top: 15px;
+        margin-left: 0px;
+        float: right; }
         .container .new-task .btn button {
+          width: 120px;
+          margin: 0px;
           min-height: 35px;
-          max-width: 150px;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          font-weight: bolder;
+          border-radius: 5px;
+          padding: 5px;
+          background-color: rgba(255, 255, 255, 0);
+          border: 2px solid black;
+          text-align: center;
+          outline: none;
+          text-decoration: none;
+          cursor: pointer; }
+        .container .new-task .btn button:hover, .container .new-task .btn button:active {
+          background-color: #ccc; }
     .container .high {
-      background-color: #FFAD33;
-      min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
-      max-width: 800px; }
+      background-color: #F5F5F5;
+      border-left: 7px solid #FF0000;
+      border-bottom: 1px solid #bbb;
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .high div {
-        margin-top: 15px;
         display: inline-block;
+        margin-top: 15px;
+        margin-left: 4%;
         width: 70%; }
-      .container .high span {
-        margin-left: 30px; }
+      .container .high .time {
+        width: 50%;
+        margin-top: 0px;
+        margin-left: 4%;
+        margin-bottom: 10px;
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .high .btn {
-        width: 25%; }
+        width: 20%;
+        margin-top: 15px;
+        margin-left: 0px;
+        float: right; }
         .container .high .btn button {
-          width: 100%;
-          margin-right: 20px;
+          width: 120px;
+          margin: 0px;
           min-height: 35px;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          font-weight: bolder;
+          border-radius: 5px;
+          padding: 5px;
+          background-color: rgba(255, 255, 255, 0);
+          border: 2px solid black;
+          text-align: center;
+          outline: none;
+          text-decoration: none;
+          cursor: pointer; }
+        .container .high .btn button:hover, .container .high .btn button:active {
+          background-color: #ccc; }
     .container .med {
-      background-color: #FFC266;
-      min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
-      max-width: 800px; }
+      background-color: #F5F5F5;
+      border-left: 7px solid #FF9900;
+      border-bottom: 1px solid #bbb;
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .med div {
-        margin-top: 15px;
         display: inline-block;
+        margin-top: 15px;
+        margin-left: 4%;
         width: 70%; }
-      .container .med span {
-        margin-left: 30px; }
+      .container .med .time {
+        width: 50%;
+        margin-top: 0px;
+        margin-left: 4%;
+        margin-bottom: 10px;
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .med .btn {
-        width: 25%; }
+        width: 20%;
+        margin-top: 15px;
+        margin-left: 0px;
+        float: right; }
         .container .med .btn button {
-          width: 100%;
-          margin-right: 20px;
+          width: 120px;
+          margin: 0px;
           min-height: 35px;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          font-weight: bolder;
+          border-radius: 5px;
+          padding: 5px;
+          background-color: rgba(255, 255, 255, 0);
+          border: 2px solid black;
+          text-align: center;
+          outline: none;
+          text-decoration: none;
+          cursor: pointer; }
+        .container .med .btn button:hover, .container .med .btn button:active {
+          background-color: #ccc; }
     .container .low {
-      background-color: #FFE0B3;
-      min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
-      max-width: 800px; }
+      background-color: #F5F5F5;
+      border-left: 7px solid #FFFF00;
+      border-bottom: 1px solid #bbb;
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .low div {
-        margin-top: 15px;
         display: inline-block;
+        margin-top: 15px;
+        margin-left: 4%;
         width: 70%; }
-      .container .low span {
-        margin-left: 30px; }
+      .container .low .time {
+        width: 50%;
+        margin-top: 0px;
+        margin-left: 4%;
+        margin-bottom: 10px;
+        font-size: 0.7em;
+        font-family: monospace; }
       .container .low .btn {
-        width: 25%; }
+        width: 20%;
+        margin-top: 15px;
+        margin-left: 0px;
+        float: right; }
         .container .low .btn button {
-          width: 100%;
-          margin-right: 20px;
+          width: 120px;
+          margin: 0px;
           min-height: 35px;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          font-weight: bolder;
+          border-radius: 5px;
+          padding: 5px;
+          background-color: rgba(255, 255, 255, 0);
+          border: 2px solid black;
+          text-align: center;
+          outline: none;
+          text-decoration: none;
+          cursor: pointer; }
+        .container .low .btn button:hover, .container .low .btn button:active {
+          background-color: #ccc; }
     .container .completed {
-      background-color: #66FF96;
-      min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
-      max-width: 800px; }
+      background-color: #F5F5F5;
+      border-left: 7px solid #FFFF00;
+      border-bottom: 1px solid #bbb;
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .completed div {
-        margin-top: 15px;
         display: inline-block;
+        margin-top: 15px;
+        margin-left: 4%;
         width: 70%; }
-      .container .completed span {
-        margin-left: 30px; }
+      .container .completed .time {
+        width: 50%;
+        margin-top: 0px;
+        margin-left: 4%;
+        margin-bottom: 10px;
+        font-size: 0.7em;
+        font-family: monospace; }
     .container .expired {
-      background-color: #FF8A7A;
-      min-height: 70px;
-      border: 1px solid #3299BB;
-      border-top: none;
-      max-width: 800px; }
+      background-color: #F5F5F5;
+      border-left: 7px solid #FF0000;
+      border-bottom: 1px solid #bbb;
+      max-width: 800px;
+      font-family: sans-serif; }
       .container .expired div {
-        margin-top: 15px;
         display: inline-block;
+        margin-top: 15px;
+        margin-left: 4%;
         width: 70%; }
-      .container .expired span {
-        margin-left: 30px; } }
+      .container .expired .time {
+        width: 50%;
+        margin-top: 0px;
+        margin-left: 4%;
+        margin-bottom: 10px;
+        font-size: 0.7em;
+        font-family: monospace; } }
 
 @media screen and (max-width: 600px) {
   body {
     font-size: 0.75em; }
-  h1 {
-    color: red; }
   .navbar li {
     margin-left: 10px; }
   .tasks .menu .menu-item {
     margin-left: 20px;
-    width: 40%; }
+    width: 30%; }
   .tasks .menu .n2 {
     margin-left: 30px; }
   .container .task div span {

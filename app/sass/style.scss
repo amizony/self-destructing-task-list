@@ -1,12 +1,15 @@
 // Variables
-$color-menu-activ: #3299BB;
-$color-menu-passiv: #BDD4FF;
-$color-task-high: #FFAD33;
-$color-task-med: #FFC266;
-$color-task-low: #FFE0B3;
-$color-expired: #FF8A7A;
-$color-completed: #66FF96;
+$color-menu-activ: #3A70E5;
+$color-menu-passiv: #AEC9FF;
+$color-task-high: #FF0000;
+$color-task-med: #FF9900;
+$color-task-low: #FFFF00;
+$color-expired: #FF0000;
+$color-completed: #00FF00;
 $color-button: #424242;
+
+$color-transparent: rgba(255, 255, 255, 0);
+$color-semi-transparent: rgba(255, 255, 255, 0.3);
 
 $font-small: 0.7em;
 $font-medium: 1.1em;
@@ -14,34 +17,57 @@ $font-big: 1.2em;
 
 
 // Mixins
-@mixin task-style($background-color) {
-  background-color: $background-color;
-  min-height: 70px;
-  border: 1px solid $color-menu-activ;
-  border-top: none;
+@mixin task-style($border-color) {
+  background-color: #F5F5F5;
+  border-left: 7px solid $border-color;
+  border-bottom: 1px solid #bbb;
   max-width: 800px;
+  font-family: sans-serif;
 
   div {
-    margin-top: 15px;
     display: inline-block;
+    margin-top: 15px;
+    margin-left: 4%;
     width: 70%;
   }
 
-  span {
-    margin-left: 30px;
+  .time {
+    width: 50%;
+    margin-top: 0px;
+    margin-left: 4%;
+    margin-bottom: 10px;
+    font-size: $font-small;
+    font-family: monospace;
   }
 }
 
 
 @mixin btn-style() {
-  width: 25%;
+  width: 20%;
+  margin-top: 15px;
+  margin-left: 0px;
+  float: right;
 
   button {
-    width: 100%;
-    margin-right: 20px;
+    width: 120px;
+    margin: 0px;
     min-height: 35px;
     font-size: $font-medium;
+    font-weight: bolder;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: $color-transparent;
+    border: 2px solid black;
+    text-align: center;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
   }
+
+  button:hover, button:active {
+    background-color: #ccc;
+  }
+
 }
 
 // Syle
@@ -51,7 +77,8 @@ $font-big: 1.2em;
   }
 
   body {
-    background-image: url("../images/rockywall.png");
+    background-image: url("../images/gplaypattern.png");
+    //background-color: $color-blue;
     font-size: 1em;
   }
 
@@ -59,7 +86,36 @@ $font-big: 1.2em;
     text-align: center;
 
     h1 {
-      font-size: 3em;
+      font-size: 5.5em;
+      font-family: monospace;
+      padding-top: 10px;
+      padding-bottom: 40px;
+    }
+  }
+
+  .logbar {
+    font-size: $font-medium;
+    font-family: sans-serif;
+    padding-bottom: 20px;
+
+    span {
+      font-style: italic;
+    }
+
+    button {
+      font-weight: bolder;
+      border-radius: 5px;
+      font-size: 0.9em;
+      background-color: $color-transparent;
+      border: 1px solid black;
+      text-align: center;
+      outline: none;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button:hover, button:active {
+      background-color: #ccc;
     }
   }
 
@@ -71,14 +127,16 @@ $font-big: 1.2em;
     ul {
       margin: 0px;
       padding-left: 0px;
-      border-bottom: 1px solid $color-menu-passiv;
+      padding-bottom: 4px;
     }
 
     li {
       list-style: none;
       display: inline;
       margin-left: 30px;
+      padding: 4px;
       font-size: $font-big;
+      font-family: sans-serif;
       background-color: $color-menu-passiv;
       height: 100%;
       border-top-left-radius: 8px;
@@ -95,60 +153,71 @@ $font-big: 1.2em;
     }
   }
 
+// Changing placeholder color in the form
+  // *::-webkit-input-placeholder {
+  //     color: white;
+  // }
+  // *:-moz-placeholder {
+  //     /* FF 4-18 */
+  //     color: white;
+  // }
+  // *::-moz-placeholder {
+  //     /* FF 19+ */
+  //     color: white;
+  // }
+  // *:-ms-input-placeholder {
+  //     /* IE 10+ */
+  //     color: white;
+  // }
+
   .container {
     max-width: 800px;
     margin: 0 auto;
     font-size: $font-big;
 
-    .menu {
-      background-color: $color-task-med;
-      border-left: 1px solid $color-menu-activ;
-      border-right: 1px solid $color-menu-activ;
-
-      .menu-item {
-        display: inline-block;
-        margin-left: 70px;
-      }
-
-      .n1 {
-        width: 30%;
-      }
-    }
-
     .new-task {
       @include task-style($color-task-med);
-      vertical-align: middle;
-      min-height: 47px;
+      border-left: none;
 
       .name {
+        margin-left: 1%;
         margin-top: 0px;
-        margin-left: 30px;
-        width: 30%;
+        padding: 0px;
+        width: 90%;
 
         input {
+          margin-top: 0px;
+          margin-bottom: 7px;
+          padding: 5px;
           width: 100%;
+          font-size: $font-medium;
+          background-color: $color-semi-transparent;
+          background-color: inherit;
+          box-shadow: none;
+          outline: none;
+          border: 1px solid #ddd;
+          border-radius: 3px;
+        }
+
+        input:hover {
+          background-color: white;
+        }
+
+        input:focus {
+          background-color: white;
         }
       }
 
       .priority {
         margin-top: 0px;
-        margin-left: 20px;
+        padding: 0px;
+        padding-bottom: 10px;
         font-size: $font-small;
-        display: inline-block;
-        width: 38%;
-        min-width: 170px;
+        width: 100%;
       }
 
       .btn {
-        margin-top: 0px;
-        width: 15%;
-        min-width: 120px;
-
-        button {
-          min-height: 35px;
-          max-width: 150px;
-          font-size: $font-medium;
-        }
+        @include btn-style();
       }
     }
 
@@ -175,11 +244,11 @@ $font-big: 1.2em;
     }
 
     .completed {
-      @include task-style($color-completed);
+      @include task-style($color-task-low);
     }
 
     .expired {
-      @include task-style($color-expired);
+      @include task-style($color-task-high);
     }
   }
 }
@@ -187,9 +256,6 @@ $font-big: 1.2em;
 @media screen and (max-width: 600px){
   body {
     font-size: .75em;
-  }
-  h1 {
-    color: red;
   }
 
   .navbar li {
@@ -199,7 +265,7 @@ $font-big: 1.2em;
   .tasks .menu {
     .menu-item {
       margin-left: 20px;
-      width: 40%;
+      width: 30%;
     }
 
     .n2 {

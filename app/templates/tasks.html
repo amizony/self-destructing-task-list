@@ -1,16 +1,19 @@
 <div class="tasks">
-  <div class="menu">
+  <!--div class="menu">
     <div class="menu-item n1"> Task description </div>
     <div class="menu-item n2"> Priority </div>
-  </div>
+  </div-->
 
   <div class="new-task">
     <form ng-submit="addTask()">
-      <div class="name"><input ng-model="newTaskDescription" placeholder="Enter a new task" /></div>
-      <div class="priority">
-        <input type="radio" ng-model="newTaskPriority" value="1" /> High
-        <input type="radio" ng-model="newTaskPriority" value="2" /> Medium
-        <input type="radio" ng-model="newTaskPriority" value="3" /> Low
+      <div>
+        <div class="name"><input ng-model="newTaskDescription" placeholder="Enter a new task here" /></div>
+        <div class="priority">
+          <span>Priority:</span>
+          <input type="radio" ng-model="newTaskPriority" value="1" /> High
+          <input type="radio" ng-model="newTaskPriority" value="2" /> Medium
+          <input type="radio" ng-model="newTaskPriority" value="3" /> Low
+        </div>
       </div>
       <div class="btn"><button type="submit">Add Task</button></div>
     </form>
@@ -20,23 +23,32 @@
   <div ng-repeat="task in tasks">
 
     <div ng-if="task.priority == 1" class="task high">
-      <div><span>{{task.desc}}</span></div>
+      <div><span>{{ task.desc }}</span></div>
       <div class="btn">
-        <button ng-click="completeTask(task)">Complete</button>
+        <button ng-click="completeTask(task)"> <i class="fa fa-check"></i> Done </button>
+      </div>
+      <div class="time">
+        Time left: {{ task.timeLeft }}
       </div>
     </div>
 
     <div ng-if="task.priority == 2" class="task med">
-      <div><span>{{task.desc}}</span></div>
+      <div><span>{{ task.desc }}</span></div>
       <div class="btn">
-        <button ng-click="completeTask(task)">Complete</button>
+        <button ng-click="completeTask(task)"> <i class="fa fa-check"></i> Done </button>
+      </div>
+      <div class="time">
+        Time left: {{ task.timeLeft }}
       </div>
     </div>
 
     <div ng-if="task.priority == 3" class="task low">
-      <div><span>{{task.desc}}</span></div>
+      <div><span>{{ task.desc }}</span></div>
       <div class="btn">
-        <button ng-click="completeTask(task)">Complete</button>
+        <button ng-click="completeTask(task)"> <i class="fa fa-check"></i> Done </button>
+      </div>
+      <div class="time">
+        Time left: {{ task.timeLeft }}
       </div>
     </div>
   </div>
