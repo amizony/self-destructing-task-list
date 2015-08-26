@@ -1,12 +1,13 @@
 // Variables
 $color-menu-activ: #3A70E5;
 $color-menu-passiv: #AEC9FF;
-$color-task-high: #FF0000;
-$color-task-med: #FF9900;
-$color-task-low: #FFFF00;
-$color-expired: #FF0000;
-$color-completed: #00FF00;
-$color-button: #424242;
+$color-task-high: #D00;
+$color-task-med: #E90;
+$color-task-low: #DD0;
+$color-expired: #D00;
+$color-completed: #0D0;
+
+$color-light-white: #DDD;
 
 $color-transparent: rgba(255, 255, 255, 0);
 $color-semi-transparent: rgba(255, 255, 255, 0.3);
@@ -18,11 +19,12 @@ $font-big: 1.2em;
 
 // Mixins
 @mixin task-style($border-color) {
-  background-color: #F5F5F5;
+  background-color: #222;
   border-left: 7px solid $border-color;
-  border-bottom: 1px solid #bbb;
+  border-bottom: 1px solid #777;
   max-width: 800px;
   font-family: sans-serif;
+  color: $color-light-white;
 
   div {
     display: inline-block;
@@ -54,10 +56,11 @@ $font-big: 1.2em;
     min-height: 35px;
     font-size: $font-medium;
     font-weight: bolder;
+    color: white;
     border-radius: 5px;
     padding: 5px;
     background-color: $color-transparent;
-    border: 2px solid black;
+    border: 2px solid $color-light-white;
     text-align: center;
     outline: none;
     text-decoration: none;
@@ -65,7 +68,7 @@ $font-big: 1.2em;
   }
 
   button:hover, button:active {
-    background-color: #ccc;
+    background-color: #0b0;
   }
 
 }
@@ -77,9 +80,9 @@ $font-big: 1.2em;
   }
 
   body {
-    background-image: url("../images/gplaypattern.png");
-    //background-color: $color-blue;
+    background-image: url("../images/gplaypatterninverse.png");
     font-size: 1em;
+    color: white;
   }
 
   .header {
@@ -90,6 +93,7 @@ $font-big: 1.2em;
       font-family: monospace;
       padding-top: 10px;
       padding-bottom: 40px;
+      color: white;
     }
   }
 
@@ -97,6 +101,15 @@ $font-big: 1.2em;
     font-size: $font-medium;
     font-family: sans-serif;
     padding-bottom: 20px;
+    color: white;
+
+    input {
+      background-color: $color-semi-transparent;
+    }
+
+    input:hover, input:focus {
+      background-color: white;
+    }
 
     span {
       font-style: italic;
@@ -106,8 +119,9 @@ $font-big: 1.2em;
       font-weight: bolder;
       border-radius: 5px;
       font-size: 0.9em;
+      color: white;
       background-color: $color-transparent;
-      border: 1px solid black;
+      border: 1px solid $color-light-white;
       text-align: center;
       outline: none;
       text-decoration: none;
@@ -115,7 +129,7 @@ $font-big: 1.2em;
     }
 
     button:hover, button:active {
-      background-color: #ccc;
+      background-color: #444;
     }
   }
 
@@ -154,21 +168,21 @@ $font-big: 1.2em;
   }
 
 // Changing placeholder color in the form
-  // *::-webkit-input-placeholder {
-  //     color: white;
-  // }
-  // *:-moz-placeholder {
-  //     /* FF 4-18 */
-  //     color: white;
-  // }
-  // *::-moz-placeholder {
-  //     /* FF 19+ */
-  //     color: white;
-  // }
-  // *:-ms-input-placeholder {
-  //     /* IE 10+ */
-  //     color: white;
-  // }
+  *::-webkit-input-placeholder {
+      color: white;
+  }
+  *:-moz-placeholder {
+      /* FF 4-18 */
+      color: white;
+  }
+  *::-moz-placeholder {
+      /* FF 19+ */
+      color: white;
+  }
+  *:-ms-input-placeholder {
+      /* IE 10+ */
+      color: white;
+  }
 
   .container {
     max-width: 800px;
@@ -195,7 +209,7 @@ $font-big: 1.2em;
           background-color: inherit;
           box-shadow: none;
           outline: none;
-          border: 1px solid #ddd;
+          border: 1px solid $color-light-white;
           border-radius: 3px;
         }
 
@@ -244,11 +258,11 @@ $font-big: 1.2em;
     }
 
     .completed {
-      @include task-style($color-task-low);
+      @include task-style($color-completed);
     }
 
     .expired {
-      @include task-style($color-task-high);
+      @include task-style($color-expired);
     }
   }
 }
