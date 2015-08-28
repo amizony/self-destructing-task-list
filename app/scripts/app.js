@@ -173,7 +173,6 @@ taskListApp.service("TaskManagement", ["$rootScope", "$firebaseArray", function(
 
   function clearOldTasks() {
     var time = new Date();
-    console.log("-- Looking for old tasks --");
     for (var i = 0; i < firebaseTasks.length; i++) {
       var age = time.getTime() - firebaseTasks[i].date;
       if ((age > oneWeek) && (firebaseTasks[i].status == "active")) {
@@ -387,7 +386,6 @@ taskListApp.service("AuthManagement", ["$rootScope", "$firebaseAuth", "$firebase
         if (error) {
           console.log("Login Failed!", error);
         } else {
-          console.log("Login Succeeded!", authData);
           $state.go("tasks");
           currentUser = name;
         }
